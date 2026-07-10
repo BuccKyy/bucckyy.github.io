@@ -15,6 +15,8 @@
   --ink: #e8eaf0;
   --ink-muted: #8b93a7;
   --accent: #ffb454;
+  --accent2: #4fd6be;
+  --accent3: #ff6b9d;
   --accent-dim: rgba(255, 180, 84, 0.55);
   --accent-glow: rgba(255, 180, 84, 0.28);
   --line: #232a38;
@@ -29,6 +31,8 @@
   --ink: #1c1f27;
   --ink-muted: #5d6373;
   --accent: #b0570a;
+  --accent2: #0e7490;
+  --accent3: #be185d;
   --accent-dim: rgba(176, 87, 10, 0.6);
   --accent-glow: rgba(176, 87, 10, 0.15);
   --line: #d9d3c5;
@@ -49,11 +53,17 @@ body {
   line-height: 1.65;
   font-size: 1.0625rem;
   transition: background-color 0.35s ease, color 0.35s ease;
-  /* engineering-paper grid */
+  /* ambient color glows + engineering-paper grid
+     ponytail: glows are static body background layers — an animated
+     fixed ::before at z-index -1 triggered a Chromium paint bug */
   background-image:
+    radial-gradient(600px 420px at 18% 12%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 70%),
+    radial-gradient(560px 460px at 85% 35%, color-mix(in srgb, var(--accent2) 11%, transparent), transparent 70%),
+    radial-gradient(640px 480px at 40% 90%, color-mix(in srgb, var(--accent3) 10%, transparent), transparent 70%),
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 44px 44px;
+  background-size: auto, auto, auto, 44px 44px, 44px 44px;
+  background-attachment: fixed, fixed, fixed, scroll, scroll;
 }
 
 /* film-grain noise overlay */
@@ -152,6 +162,13 @@ main {
 
 .hero { padding: clamp(4rem, 10vh, 7.5rem) 0 4rem; }
 
+/* staggered hero entrance */
+.hero .reveal:nth-child(1) { transition-delay: 0.05s; }
+.hero .reveal:nth-child(2) { transition-delay: 0.15s; }
+.hero .reveal:nth-child(3) { transition-delay: 0.3s; }
+.hero .reveal:nth-child(4) { transition-delay: 0.45s; }
+.hero .reveal:nth-child(5) { transition-delay: 0.6s; }
+
 .hero__meta {
   color: var(--ink-muted);
   margin-bottom: 1.5rem;
@@ -172,6 +189,8 @@ main {
   margin-bottom: 2rem;
 }
 
+.hero__tagline em:nth-of-type(2) { color: var(--accent2); }
+
 .hero__tagline {
   font-size: clamp(1.15rem, 2.3vw, 1.5rem);
   font-weight: 500;
@@ -190,7 +209,7 @@ main {
 }
 
 .wave-path {
-  stroke: var(--accent);
+  stroke: url(#wavegrad);
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -202,8 +221,8 @@ main {
 
 @keyframes draw-wave { to { stroke-dashoffset: 0; } }
 @keyframes pulse-wave {
-  0%, 100% { filter: drop-shadow(0 0 4px var(--accent-glow)); opacity: 0.85; }
-  50%      { filter: drop-shadow(0 0 12px var(--accent-glow)); opacity: 1; }
+  0%, 100% { filter: drop-shadow(0 0 4px var(--accent-glow)) hue-rotate(0deg); opacity: 0.85; }
+  50%      { filter: drop-shadow(0 0 14px var(--accent-glow)) hue-rotate(-30deg); opacity: 1; }
 }
 
 .hero__wave-label {
@@ -228,6 +247,7 @@ main {
   border-color: var(--accent);
   color: var(--accent);
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px -8px var(--accent-glow);
 }
 .btn--primary {
   background: var(--accent);
@@ -263,6 +283,19 @@ main {
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
+
+/* tri-color underline sweeps in when the heading reveals */
+.section__head h2::after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 0;
+  margin-top: 0.4rem;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+}
+.section__head.visible h2::after { width: 100%; }
 
 .section__note {
   color: var(--ink-muted);
@@ -336,7 +369,20 @@ main {
   transform: translateY(-4px);
   box-shadow: 0 12px 32px -18px var(--accent-glow);
 }
-/* corner tick */
+
+/* each case study carries its own accent color */
+.case:nth-child(2), .repo:nth-child(3n+2), .skill-group:nth-child(3n+2) {
+  --accent: var(--accent2);
+  --accent-dim: color-mix(in srgb, var(--accent2) 55%, transparent);
+  --accent-glow: color-mix(in srgb, var(--accent2) 28%, transparent);
+}
+.case:nth-child(3), .repo:nth-child(3n), .skill-group:nth-child(3n) {
+  --accent: var(--accent3);
+  --accent-dim: color-mix(in srgb, var(--accent3) 55%, transparent);
+  --accent-glow: color-mix(in srgb, var(--accent3) 28%, transparent);
+}
+
+/* corner tick — grows on hover */
 .case::before {
   content: "";
   position: absolute;
@@ -346,7 +392,9 @@ main {
   height: 14px;
   border-top: 2px solid var(--accent);
   border-left: 2px solid var(--accent);
+  transition: width 0.3s ease, height 0.3s ease;
 }
+.case:hover::before { width: 32px; height: 32px; }
 
 .case__id {
   color: var(--accent);
@@ -392,6 +440,7 @@ main {
   border-color: var(--accent-dim);
   background: var(--bg-panel);
   transform: translateY(-4px);
+  box-shadow: 0 14px 36px -20px var(--accent-glow);
 }
 
 .repo__top {
@@ -524,9 +573,12 @@ main {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
+  .hero .reveal { transition-delay: 0s; }
   .wave-path { animation: none; stroke-dashoffset: 0; }
   .blink, .hero__meta::before { animation: none; }
   .btn:hover, .case:hover, .repo:hover { transform: none; }
+  .section__head h2::after { transition: none; width: 100%; }
+  .case::before { transition: none; }
 }
 
 /* ============ RESPONSIVE ============ */
