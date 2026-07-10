@@ -25,294 +25,277 @@
 </head>
 <body>
 
+  <div class="spotlight" aria-hidden="true"></div>
+
   <a class="skip-link" href="#about">Skip to content</a>
 
-  <header class="nav">
-    <a class="nav__logo mono" href="#top">TTD<span class="blink">_</span></a>
-    <nav class="nav__links mono" aria-label="Sections">
-      <a href="#about">about</a>
-      <a href="#experience">experience</a>
-      <a href="#work">work</a>
-      <a href="#skills">skills</a>
-      <a href="#contact">contact</a>
-    </nav>
-    <button id="theme-toggle" class="theme-toggle mono" aria-label="Toggle color theme">
-      <span class="theme-toggle__dark">◐ dark</span>
-      <span class="theme-toggle__light">◑ light</span>
-    </button>
-  </header>
+  <button id="theme-toggle" class="theme-toggle mono" aria-label="Toggle color theme">
+    <span class="theme-toggle__dark">◐ dark</span>
+    <span class="theme-toggle__light">◑ light</span>
+  </button>
 
-  <main id="top">
+  <div class="layout">
 
-    <!-- ================= HERO ================= -->
-    <section class="hero">
-      <p class="hero__meta mono reveal">Ho Chi Minh City, Vietnam · UTC+7 · open to remote</p>
-      <h1 class="hero__name reveal">Tran<br>Trung&nbsp;Duc</h1>
-      <p class="hero__tagline reveal">
-        AI engineer building <em>agentic systems</em> that run real business
-        operations — and the <em>evaluation frameworks</em> that make LLMs
-        reliable enough to ship.
-      </p>
-
-      <div class="hero__wave reveal" aria-hidden="true">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="wavegrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" style="stop-color: var(--accent)"/>
-              <stop offset="0.5" style="stop-color: var(--accent2)"/>
-              <stop offset="1" style="stop-color: var(--accent3)"/>
-            </linearGradient>
-          </defs>
-          <path class="wave-path" fill="none"
-            d="M0,78 L60,78 L74,70 L86,96 L102,30 L118,104 L134,56 L150,72 L190,72 L230,78 L290,78 L304,70 L316,96 L332,30 L348,104 L364,56 L380,72 L420,72 L460,78 L520,78 L534,70 L546,96 L562,30 L578,104 L594,56 L610,72 L650,72 L690,78 L750,78 L764,70 L776,96 L792,30 L808,104 L824,56 L840,72 L880,72 L920,78 L980,78 L994,70 L1006,96 L1022,30 L1038,104 L1054,56 L1070,72 L1110,72 L1150,78 L1200,78" />
-        </svg>
-        <p class="hero__wave-label mono">sig: ppg · where it started — signals in, decisions out</p>
-      </div>
-
-      <div class="hero__actions reveal">
-        <a class="btn btn--primary" href="mailto:trantrungduc313@gmail.com">Get in touch</a>
-        <a class="btn" href="https://github.com/BuccKyy" target="_blank" rel="noopener">GitHub ↗</a>
-        <a class="btn" href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="noopener">LinkedIn ↗</a>
-      </div>
-    </section>
-
-    <!-- ================= ABOUT ================= -->
-    <section class="section" id="about">
-      <div class="section__head reveal">
-        <span class="section__index mono">01</span>
-        <h2>About</h2>
-      </div>
-      <div class="about reveal">
-        <p>
-          I'm an AI engineer at <strong>MaxflowAI</strong>, where I design and ship
-          multi-agent systems for enterprise clients — B2B sales automation,
-          inventory intelligence, HR and event operations.
+    <!-- ================= SIDEBAR ================= -->
+    <header class="sidebar">
+      <div class="sidebar__top">
+        <p class="sidebar__meta mono">Ho Chi Minh City · UTC+7 · open to remote</p>
+        <h1 class="sidebar__name">Tran<br>Trung&nbsp;Duc</h1>
+        <p class="sidebar__role">AI Engineer · Agentic Systems &amp; LLM Workflows</p>
+        <p class="sidebar__tagline">
+          I build <em>agentic systems</em> that run real business operations —
+          and the <em>evaluation frameworks</em> that make LLMs reliable
+          enough to ship.
         </p>
-        <p>
-          My path started in <strong>biomedical signal processing</strong>: a B.Eng in
-          Electronics &amp; Telecommunication Engineering (University of Science,
-          VNU-HCM, GPA 3.4/4.0) and research on cuffless blood pressure estimation
-          from PPG signals — from deep learning models down to STM32 firmware.
-        </p>
-        <p>
-          That range is the throughline: I like building systems that work
-          <strong>end to end</strong>, and proving they work with deterministic
-          evaluation rather than vibes. Calculations belong in Python; LLMs write
-          the words.
-        </p>
-      </div>
-    </section>
 
-    <!-- ================= EXPERIENCE ================= -->
-    <section class="section" id="experience">
-      <div class="section__head reveal">
-        <span class="section__index mono">02</span>
-        <h2>Experience</h2>
-      </div>
-
-      <article class="job reveal">
-        <div class="job__meta mono">
-          <span class="job__dates">2026 — present</span>
-          <span class="job__loc">Ho Chi Minh City</span>
+        <div class="sidebar__wave" aria-hidden="true">
+          <svg viewBox="0 0 400 90" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="wavegrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" style="stop-color: var(--accent)"/>
+                <stop offset="0.5" style="stop-color: var(--accent2)"/>
+                <stop offset="1" style="stop-color: var(--accent3)"/>
+              </linearGradient>
+            </defs>
+            <path class="wave-path" fill="none"
+              d="M0,58 L40,58 L52,50 L62,72 L76,22 L90,78 L104,42 L118,54 L150,54 L180,58 L220,58 L232,50 L242,72 L256,22 L270,78 L284,42 L298,54 L330,54 L360,58 L400,58" />
+          </svg>
+          <p class="sidebar__wave-label mono">sig: ppg · signals in, decisions out</p>
         </div>
-        <div class="job__body">
-          <h3>AI Engineer / Agent Builder <span class="job__company">· MaxflowAI</span></h3>
+
+        <nav class="sidebar__nav mono" aria-label="Sections">
+          <a href="#about" class="nav-link"><span class="nav-line"></span>about</a>
+          <a href="#experience" class="nav-link"><span class="nav-line"></span>experience</a>
+          <a href="#work" class="nav-link"><span class="nav-line"></span>work</a>
+          <a href="#skills" class="nav-link"><span class="nav-line"></span>skills</a>
+          <a href="#contact" class="nav-link"><span class="nav-line"></span>contact</a>
+        </nav>
+      </div>
+
+      <div class="sidebar__bottom mono">
+        <a href="https://github.com/BuccKyy" target="_blank" rel="noopener">github ↗</a>
+        <a href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="noopener">linkedin ↗</a>
+        <a href="mailto:trantrungduc313@gmail.com">email ↗</a>
+      </div>
+    </header>
+
+    <!-- ================= CONTENT ================= -->
+    <main class="content">
+
+      <section class="section" id="about">
+        <h2 class="section__title mono reveal">01 · about</h2>
+        <div class="about reveal">
+          <p>
+            I'm an AI engineer at <strong>MaxflowAI</strong>, where I design and ship
+            multi-agent systems for enterprise clients — B2B sales automation,
+            inventory intelligence, HR and event operations.
+          </p>
+          <p>
+            My path started in <strong>biomedical signal processing</strong>: a B.Eng in
+            Electronics &amp; Telecommunication Engineering (University of Science,
+            VNU-HCM, GPA 3.4/4.0) and research on cuffless blood pressure estimation
+            from PPG signals — from deep learning models down to STM32 firmware.
+          </p>
+          <p>
+            That range is the throughline: I like building systems that work
+            <strong>end to end</strong>, and proving they work with deterministic
+            evaluation rather than vibes. Calculations belong in Python; LLMs write
+            the words.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="experience">
+        <h2 class="section__title mono reveal">02 · experience</h2>
+
+        <div class="jobs">
+          <article class="job reveal">
+            <span class="job__dates mono">2026 — present</span>
+            <div class="job__body">
+              <h3>AI Engineer / Agent Builder <span class="job__company">· MaxflowAI</span></h3>
+              <ul>
+                <li>Design and ship multi-agent systems for real clients across B2B sales automation, inventory logistics, education &amp; event operations, email pipelines, and HR workflows</li>
+                <li>Build Python- and JSON-based orchestration: routing agents, lead scoring, campaign orchestration, backend persistence, and admin access control</li>
+                <li>Configure databases, event-driven triggers, scheduled jobs, and external connectors (CRM via MCP, SMS gateways, SMTP) orchestrating Claude and GPT models</li>
+                <li>Write Playwright QA suites and deterministic evaluation frameworks for LLM outputs; use <strong>Claude Code</strong> daily for AI-assisted development</li>
+                <li>Deliver mini-app HTML/JS frontends integrating with the platform REST API via postMessage authentication</li>
+              </ul>
+              <p class="chips mono"><span>Python</span><span>Claude &amp; GPT</span><span>MCP</span><span>Playwright</span><span>Claude Code</span><span>REST</span></p>
+            </div>
+          </article>
+
+          <article class="job reveal">
+            <span class="job__dates mono">Apr — Oct 2025</span>
+            <div class="job__body">
+              <h3>Product Reviewer / QA, AI Features <span class="job__company">· SNOW Vietnam</span></h3>
+              <ul>
+                <li>Systematic QA of AI-generated image &amp; video features (AR filters, computer-vision effects), covering edge cases like low light and occlusion</li>
+                <li>Documented defect patterns with reproducible steps for the CV research team; verified fixes and tracked regressions across releases</li>
+              </ul>
+              <p class="chips mono"><span>AI features QA</span><span>Computer vision</span><span>AR filters</span></p>
+            </div>
+          </article>
+
+          <article class="job reveal">
+            <span class="job__dates mono">Nov 2024 — Jan 2025</span>
+            <div class="job__body">
+              <h3>AI Engineer Intern <span class="job__company">· ITR VN</span></h3>
+              <ul>
+                <li>Implemented PPG2BP-Net for cuffless blood pressure estimation with clinical-grade accuracy: SBP MAE 9.76±8.99 mmHg, DBP MAE 5.25±5.26 mmHg</li>
+                <li>Built MIMIC-III data pipelines; cut processing latency ~40% via NumPy vectorisation</li>
+                <li>Developed an STM32 + MAX30102 hardware prototype with Bluetooth streaming to a mobile app for real-time visualisation</li>
+              </ul>
+              <p class="chips mono"><span>Deep learning</span><span>MIMIC-III</span><span>NumPy</span><span>STM32</span><span>Bluetooth</span></p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="work">
+        <h2 class="section__title mono reveal">03 · selected work</h2>
+
+        <p class="section__note mono reveal">client work @ maxflowai — details anonymised</p>
+
+        <div class="cases">
+          <article class="case reveal">
+            <span class="case__id mono">CS-01</span>
+            <h3>B2B Sales Automation Platform</h3>
+            <p>
+              Multi-agent system with a master routing agent delegating to specialist
+              agents for partner research, 100-point lead scoring (pure Python),
+              email drafting, controlled batch delivery, and campaign analytics.
+              CRM integration through a custom <strong>MCP bridge</strong>; a Cloud Run
+              webhook receiver turns CRM events into agent runs — automation without
+              anyone opening a chat.
+            </p>
+            <p class="case__tags mono">multi-agent · MCP · Cloud Run · Python · CRM</p>
+          </article>
+
+          <article class="case reveal">
+            <span class="case__id mono">CS-02</span>
+            <h3>Inventory Intelligence System</h3>
+            <p>
+              Python-first decision engine computing days-of-inventory, demand
+              trends, and warehouse transfer recommendations with auditable reason
+              codes. The LLM never calculates — it only writes the executive summary
+              from computed JSON. A hallucination-proof architecture for decisions
+              that move real stock.
+            </p>
+            <p class="case__tags mono">decision engine · Python · LLM guardrails · SQL</p>
+          </article>
+
+          <article class="case reveal">
+            <span class="case__id mono">CS-03</span>
+            <h3>Enterprise Agent Operations</h3>
+            <p>
+              A portfolio of production workflows: event check-in and feedback
+              capture, HR pipelines, a bulk email runtime with queueing and routing
+              rules, scheduled jobs, and mini-app frontends authenticated against
+              the platform REST API. Config-driven throughout — business rules live
+              in the database, not in prompts.
+            </p>
+            <p class="case__tags mono">workflow automation · REST · scheduled jobs · HTML/JS</p>
+          </article>
+        </div>
+
+        <p class="section__note mono reveal" style="margin-top: 3.5rem;">open source &amp; research — github.com/BuccKyy</p>
+
+        <div class="repos">
+          <a class="repo reveal" href="https://github.com/BuccKyy/Deep-PPG-Research-Core" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">Python</span><span>★ 2</span></div>
+            <h3>Deep-PPG-Research-Core</h3>
+            <p>End-to-end research framework for PPG-based blood pressure prediction — standardised pipelines from raw signal to model evaluation.</p>
+          </a>
+          <a class="repo reveal" href="https://github.com/BuccKyy/Cuffless-BP-IoT-System" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">C</span></div>
+            <h3>Cuffless-BP-IoT-System</h3>
+            <p>Real-time, non-invasive blood pressure monitoring with edge AI — from STM32 firmware to inference.</p>
+          </a>
+          <a class="repo reveal" href="https://github.com/BuccKyy/verification-pack-generator" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">Python</span></div>
+            <h3>verification-pack-generator</h3>
+            <p>Deterministic LLM claim-checker: BM25 retrieval grounds every generated claim in source evidence. A re-runnable regression gate for RAG features.</p>
+          </a>
+          <a class="repo reveal" href="https://github.com/BuccKyy/Video-Translation-Tool" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">Python</span></div>
+            <h3>Video-Translation-Tool</h3>
+            <p>AI video translation pipeline: Whisper ASR → LLM translation → TTS → FFmpeg remux. Each stage independently testable.</p>
+          </a>
+          <a class="repo reveal" href="https://github.com/BuccKyy/SGX-Downloader" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">Python</span></div>
+            <h3>SGX-Downloader</h3>
+            <p>Automated derivatives-data downloader with intelligent retry, recovery, and SQLite tracking.</p>
+          </a>
+          <a class="repo reveal" href="https://github.com/BuccKyy/PPG-MoNi-Android-App" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">Kotlin</span></div>
+            <h3>PPG-MoNi-Android-App</h3>
+            <p>Android companion app for real-time PPG signal visualisation over Bluetooth.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="section" id="skills">
+        <h2 class="section__title mono reveal">04 · skills</h2>
+
+        <div class="skills">
+          <div class="skill-group reveal">
+            <h3 class="mono">agentic ai &amp; llms</h3>
+            <p>Claude (Sonnet/Haiku) · GPT · LangGraph · n8n · MCP · RAG &amp; BM25 retrieval · prompt engineering · tool use / function calling · Claude Code · Ollama (Qwen, LLaMA)</p>
+          </div>
+          <div class="skill-group reveal">
+            <h3 class="mono">backend &amp; data</h3>
+            <p>Python (advanced) · FastAPI · REST APIs · SQL · webhooks &amp; event triggers · Pandas · NumPy</p>
+          </div>
+          <div class="skill-group reveal">
+            <h3 class="mono">ml &amp; dl</h3>
+            <p>TensorFlow / Keras · PyTorch · scikit-learn · model evaluation protocols · digital signal processing</p>
+          </div>
+          <div class="skill-group reveal">
+            <h3 class="mono">qa &amp; reliability</h3>
+            <p>Playwright · Selenium · deterministic LLM output validation · structured output schemas · regression testing</p>
+          </div>
+          <div class="skill-group reveal">
+            <h3 class="mono">embedded &amp; mobile</h3>
+            <p>C/C++ · STM32 · MAX30102 · Kotlin · Bluetooth</p>
+          </div>
+          <div class="skill-group reveal">
+            <h3 class="mono">tools</h3>
+            <p>Git · Docker · Linux · FFmpeg · OpenCV · MATLAB</p>
+          </div>
+        </div>
+
+        <div class="awards reveal">
+          <h3 class="mono awards__title">awards &amp; certifications</h3>
           <ul>
-            <li>Design and ship multi-agent systems for real clients across B2B sales automation, inventory logistics, education &amp; event operations, email pipelines, and HR workflows</li>
-            <li>Build Python- and JSON-based orchestration: routing agents, lead scoring, campaign orchestration, backend persistence, and admin access control</li>
-            <li>Configure databases, event-driven triggers, scheduled jobs, and external connectors (CRM via MCP, SMS gateways, SMTP) orchestrating Claude and GPT models</li>
-            <li>Write Playwright QA suites and deterministic evaluation frameworks for LLM outputs; use <strong>Claude Code</strong> daily for AI-assisted development</li>
-            <li>Deliver mini-app HTML/JS frontends integrating with the platform REST API via postMessage authentication</li>
+            <li><strong>VPBank Technology Hackathon 2025</strong> — Senior Track</li>
+            <li><strong>Biomedical Engineering Innovation Competition 2025</strong> — Team Lead, IoT Blood Pressure Monitoring System</li>
+            <li><strong>Coursera</strong> — Machine Learning with Python · Deep Learning &amp; Neural Networks with Keras · Building Deep Learning Models with Keras and TensorFlow</li>
           </ul>
         </div>
-      </article>
+      </section>
 
-      <article class="job reveal">
-        <div class="job__meta mono">
-          <span class="job__dates">Apr — Oct 2025</span>
-          <span class="job__loc">Ho Chi Minh City</span>
-        </div>
-        <div class="job__body">
-          <h3>Product Reviewer / QA, AI Features <span class="job__company">· SNOW Vietnam</span></h3>
-          <ul>
-            <li>Systematic QA of AI-generated image &amp; video features (AR filters, computer-vision effects), covering edge cases like low light and occlusion</li>
-            <li>Documented defect patterns with reproducible steps for the CV research team; verified fixes and tracked regressions across releases</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="job reveal">
-        <div class="job__meta mono">
-          <span class="job__dates">Nov 2024 — Jan 2025</span>
-          <span class="job__loc">Ho Chi Minh City</span>
-        </div>
-        <div class="job__body">
-          <h3>AI Engineer Intern <span class="job__company">· ITR VN</span></h3>
-          <ul>
-            <li>Implemented PPG2BP-Net for cuffless blood pressure estimation with clinical-grade accuracy: SBP MAE 9.76±8.99 mmHg, DBP MAE 5.25±5.26 mmHg</li>
-            <li>Built MIMIC-III data pipelines; cut processing latency ~40% via NumPy vectorisation</li>
-            <li>Developed an STM32 + MAX30102 hardware prototype with Bluetooth streaming to a mobile app for real-time visualisation</li>
-          </ul>
-        </div>
-      </article>
-    </section>
-
-    <!-- ================= WORK / PROJECTS ================= -->
-    <section class="section" id="work">
-      <div class="section__head reveal">
-        <span class="section__index mono">03</span>
-        <h2>Selected work</h2>
-      </div>
-
-      <p class="section__note mono reveal">client work @ maxflowai — details anonymised</p>
-
-      <div class="cases">
-        <article class="case reveal">
-          <span class="case__id mono">CS-01</span>
-          <h3>B2B Sales Automation Platform</h3>
-          <p>
-            Multi-agent system with a master routing agent delegating to specialist
-            agents for partner research, 100-point lead scoring (pure Python),
-            email drafting, controlled batch delivery, and campaign analytics.
-            CRM integration through a custom <strong>MCP bridge</strong>; a Cloud Run
-            webhook receiver turns CRM events into agent runs — automation without
-            anyone opening a chat.
+      <section class="section" id="contact">
+        <h2 class="section__title mono reveal">05 · contact</h2>
+        <div class="contact reveal">
+          <p class="contact__lead">
+            Have a role or a project in mind?<br>
+            I work async-first, remote, from UTC+7.
           </p>
-          <p class="case__tags mono">multi-agent · MCP · Cloud Run · Python · CRM</p>
-        </article>
-
-        <article class="case reveal">
-          <span class="case__id mono">CS-02</span>
-          <h3>Inventory Intelligence System</h3>
-          <p>
-            Python-first decision engine computing days-of-inventory, demand
-            trends, and warehouse transfer recommendations with auditable reason
-            codes. The LLM never calculates — it only writes the executive summary
-            from computed JSON. A hallucination-proof architecture for decisions
-            that move real stock.
-          </p>
-          <p class="case__tags mono">decision engine · Python · LLM guardrails · SQL</p>
-        </article>
-
-        <article class="case reveal">
-          <span class="case__id mono">CS-03</span>
-          <h3>Enterprise Agent Operations</h3>
-          <p>
-            A portfolio of production workflows: event check-in and feedback
-            capture, HR pipelines, a bulk email runtime with queueing and routing
-            rules, scheduled jobs, and mini-app frontends authenticated against
-            the platform REST API. Config-driven throughout — business rules live
-            in the database, not in prompts.
-          </p>
-          <p class="case__tags mono">workflow automation · REST · scheduled jobs · HTML/JS</p>
-        </article>
-      </div>
-
-      <p class="section__note mono reveal" style="margin-top: 3.5rem;">open source &amp; research — github.com/BuccKyy</p>
-
-      <div class="repos">
-        <a class="repo reveal" href="https://github.com/BuccKyy/Deep-PPG-Research-Core" target="_blank" rel="noopener">
-          <div class="repo__top mono"><span class="repo__lang">Python</span><span>★ 2</span></div>
-          <h3>Deep-PPG-Research-Core</h3>
-          <p>End-to-end research framework for PPG-based blood pressure prediction — standardised pipelines from raw signal to model evaluation.</p>
-        </a>
-        <a class="repo reveal" href="https://github.com/BuccKyy/Cuffless-BP-IoT-System" target="_blank" rel="noopener">
-          <div class="repo__top mono"><span class="repo__lang">C</span></div>
-          <h3>Cuffless-BP-IoT-System</h3>
-          <p>Real-time, non-invasive blood pressure monitoring with edge AI — from STM32 firmware to inference.</p>
-        </a>
-        <a class="repo reveal" href="https://github.com/BuccKyy/verification-pack-generator" target="_blank" rel="noopener">
-          <div class="repo__top mono"><span class="repo__lang">Python</span></div>
-          <h3>verification-pack-generator</h3>
-          <p>Deterministic LLM claim-checker: BM25 retrieval grounds every generated claim in source evidence. A re-runnable regression gate for RAG features.</p>
-        </a>
-        <a class="repo reveal" href="https://github.com/BuccKyy/Video-Translation-Tool" target="_blank" rel="noopener">
-          <div class="repo__top mono"><span class="repo__lang">Python</span></div>
-          <h3>Video-Translation-Tool</h3>
-          <p>AI video translation pipeline: Whisper ASR → LLM translation → TTS → FFmpeg remux. Each stage independently testable.</p>
-        </a>
-        <a class="repo reveal" href="https://github.com/BuccKyy/SGX-Downloader" target="_blank" rel="noopener">
-          <div class="repo__top mono"><span class="repo__lang">Python</span></div>
-          <h3>SGX-Downloader</h3>
-          <p>Automated derivatives-data downloader with intelligent retry, recovery, and SQLite tracking.</p>
-        </a>
-        <a class="repo reveal" href="https://github.com/BuccKyy/PPG-MoNi-Android-App" target="_blank" rel="noopener">
-          <div class="repo__top mono"><span class="repo__lang">Kotlin</span></div>
-          <h3>PPG-MoNi-Android-App</h3>
-          <p>Android companion app for real-time PPG signal visualisation over Bluetooth.</p>
-        </a>
-      </div>
-    </section>
-
-    <!-- ================= SKILLS ================= -->
-    <section class="section" id="skills">
-      <div class="section__head reveal">
-        <span class="section__index mono">04</span>
-        <h2>Skills</h2>
-      </div>
-
-      <div class="skills">
-        <div class="skill-group reveal">
-          <h3 class="mono">agentic ai &amp; llms</h3>
-          <p>Claude (Sonnet/Haiku) · GPT · LangGraph · n8n · MCP · RAG &amp; BM25 retrieval · prompt engineering · tool use / function calling · Claude Code · Ollama (Qwen, LLaMA)</p>
+          <a class="contact__email" href="mailto:trantrungduc313@gmail.com">trantrungduc313@gmail.com</a>
+          <div class="contact__links mono">
+            <a href="https://github.com/BuccKyy" target="_blank" rel="noopener">github.com/BuccKyy ↗</a>
+            <a href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="noopener">linkedin ↗</a>
+          </div>
         </div>
-        <div class="skill-group reveal">
-          <h3 class="mono">backend &amp; data</h3>
-          <p>Python (advanced) · FastAPI · REST APIs · SQL · webhooks &amp; event triggers · Pandas · NumPy</p>
-        </div>
-        <div class="skill-group reveal">
-          <h3 class="mono">ml &amp; dl</h3>
-          <p>TensorFlow / Keras · PyTorch · scikit-learn · model evaluation protocols · digital signal processing</p>
-        </div>
-        <div class="skill-group reveal">
-          <h3 class="mono">qa &amp; reliability</h3>
-          <p>Playwright · Selenium · deterministic LLM output validation · structured output schemas · regression testing</p>
-        </div>
-        <div class="skill-group reveal">
-          <h3 class="mono">embedded &amp; mobile</h3>
-          <p>C/C++ · STM32 · MAX30102 · Kotlin · Bluetooth</p>
-        </div>
-        <div class="skill-group reveal">
-          <h3 class="mono">tools</h3>
-          <p>Git · Docker · Linux · FFmpeg · OpenCV · MATLAB</p>
-        </div>
-      </div>
+      </section>
 
-      <div class="awards reveal">
-        <h3 class="mono awards__title">awards &amp; certifications</h3>
-        <ul>
-          <li><strong>VPBank Technology Hackathon 2025</strong> — Senior Track</li>
-          <li><strong>Biomedical Engineering Innovation Competition 2025</strong> — Team Lead, IoT Blood Pressure Monitoring System</li>
-          <li><strong>Coursera</strong> — Machine Learning with Python · Deep Learning &amp; Neural Networks with Keras · Building Deep Learning Models with Keras and TensorFlow</li>
-        </ul>
-      </div>
-    </section>
+      <footer class="footer mono">
+        <span>© 2026 Tran Trung Duc</span>
+        <span>plain HTML/CSS — designed &amp; shipped with Claude Code</span>
+      </footer>
 
-    <!-- ================= CONTACT ================= -->
-    <section class="section section--contact" id="contact">
-      <div class="section__head reveal">
-        <span class="section__index mono">05</span>
-        <h2>Contact</h2>
-      </div>
-      <div class="contact reveal">
-        <p class="contact__lead">
-          Have a role or a project in mind?<br>
-          I work async-first, remote, from UTC+7.
-        </p>
-        <a class="contact__email" href="mailto:trantrungduc313@gmail.com">trantrungduc313@gmail.com</a>
-        <div class="contact__links mono">
-          <a href="https://github.com/BuccKyy" target="_blank" rel="noopener">github.com/BuccKyy ↗</a>
-          <a href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="noopener">linkedin ↗</a>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="footer mono">
-    <span>© 2026 Tran Trung Duc</span>
-    <span>plain HTML/CSS — designed &amp; shipped with Claude Code</span>
-  </footer>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
