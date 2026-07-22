@@ -260,6 +260,38 @@ a { color: inherit; }
   background: var(--accent);
 }
 
+/* ---- CV download button ---- */
+.sidebar__cta { margin-bottom: 1.5rem; }
+
+.cv-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.1rem;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  color: var(--accent);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.cv-button:hover {
+  background: var(--accent);
+  color: var(--bg);
+  transform: translateY(-2px);
+}
+
+.cv-button__icon { font-size: 0.9rem; }
+
+.cv-button__meta {
+  opacity: 0.6;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+}
+
 .sidebar__bottom { display: flex; gap: 1.75rem; }
 .sidebar__bottom a {
   color: var(--ink-muted);
@@ -301,6 +333,31 @@ a { color: inherit; }
 
 .about { max-width: 60ch; }
 .about p + p { margin-top: 1.25rem; }
+
+/* ---- impact stats ---- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.75rem;
+  margin-top: 2.75rem;
+  padding-top: 2rem;
+  border-top: 1px solid color-mix(in srgb, var(--ink-muted) 25%, transparent);
+}
+
+.stat { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.stat__num {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+}
+
+.stat__label {
+  font-size: 0.7rem;
+  color: var(--ink-muted);
+  line-height: 1.5;
+}
 
 /* ============ EXPERIENCE ============ */
 
@@ -428,6 +485,20 @@ a { color: inherit; }
 .case p {
   font-size: 0.9375rem;
   color: color-mix(in srgb, var(--ink) 82%, var(--ink-muted));
+}
+
+.case__outcome {
+  margin-top: 1rem;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--accent);
+  font-size: 0.9rem;
+}
+
+.case__outcome .mono {
+  color: var(--accent);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .case__tags {

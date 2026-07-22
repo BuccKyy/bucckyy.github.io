@@ -72,6 +72,12 @@
         </nav>
       </div>
 
+      <div class="sidebar__cta">
+        <a class="cv-button mono" href="TranTrungDuc-AI-Engineer-CV.pdf" download>
+          <span class="cv-button__icon" aria-hidden="true">↓</span> download cv <span class="cv-button__meta">pdf</span>
+        </a>
+      </div>
+
       <div class="sidebar__bottom mono">
         <a href="https://github.com/BuccKyy" target="_blank" rel="noopener">github ↗</a>
         <a href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="noopener">linkedin ↗</a>
@@ -86,7 +92,7 @@
         <h2 class="section__title mono reveal">01 · about</h2>
         <div class="about reveal">
           <p>
-            I'm an AI engineer at <strong>MaxflowAI</strong>, where I design and ship
+            I'm an AI engineer at <strong>Maxflow AI</strong>, where I design and ship
             multi-agent systems for enterprise clients — B2B sales automation,
             inventory intelligence, HR and event operations.
           </p>
@@ -102,6 +108,27 @@
             evaluation rather than vibes. Calculations belong in Python; LLMs write
             the words.
           </p>
+          <p>
+            In production that also means engineering for <strong>latency and cost</strong> —
+            routing high-volume steps to cheap, fast models and reserving larger ones for
+            hard reasoning; caching retrieved context; streaming responses; handling
+            timeouts, retries, and rate limits under load.
+          </p>
+        </div>
+
+        <div class="stats reveal">
+          <div class="stat">
+            <span class="stat__num">2–3 hrs → 3 min</span>
+            <span class="stat__label mono">research-to-quote workflow, automated</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num">~40%</span>
+            <span class="stat__label mono">inference latency cut via vectorisation</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num">9.76 mmHg</span>
+            <span class="stat__label mono">SBP MAE — clinical-grade, from paper to build</span>
+          </div>
         </div>
       </section>
 
@@ -110,9 +137,9 @@
 
         <div class="jobs">
           <article class="job reveal">
-            <span class="job__dates mono">2026 — present</span>
+            <span class="job__dates mono">Feb 2026 — present</span>
             <div class="job__body">
-              <h3>AI Engineer / Agent Builder <span class="job__company">· MaxflowAI</span></h3>
+              <h3>AI Automation / Agent Builder <span class="job__company">· Maxflow AI</span></h3>
               <ul>
                 <li>Design and ship multi-agent systems for real clients across B2B sales automation, inventory logistics, education &amp; event operations, email pipelines, and HR workflows</li>
                 <li>Build Python- and JSON-based orchestration: routing agents, lead scoring, campaign orchestration, backend persistence, and admin access control</li>
@@ -125,9 +152,9 @@
           </article>
 
           <article class="job reveal">
-            <span class="job__dates mono">Apr — Oct 2025</span>
+            <span class="job__dates mono">May — Oct 2025</span>
             <div class="job__body">
-              <h3>Product Reviewer / QA, AI Features <span class="job__company">· SNOW Vietnam</span></h3>
+              <h3>Data Labeling / Product Reviewer <span class="job__company">· SNOW Vietnam</span></h3>
               <ul>
                 <li>Systematic QA of AI-generated image &amp; video features (AR filters, computer-vision effects), covering edge cases like low light and occlusion</li>
                 <li>Documented defect patterns with reproducible steps for the CV research team; verified fixes and tracked regressions across releases</li>
@@ -137,9 +164,9 @@
           </article>
 
           <article class="job reveal">
-            <span class="job__dates mono">Nov 2024 — Jan 2025</span>
+            <span class="job__dates mono">Nov 2024 — Feb 2025</span>
             <div class="job__body">
-              <h3>AI Engineer Intern <span class="job__company">· ITR VN</span></h3>
+              <h3>Artificial Intelligence Intern <span class="job__company">· ITR VN</span></h3>
               <ul>
                 <li>Implemented PPG2BP-Net for cuffless blood pressure estimation with clinical-grade accuracy: SBP MAE 9.76±8.99 mmHg, DBP MAE 5.25±5.26 mmHg</li>
                 <li>Built MIMIC-III data pipelines; cut processing latency ~40% via NumPy vectorisation</li>
@@ -168,6 +195,7 @@
               webhook receiver turns CRM events into agent runs — automation without
               anyone opening a chat.
             </p>
+            <p class="case__outcome"><span class="mono">outcome →</span> a research-and-quote cycle that took sales <strong>2–3 hours</strong> now completes in <strong>about three minutes</strong>.</p>
             <p class="case__tags mono">multi-agent · MCP · Cloud Run · Python · CRM</p>
           </article>
 
@@ -181,6 +209,7 @@
               from computed JSON. A hallucination-proof architecture for decisions
               that move real stock.
             </p>
+            <p class="case__outcome"><span class="mono">outcome →</span> every recommendation is <strong>traceable to a reason code</strong>, so operations can audit the decision instead of trusting the model.</p>
             <p class="case__tags mono">decision engine · Python · LLM guardrails · SQL</p>
           </article>
 
@@ -240,11 +269,19 @@
         <div class="skills">
           <div class="skill-group reveal">
             <h3 class="mono">agentic ai &amp; llms</h3>
-            <p>Claude (Sonnet/Haiku) · GPT · LangGraph · n8n · MCP · RAG &amp; BM25 retrieval · prompt engineering · tool use / function calling · Claude Code · Ollama (Qwen, LLaMA)</p>
+            <p>Claude (Sonnet/Haiku) · GPT · LangGraph · n8n · MCP · prompt engineering · tool use / function calling · structured outputs &amp; guardrails · human-in-the-loop review · Claude Code · Ollama (Qwen, LLaMA)</p>
+          </div>
+          <div class="skill-group reveal">
+            <h3 class="mono">retrieval &amp; rag</h3>
+            <p>RAG pipelines · embeddings · hybrid retrieval (BM25 + dense) · vector databases (FAISS, Chroma, PGVector) · grounding &amp; claim verification</p>
           </div>
           <div class="skill-group reveal">
             <h3 class="mono">backend &amp; data</h3>
-            <p>Python (advanced) · FastAPI · REST APIs · SQL · webhooks &amp; event triggers · Pandas · NumPy</p>
+            <p>Python (advanced) · FastAPI · REST APIs · SQL · webhooks &amp; event triggers · jobs &amp; retries · Pandas · NumPy</p>
+          </div>
+          <div class="skill-group reveal">
+            <h3 class="mono">inference &amp; cost</h3>
+            <p>model routing for cost/latency · context &amp; prompt optimisation · caching · response streaming · timeout, retry &amp; rate-limit handling · quantised on-device inference (TF Lite)</p>
           </div>
           <div class="skill-group reveal">
             <h3 class="mono">ml &amp; dl</h3>
@@ -259,8 +296,8 @@
             <p>C/C++ · STM32 · MAX30102 · Kotlin · Bluetooth</p>
           </div>
           <div class="skill-group reveal">
-            <h3 class="mono">tools</h3>
-            <p>Git · Docker · Linux · FFmpeg · OpenCV · MATLAB</p>
+            <h3 class="mono">deploy &amp; tools</h3>
+            <p>Docker · Cloud Run · CI/CD · Git · Linux · structured logging &amp; observability · FFmpeg · OpenCV · MATLAB</p>
           </div>
         </div>
 
@@ -283,6 +320,7 @@
           </p>
           <a class="contact__email" href="mailto:trantrungduc313@gmail.com">trantrungduc313@gmail.com</a>
           <div class="contact__links mono">
+            <a href="TranTrungDuc-AI-Engineer-CV.pdf" download>download cv ↓</a>
             <a href="https://github.com/BuccKyy" target="_blank" rel="noopener">github.com/BuccKyy ↗</a>
             <a href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="noopener">linkedin ↗</a>
           </div>
@@ -291,7 +329,7 @@
 
       <footer class="footer mono">
         <span>© 2026 Tran Trung Duc</span>
-        <span>plain HTML/CSS — designed &amp; shipped with Claude Code</span>
+        <span>Ho Chi Minh City · UTC+7 · open to remote</span>
       </footer>
 
     </main>
