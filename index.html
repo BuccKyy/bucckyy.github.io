@@ -125,7 +125,7 @@
     <!-- ================= HERO ================= -->
     <header class="hero">
       <div class="hero__top-bar mono">
-        <p class="hero__meta">Ho Chi Minh City · UTC+7 · <span id="clock">00:00:00</span></p>
+        <p class="hero__meta">システム稼働中 // HCMC · UTC+7 · <span id="clock">00:00:00</span></p>
         <div class="domain-legend" aria-label="Engineering domain color key">
           <span class="domain-pill" data-domain="agentic"><i></i>Agentic Orchestration</span>
           <span class="domain-pill" data-domain="verify"><i></i>Verification &amp; Guardrails</span>
@@ -156,20 +156,31 @@
 
       <!-- ============ HERO ENGINEERING INSTRUMENT ============ -->
       <section class="hero__instrument" id="hero-instrument" aria-label="Interactive Systems &amp; Signal Instrument">
+        <span class="reticle reticle--tl" aria-hidden="true">+</span>
+        <span class="reticle reticle--tr" aria-hidden="true">+</span>
+        <span class="reticle reticle--bl" aria-hidden="true">+</span>
+        <span class="reticle reticle--br" aria-hidden="true">+</span>
+
         <div class="instrument__header mono">
           <div class="instrument__tabs" role="tablist" aria-label="Instrument Mode Selector">
             <button type="button" class="instrument__tab active" id="tab-signal" role="tab" aria-selected="true" aria-controls="panel-signal" data-mode="signal">
               <span class="instrument__tab-led"></span>
-              <span class="instrument__tab-name">01 // BIOMEDICAL DSP · MIMIC-III SBP</span>
+              <span class="instrument__tab-name">01 // BIOMEDICAL DSP · 生体信号解析</span>
             </button>
             <button type="button" class="instrument__tab" id="tab-agent" role="tab" aria-selected="false" aria-controls="panel-agent" data-mode="agent">
               <span class="instrument__tab-led"></span>
-              <span class="instrument__tab-name">02 // ENTERPRISE AGENT DAG · 7-NODE PIPELINE</span>
+              <span class="instrument__tab-name">02 // ENTERPRISE AGENT DAG · 決定論的制御</span>
             </button>
           </div>
           <div class="instrument__meta">
-            <span class="instrument__status-tag"><span class="instrument__status-dot"></span> TELEMETRY LOCKED · 125 Hz</span>
+            <span class="instrument__status-tag" id="instrument-status-tag"><span class="instrument__status-dot"></span> 同期率 98.4% // TELEMETRY LOCKED · 125 Hz</span>
           </div>
+        </div>
+
+        <!-- NERV MAGI / Rhodes Island Tactical Alert Strip (activates on Motion Artifact or Bad Math Simulation) -->
+        <div class="tactical-alert mono" id="tactical-alert" hidden role="status" aria-live="polite">
+          <span class="tactical-alert__code" id="tactical-alert-code">⚠ MAGI CAUTION // 信号異常検知</span>
+          <span class="tactical-alert__msg" id="tactical-alert-msg">HIGH-AMPLITUDE MOTION ARTIFACT DETECTED ON 125Hz STREAM — SWITCH TO BUTTERWORTH STAGE TO ISOLATE</span>
         </div>
 
         <!-- PANEL 1: BIOMEDICAL DSP OSCILLOSCOPE -->
@@ -276,7 +287,7 @@
 
       <!-- ============ ABOUT ============ -->
       <section class="section" id="about">
-        <h2 class="section__title reveal">About &amp; Engineering Philosophy</h2>
+        <h2 class="section__title reveal">About &amp; Engineering Philosophy <span class="section__code mono">// SEC-01 · 設計思想</span></h2>
         <div class="about reveal">
           <p class="about__lead">
             I am an AI Systems Engineer at <strong>MaxflowAI</strong>, where I design and deploy
@@ -330,7 +341,7 @@
 
       <!-- ============ SELECTED WORK ============ -->
       <section class="section" id="work">
-        <h2 class="section__title reveal">Selected Work &amp; Enterprise Systems</h2>
+        <h2 class="section__title reveal">Selected Work &amp; Enterprise Systems <span class="section__code mono">// SEC-02 · 実戦システム</span></h2>
         <p class="section__sub mono reveal">
           Production client architectures @ MaxflowAI (proprietary data anonymised) — switch pipeline tabs on any system to inspect the live input payload, Python rule gate, and verified output.
         </p>
@@ -616,7 +627,7 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
 
       <!-- ============ CAPABILITIES ============ -->
       <section class="section" id="capabilities">
-        <h2 class="section__title reveal">Core Engineering Capabilities</h2>
+        <h2 class="section__title reveal">Core Engineering Capabilities <span class="section__code mono">// SEC-03 · 技術領域</span></h2>
         <p class="section__sub mono reveal">Technical domains delivered end-to-end from architecture and data contracts to production deployment.</p>
 
         <div class="capabilities">
@@ -666,7 +677,7 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
 
       <!-- ============ EXPERIENCE ============ -->
       <section class="section" id="experience">
-        <h2 class="section__title reveal">Work Experience</h2>
+        <h2 class="section__title reveal">Work Experience <span class="section__code mono">// SEC-04 · 職務経歴</span></h2>
 
         <div class="jobs">
           <article class="job reveal" data-domain="agentic">
@@ -722,7 +733,7 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
 
       <!-- ============ OPEN SOURCE ============ -->
       <section class="section" id="open-source">
-        <h2 class="section__title reveal">Open Source &amp; Research</h2>
+        <h2 class="section__title reveal">Open Source &amp; Research <span class="section__code mono">// SEC-05 · 研究開発</span></h2>
         <div class="repos-header reveal">
           <p class="section__sub mono">Selected repositories on github.com/BuccKyy — filter by engineering domain</p>
           <div class="repo-filters mono" role="group" aria-label="Filter repositories by domain">
@@ -792,7 +803,7 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
 
       <!-- ============ TECH STACK ============ -->
       <section class="section" id="skills">
-        <h2 class="section__title reveal">Technical Stack &amp; Tooling</h2>
+        <h2 class="section__title reveal">Technical Stack &amp; Tooling <span class="section__code mono">// SEC-06 · 技術基盤</span></h2>
 
         <div class="skills-grid">
           <div class="skill-card reveal" data-domain="agentic">
@@ -910,7 +921,7 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
 
       <!-- ============ EDUCATION ============ -->
       <section class="section" id="education">
-        <h2 class="section__title reveal">Education &amp; Credentials</h2>
+        <h2 class="section__title reveal">Education &amp; Credentials <span class="section__code mono">// SEC-07 · 学歴・実績</span></h2>
 
         <div class="edu-grid">
           <div class="edu-card reveal" data-domain="signal">
@@ -936,7 +947,7 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
 
       <!-- ============ CONTACT ============ -->
       <section class="section" id="contact">
-        <h2 class="section__title reveal">Get in Touch</h2>
+        <h2 class="section__title reveal">Get in Touch <span class="section__code mono">// SEC-08 · 通信回線</span></h2>
         <div class="contact reveal">
           <p class="contact__lead">
             Open to remote roles in<br>

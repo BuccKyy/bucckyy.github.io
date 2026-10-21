@@ -235,8 +235,30 @@
     var tabs = instrument.querySelectorAll(".instrument__tab");
     var panelSignal = document.getElementById("panel-signal");
     var panelAgent = document.getElementById("panel-agent");
+    var tacticalAlert = document.getElementById("tactical-alert");
+    var tacticalAlertCode = document.getElementById("tactical-alert-code");
+    var tacticalAlertMsg = document.getElementById("tactical-alert-msg");
+    var statusTagEl = document.getElementById("instrument-status-tag");
 
     var activeMode = "signal";
+
+    function updateTacticalAlert() {
+      if (!tacticalAlert) return;
+      if (activeMode === "signal" && motionArtifact && currentStage === "raw") {
+        tacticalAlert.removeAttribute("hidden");
+        if (tacticalAlertCode) tacticalAlertCode.textContent = "⚠ MAGI CAUTION // 信号異常検知 · ARTIFACT";
+        if (tacticalAlertMsg) tacticalAlertMsg.textContent = "HIGH-AMPLITUDE MOTION BURST ON 125Hz STREAM (SQI 61.2%) — SWITCH TO STAGE 02 BUTTERWORTH TO CLEAN";
+        if (statusTagEl) statusTagEl.innerHTML = '<span class="instrument__status-dot"></span> 同期率 61.2% // ARTIFACT WARNING';
+      } else if (activeMode === "agent" && faultMode) {
+        tacticalAlert.removeAttribute("hidden");
+        if (tacticalAlertCode) tacticalAlertCode.textContent = "⛔ MAGI GATE REJECT // 算術不整合検知 · FAULT";
+        if (tacticalAlertMsg) tacticalAlertMsg.textContent = "NODE 05 PYDANTIC GATE BLOCKED LLM PRICING DRIFT (€14,200 vs €15,840) — SAP ERP WRITE PREVENTED";
+        if (statusTagEl) statusTagEl.innerHTML = '<span class="instrument__status-dot"></span> 防御隔壁作動 // GATE INTERCEPT ACTIVE';
+      } else {
+        tacticalAlert.setAttribute("hidden", "");
+        if (statusTagEl) statusTagEl.innerHTML = '<span class="instrument__status-dot"></span> 同期率 98.4% // TELEMETRY LOCKED · 125 Hz';
+      }
+    }
 
     function switchInstrumentMode(mode) {
       if (mode === activeMode) return;
@@ -265,6 +287,7 @@
           dagModule.start();
         }
       }
+      updateTacticalAlert();
     }
 
     tabs.forEach(function (tab) {
@@ -309,6 +332,7 @@
           dspProbe.innerHTML = "SQI 98.4% <small>move cursor on wave</small>";
         }
       }
+      updateTacticalAlert();
     }
 
     stageBtns.forEach(function (btn) {
@@ -505,6 +529,12 @@
         ctx.moveTo(sweepX, 0);
         ctx.lineTo(sweepX, height);
         ctx.stroke();
+
+        // Tactical Anime HUD Callout Watermark inside Oscilloscope Stage
+        ctx.fillStyle = "rgba(148, 157, 178, 0.42)";
+        ctx.font = "10.5px " + getComputedStyle(root).getPropertyValue("--font-mono");
+        ctx.fillText("[ CH-01 // 光学脈波センサ · 125Hz STREAM ]", 12, 18);
+        ctx.fillText("[ TARGET // MIMIC-III SBP REGRESSION ]", width - 265, height - 10);
 
         animId = requestAnimationFrame(draw);
       }
@@ -830,7 +860,14 @@
 
           ctx.beginPath();
           var rx = pt.x - nodeW / 2, ry = pt.y - nodeH / 2;
-          ctx.rect(rx, ry, nodeW, nodeH);
+          var cut = 8;
+          ctx.moveTo(rx, ry);
+          ctx.lineTo(rx + nodeW - cut, ry);
+          ctx.lineTo(rx + nodeW, ry + cut);
+          ctx.lineTo(rx + nodeW, ry + nodeH);
+          ctx.lineTo(rx + cut, ry + nodeH);
+          ctx.lineTo(rx, ry + nodeH - cut);
+          ctx.closePath();
           ctx.fill();
           ctx.stroke();
 
@@ -846,6 +883,11 @@
           ctx.font = "9.5px " + monoFont;
           ctx.fillText(isFaultNode ? "GATE BLOCKED" : ("NODE " + node.code), rx + 10, ry + 35);
         }
+
+        // Tactical Anime HUD Callout Watermark inside DAG Stage
+        ctx.fillStyle = "rgba(148, 157, 178, 0.42)";
+        ctx.font = "10.5px " + monoFont;
+        ctx.fillText("[ MAGI-DAG // 決定論的制御回路 · 7-NODE PIPELINE ]", 12, 18);
 
         animId = requestAnimationFrame(draw);
       }
@@ -879,6 +921,7 @@
           dagFaultBtn.setAttribute("aria-pressed", String(faultMode));
           dagFaultBtn.textContent = faultMode ? "⚠ Simulate Bad Math: ON" : "⚠ Simulate Bad Math: OFF";
         }
+        updateTacticalAlert();
         if (faultMode) {
           triggerRun();
         } else {
@@ -902,6 +945,7 @@
             dagFaultBtn.textContent = "⚠ Simulate Bad Math: ON";
           }
         }
+        updateTacticalAlert();
         triggerRun();
       };
 
