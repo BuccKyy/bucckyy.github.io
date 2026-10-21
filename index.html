@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tran Trung Duc — AI Engineer · LLM Systems, Backend &amp; ML</title>
-  <meta name="description" content="AI engineer in Ho Chi Minh City building LLM systems, FastAPI backends, and ML/data pipelines — from multi-agent workflows to biomedical signal research.">
+  <title>Tran Trung Duc — AI Systems Engineer · Multi-Agent Workflows &amp; Biomedical DSP</title>
+  <meta name="description" content="AI systems engineer in Ho Chi Minh City building multi-agent pipelines, FastAPI backends, deterministic evaluation gates, and biomedical signal processing (MIMIC-III).">
   <meta name="author" content="Tran Trung Duc">
   <meta name="robots" content="index, follow">
   <meta name="color-scheme" content="dark light">
@@ -12,8 +12,8 @@
   <link rel="canonical" href="https://bucckyy.github.io/">
   <link rel="sitemap" type="application/xml" href="sitemap.xml">
 
-  <meta property="og:title" content="Tran Trung Duc — AI Engineer · LLM Systems, Backend &amp; ML">
-  <meta property="og:description" content="LLM systems, FastAPI backends, ML/data pipelines, and the evaluation layer that makes AI output safe to use.">
+  <meta property="og:title" content="Tran Trung Duc — AI Systems Engineer">
+  <meta property="og:description" content="Deterministic core, LLM at the edges. Multi-agent pipelines, FastAPI backends, and biomedical signal research on MIMIC-III.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://bucckyy.github.io/">
   <meta property="og:site_name" content="Tran Trung Duc">
@@ -22,68 +22,42 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Tran Trung Duc — AI Engineer, LLM systems, backend and machine learning">
+  <meta property="og:image:alt" content="Tran Trung Duc — AI Systems Engineer">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tran Trung Duc — AI Engineer · LLM Systems, Backend &amp; ML">
-  <meta name="twitter:description" content="LLM systems, FastAPI backends, ML/data pipelines, and the evaluation layer that makes AI output safe to use.">
+  <meta name="twitter:title" content="Tran Trung Duc — AI Systems Engineer">
+  <meta name="twitter:description" content="Deterministic core, LLM at the edges. Multi-agent pipelines, FastAPI backends, and biomedical signal research on MIMIC-III.">
   <meta name="twitter:image" content="https://bucckyy.github.io/og-ai-engineer.png">
-  <meta name="twitter:image:alt" content="Tran Trung Duc — AI Engineer, LLM systems, backend and machine learning">
+  <meta name="twitter:image:alt" content="Tran Trung Duc — AI Systems Engineer">
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0e14'/%3E%3Cpath d='M4 20 L9 20 L11 12 L14 26 L17 8 L20 22 L22 17 L28 17' stroke='%23ffb454' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="preload" href="fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/ibm-plex-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/ibm-plex-mono-500-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
   <noscript><style>
     .reveal, .hero__meta, .hero__name, .hero__role, .hero__tagline,
-    .hero__actions, .hero__orb { opacity: 1; translate: none; }
-    .hero__orb canvas { opacity: 1; }
+    .hero__actions, .hero__instrument { opacity: 1; translate: none; }
     #clock { display: none; }
   </style></noscript>
   <script>
-    // Set theme before paint to avoid a flash.
     (function () {
       var t = null;
-      try { t = localStorage.getItem('theme'); } catch (err) {}
-      if (t !== 'light' && t !== 'dark') {
-        t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      try { t = localStorage.getItem("theme"); } catch (err) {}
+      if (t !== "light" && t !== "dark") {
+        t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
       }
-      document.documentElement.setAttribute('data-theme', t);
-      var meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', t === 'light' ? '#f6f3ec' : '#0b0e14');
-      document.documentElement.classList.add('js');
-
-      // Boot reveal: start once fonts are ready (capped at 650ms) so the
-      // headline never reflows mid-animation. Lives here so it still runs
-      // even if script.js fails to load.
-      document.addEventListener('DOMContentLoaded', function () {
-        var fired = false;
-        var start = function () {
-          if (fired) return;
-          fired = true;
-          document.body.classList.add('is-loaded');
-        };
-        if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
-          document.fonts.ready.then(start);
-        }
-        window.setTimeout(start, 650);
-      });
+      document.documentElement.setAttribute("data-theme", t);
+      document.documentElement.classList.add("js");
     })();
   </script>
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Tran Trung Duc",
-    "jobTitle": "AI Engineer",
-    "description": "AI engineer building LLM systems, FastAPI backends, ML/data pipelines, and evaluation harnesses.",
-    "url": "https://bucckyy.github.io/",
-    "image": "https://bucckyy.github.io/og-ai-engineer.png",
-    "email": "mailto:trantrungduc313@gmail.com",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Ho Chi Minh City",
-      "addressCountry": "VN"
-    },
+    "alternateName": "Duc Tran",
+    "jobTitle": "AI Systems Engineer",
     "worksFor": {
       "@type": "Organization",
       "name": "MaxflowAI"
@@ -92,7 +66,7 @@
       "@type": "CollegeOrUniversity",
       "name": "University of Science, VNU-HCM"
     },
-    "knowsLanguage": ["Vietnamese", "English"],
+    "url": "https://bucckyy.github.io/",
     "sameAs": [
       "https://github.com/BuccKyy",
       "https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/"
@@ -122,15 +96,15 @@
 
   <a class="skip-link" href="#about">Skip to content</a>
 
-  <nav class="topnav" aria-label="Sections">
+  <nav class="topnav" aria-label="Main Sections">
     <div class="topnav__inner mono">
       <div class="topnav__links">
         <a href="#about" class="nav-link"><span class="nav-line"></span>about</a>
+        <a href="#work" class="nav-link"><span class="nav-line"></span>selected work</a>
         <a href="#capabilities" class="nav-link"><span class="nav-line"></span>capabilities</a>
-        <a href="#work" class="nav-link"><span class="nav-line"></span>work</a>
         <a href="#experience" class="nav-link"><span class="nav-line"></span>experience</a>
         <a href="#open-source" class="nav-link"><span class="nav-line"></span>open source</a>
-        <a href="#skills" class="nav-link"><span class="nav-line"></span>skills</a>
+        <a href="#skills" class="nav-link"><span class="nav-line"></span>tech stack</a>
         <a href="#education" class="nav-link"><span class="nav-line"></span>education</a>
         <a href="#contact" class="nav-link"><span class="nav-line"></span>contact</a>
       </div>
@@ -148,18 +122,17 @@
     <header class="hero">
       <p class="hero__meta mono">Ho Chi Minh City · UTC+7 · <span id="clock">00:00:00</span></p>
       <h1 class="hero__name">Tran Trung Duc</h1>
-      <p class="hero__role">AI Engineer · LLM Systems, Backend &amp; ML</p>
+      <p class="hero__role">AI Systems Engineer · Multi-Agent Workflows &amp; Biomedical DSP</p>
       <p class="hero__tagline">
-        I build <em>AI systems</em> that do real work —
-        and the <em>evaluation layer</em> that makes model output
-        safe to use.
+        I engineer <em>deterministic AI systems</em> that run real business operations —
+        and the <em>evaluation layer</em> that makes LLM outputs safe, auditable, and reliable.
       </p>
 
       <div class="hero__actions">
         <a class="cv-button mono" href="TranTrungDuc-AI-Engineer-CV.pdf" download>
           <span class="cv-button__icon" aria-hidden="true">↓</span> download cv <span class="cv-button__meta">pdf</span>
         </a>
-        <p class="hero__status mono"><span class="status-dot" aria-hidden="true"></span> open to remote roles</p>
+        <p class="hero__status mono"><span class="status-indicator" aria-hidden="true"></span> open to remote roles</p>
         <div class="hero__socials mono">
           <a href="https://github.com/BuccKyy" target="_blank" rel="me noopener">github ↗</a>
           <a href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="me noopener">linkedin ↗</a>
@@ -167,259 +140,348 @@
         </div>
       </div>
 
-      <div class="hero__orb" aria-hidden="true">
-        <div class="hero__orb-stage">
-          <canvas id="signal-orb"></canvas>
+      <!-- ============ HERO ENGINEERING INSTRUMENT ============ -->
+      <section class="hero__instrument" id="hero-instrument" aria-label="Interactive Systems & Signal Instrument">
+        <div class="instrument__header mono">
+          <div class="instrument__tabs" role="tablist" aria-label="Instrument Mode Selector">
+            <button type="button" class="instrument__tab active" id="tab-signal" role="tab" aria-selected="true" aria-controls="panel-signal" data-mode="signal">
+              <span class="instrument__tab-led"></span>
+              <span class="instrument__tab-name">01 // BIOMEDICAL DSP · MIMIC-III SBP</span>
+            </button>
+            <button type="button" class="instrument__tab" id="tab-agent" role="tab" aria-selected="false" aria-controls="panel-agent" data-mode="agent">
+              <span class="instrument__tab-led"></span>
+              <span class="instrument__tab-name">02 // ENTERPRISE AGENT DAG · 7-AGENT PIPELINE</span>
+            </button>
+          </div>
+          <div class="instrument__meta">
+            <span class="instrument__status-tag"><span class="instrument__status-dot"></span> INSTRUMENT ACTIVE</span>
+          </div>
         </div>
-        <p class="hero__orb-label mono">sig: neural field · signals in, decisions out</p>
-      </div>
-    </header>
 
-    <!-- ================= TICKER ================= -->
-    <div class="ticker" aria-hidden="true">
-      <div class="ticker__track mono">
-        <div class="ticker__group">
-          <span>llm &amp; agent systems</span><i>◆</i>
-          <span>multi-agent orchestration</span><i>◆</i>
-          <span>evaluation harnesses</span><i>◆</i>
-          <span>fastapi services</span><i>◆</i>
-          <span>ml &amp; data pipelines</span><i>◆</i>
-          <span>biomedical signal processing</span><i>◆</i>
-          <span>document processing</span><i>◆</i>
-          <span>contracts &amp; validation</span><i>◆</i>
-          <span>human-in-the-loop review</span><i>◆</i>
+        <!-- PANEL 1: BIOMEDICAL DSP OSCILLOSCOPE -->
+        <div class="instrument__panel active" id="panel-signal" role="tabpanel" aria-labelledby="tab-signal">
+          <div class="instrument__stage">
+            <canvas id="dsp-canvas" width="1120" height="260"></canvas>
+            <div class="dsp__overlay">
+              <div class="dsp__readouts mono">
+                <div class="dsp__metric">
+                  <span class="dsp__label">HEART RATE</span>
+                  <span class="dsp__val" id="dsp-hr">72 <small>BPM</small></span>
+                </div>
+                <div class="dsp__metric">
+                  <span class="dsp__label">ESTIMATED BP</span>
+                  <span class="dsp__val" id="dsp-bp">118.4 / 76.2 <small>mmHg</small></span>
+                </div>
+                <div class="dsp__metric">
+                  <span class="dsp__label">MIMIC-III SBP MAE</span>
+                  <span class="dsp__val" id="dsp-mae">9.76 <small>± 8.99 mmHg</small></span>
+                </div>
+                <div class="dsp__metric">
+                  <span class="dsp__label">SIGNAL QUALITY</span>
+                  <span class="dsp__val" id="dsp-sqi">98.4% <small>EXCELLENT</small></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="instrument__controls mono">
+            <div class="instrument__filter-buttons">
+              <span class="controls__title">FILTER STAGE:</span>
+              <button type="button" class="stage-btn active" data-stage="raw">Raw Acquisition (Noise &amp; Drift)</button>
+              <button type="button" class="stage-btn" data-stage="bandpass">0.5–8Hz Butterworth (Clean)</button>
+              <button type="button" class="stage-btn" data-stage="vpg">1st Deriv (VPG ΔV/Δt)</button>
+              <button type="button" class="stage-btn" data-stage="peaks">Systolic Peak Detection &amp; Model</button>
+            </div>
+            <div class="instrument__hint">
+              <span class="hint__icon">ℹ</span> <span id="dsp-stage-desc">Raw 125Hz PPG sensor acquisition showing respiratory baseline wander and motion noise.</span>
+            </div>
+          </div>
         </div>
-        <div class="ticker__group">
-          <span>llm &amp; agent systems</span><i>◆</i>
-          <span>multi-agent orchestration</span><i>◆</i>
-          <span>evaluation harnesses</span><i>◆</i>
-          <span>fastapi services</span><i>◆</i>
-          <span>ml &amp; data pipelines</span><i>◆</i>
-          <span>biomedical signal processing</span><i>◆</i>
-          <span>document processing</span><i>◆</i>
-          <span>contracts &amp; validation</span><i>◆</i>
-          <span>human-in-the-loop review</span><i>◆</i>
+
+        <!-- PANEL 2: ENTERPRISE AGENT DAG INSPECTOR -->
+        <div class="instrument__panel" id="panel-agent" role="tabpanel" aria-labelledby="tab-agent">
+          <div class="instrument__stage dag__stage">
+            <div class="dag__canvas-wrap">
+              <canvas id="dag-canvas" width="1120" height="260"></canvas>
+            </div>
+            <div class="dag__legend mono">
+              <span class="legend-item"><span class="legend-dot dot-deterministic"></span> Deterministic Python</span>
+              <span class="legend-item"><span class="legend-dot dot-llm"></span> LLM Reasoning (Sonnet)</span>
+              <span class="legend-item"><span class="legend-dot dot-gate"></span> Validation / HITL Gate</span>
+              <span class="legend-item"><span class="legend-dot dot-erp"></span> ERP Transaction</span>
+            </div>
+          </div>
+          <div class="dag__controls mono">
+            <div class="dag__action-bar">
+              <button type="button" class="dag-trigger-btn" id="dag-run-btn">
+                <span class="play-icon">▶</span> SIMULATE PIPELINE EXECUTION
+              </button>
+              <span class="dag__active-step" id="dag-step-label">Ready. Click any node to inspect runtime payload contract.</span>
+            </div>
+            <!-- Node Schema Inspector -->
+            <div class="dag__inspector mono" id="dag-inspector">
+              <div class="inspector__header">
+                <span class="inspector__title" id="inspector-title">NODE CONTRACT // Pydantic Validation Gate</span>
+                <span class="inspector__badge" id="inspector-badge">PASS · DETERMINISTIC GATE</span>
+              </div>
+              <pre class="inspector__code" id="inspector-code"><code>{
+  "validator": "PydanticV2",
+  "model": "ProposalDraftPayload",
+  "arithmetic_guard": "VERIFIED_EXTERNAL_PYTHON",
+  "checks": {"status_enum": "VALID", "score_range": [0, 100], "read_back": "MATCHED"},
+  "result": "PASS (88/88 test suite)"
+}</code></pre>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </header>
 
     <!-- ================= CONTENT ================= -->
     <main class="content">
 
-      <!-- ============ 01 ABOUT ============ -->
+      <!-- ============ ABOUT ============ -->
       <section class="section" id="about">
-        <h2 class="section__title mono reveal">01 · about</h2>
+        <h2 class="section__title mono reveal">About &amp; Engineering Philosophy</h2>
         <div class="about reveal">
           <p>
-            I'm an AI engineer at <strong>MaxflowAI</strong>, where I build
-            LLM-powered systems and Python backends for real business operations —
-            B2B sales automation, inventory intelligence, event and HR workflows, and
-            ERP-adjacent document processing.
+            I am an AI Systems Engineer at <strong>MaxflowAI</strong>, where I design and deploy
+            production multi-agent workflows, deterministic evaluation gates, and Python backends for real business operations —
+            B2B sales automation, inventory intelligence, event and HR workflows, and ERP-adjacent document processing.
           </p>
           <p>
-            My path started in <strong>biomedical signal processing</strong>: a B.Eng in
+            My engineering foundation is rooted in <strong>biomedical signal processing</strong>: a B.Eng in
             Electronics &amp; Telecommunication Engineering (University of Science,
-            VNU-HCM, GPA 3.4/4.0) and research on cuffless blood pressure estimation
-            from PPG signals — from deep-learning models down to STM32 firmware.
+            VNU-HCM, GPA 3.4/4.0) and published research on cuffless blood pressure estimation
+            from PPG signals — spanning deep-learning architectures (PPG2BP-Net) down to STM32 bare-metal firmware.
           </p>
           <p>
-            That range is the throughline: I build systems <strong>end to end</strong>,
-            and prove they work with deterministic evaluation. Calculations belong in
-            Python; the model handles language and interpretation. The unglamorous
-            parts — schemas, state, retries, human review, test coverage, audit trails —
-            are the product.
+            That range defines my throughline: I build systems <strong>end to end</strong>,
+            and prove they work with deterministic evaluation rather than vibes.
+            <strong>Arithmetic, scoring, pricing, and state transitions belong in Python; the model handles language and interpretation.</strong>
+            The unglamorous layers — strict Pydantic schemas, state machines, retries, human review gates, and correlation-based reconciliation — are what turn AI from an unstable demo into enterprise software.
           </p>
           <p class="about__now">
-            Currently building AI systems at MaxflowAI.
-            Open to remote roles in AI engineering, ML engineering, and AI-adjacent backend work.
+            Currently building AI systems at MaxflowAI. Open to remote roles in AI engineering, ML systems, and backend engineering.
           </p>
         </div>
 
         <div class="stats reveal">
-          <p class="stats__label mono">selected outcomes</p>
+          <div class="stats__label mono">Selected Engineering Benchmarks</div>
           <div class="stat">
             <span class="stat__num">7</span>
-            <span class="stat__label mono">agents coordinated in one workflow</span>
+            <span class="stat__label mono">agents coordinated in one production pipeline</span>
           </div>
           <div class="stat">
             <span class="stat__num">700+</span>
-            <span class="stat__label mono">records scored with an 11-metric model</span>
+            <span class="stat__label mono">records scored with an 11-metric deterministic model</span>
           </div>
           <div class="stat">
             <span class="stat__num">2–3h → 3min</span>
-            <span class="stat__label mono">manual research-to-proposal cycle</span>
+            <span class="stat__label mono">manual research-to-proposal cycle reduction (&gt;95%)</span>
           </div>
           <div class="stat">
             <span class="stat__num">88 / 88</span>
-            <span class="stat__label mono">focused ERP tests passed; 5/5 read-back checks</span>
+            <span class="stat__label mono">focused ERP tests passed; 5/5 read-back checks matched</span>
           </div>
           <div class="stat">
             <span class="stat__num">~40%</span>
-            <span class="stat__label mono">data-processing latency cut via NumPy</span>
+            <span class="stat__label mono">data-processing latency cut via vectorized NumPy</span>
           </div>
           <div class="stat">
             <span class="stat__num">9.76 mmHg</span>
-            <span class="stat__label mono">SBP MAE — cuffless BP research on MIMIC-III</span>
+            <span class="stat__label mono">MIMIC-III SBP MAE (± 8.99 mmHg) cuffless BP research</span>
           </div>
         </div>
       </section>
 
-      <!-- ============ 02 CAPABILITIES ============ -->
-      <section class="section" id="capabilities">
-        <h2 class="section__title mono reveal">02 · capabilities</h2>
-        <p class="section__note mono reveal">what I actually build, end to end</p>
-
-        <div class="capabilities">
-          <article class="capability reveal">
-            <span class="capability__id mono">C-01</span>
-            <h3>LLM systems</h3>
-            <p>LLM applications and multi-agent orchestration with master/specialist routing, tool calling, memory, state, recovery logic, and human approval gates. MCP integrations when a model needs to touch a real system.</p>
-          </article>
-          <article class="capability reveal">
-            <span class="capability__id mono">C-02</span>
-            <h3>Backend &amp; APIs</h3>
-            <p>Python and FastAPI services, SSE progress streams, Pydantic contracts, webhooks, scheduled jobs, SQL/SQLite persistence, JSON/CSV/XLSX processing, and Dockerized services.</p>
-          </article>
-          <article class="capability reveal">
-            <span class="capability__id mono">C-03</span>
-            <h3>Reliability &amp; evaluation</h3>
-            <p>Deterministic cores, strict output validation, fallback paths, human review, pytest and Playwright coverage, read-after-write checks, and evidence-based release decisions.</p>
-          </article>
-          <article class="capability reveal">
-            <span class="capability__id mono">C-04</span>
-            <h3>Product surfaces</h3>
-            <p>HTML/CSS/JavaScript operator mini-apps: dashboards, review screens, forms, status timelines, evidence-first detail views, postMessage authentication, and localStorage fallback.</p>
-          </article>
-          <article class="capability reveal">
-            <span class="capability__id mono">C-05</span>
-            <h3>ML &amp; data</h3>
-            <p>Python data pipelines, waveform ingestion and cleaning, feature extraction, TensorFlow/Keras, PyTorch and scikit-learn training, MAE/RMSE evaluation, and TFLite export.</p>
-          </article>
-          <article class="capability reveal">
-            <span class="capability__id mono">C-06</span>
-            <h3>Embedded &amp; mobile</h3>
-            <p>STM32 and sensor acquisition, I2C/UART/SPI, Bluetooth streaming, Kotlin/Android apps, and on-device TFLite inference.</p>
-          </article>
-        </div>
-
-        <div class="principles reveal">
-          <h3 class="principles__title mono">operating principles</h3>
-          <ol>
-            <li><strong>Deterministic core, LLM at the edges.</strong> Arithmetic, scoring, pricing, and state transitions run in Python. The model handles language and interpretation.</li>
-            <li><strong>Contracts before prompts.</strong> Strict JSON, Pydantic models, typed enums, explicit status fields, and validation before anything reaches a user.</li>
-            <li><strong>Human review before irreversible actions.</strong> Approval gates for sends, posts, exports, and ERP writes. Show the source next to the proposed result.</li>
-            <li><strong>Evidence-based release.</strong> pytest, Playwright, contract tests, read-after-write checks. A release is PASS, FAIL, BLOCKED, or NOT TESTABLE — never “looks fine.”</li>
-            <li><strong>Local-first verification.</strong> Isolated adapters and fixtures let workflows run without touching production. Deployment boundaries are documented, not assumed.</li>
-          </ol>
-        </div>
-      </section>
-
-      <!-- ============ 03 SELECTED WORK ============ -->
+      <!-- ============ SELECTED WORK ============ -->
       <section class="section" id="work">
-        <h2 class="section__title mono reveal">03 · selected work</h2>
-        <p class="section__note mono reveal">client work @ maxflowai — client names and private data withheld</p>
+        <h2 class="section__title mono reveal">Selected Work &amp; Enterprise Systems</h2>
+        <p class="section__note mono reveal">production client systems @ maxflowai — client names and proprietary data withheld</p>
 
         <div class="cases">
           <article class="case reveal">
-            <span class="case__id mono">CS-01 · client work · 2026</span>
+            <span class="case__id mono">CS-01 · Production Client System · 2026</span>
             <h3>B2B Sales Automation Platform</h3>
             <div class="case__block">
               <span class="mono">problem</span>
-              <p>Sales spent 2–3 hours per prospect researching the company, checking order history, scoring fit, and writing a proposal.</p>
+              <p>Sales teams spent 2–3 hours per prospect manually researching company background, cross-checking CRM order history, scoring product fit, and drafting tailored proposals.</p>
             </div>
             <div class="case__block">
               <span class="mono">system</span>
-              <p>A <strong>7-agent pipeline</strong>: master router, partner research, deterministic 11-metric scoring across 700+ records, proposal generation, QC, batch delivery, and campaign analytics. CRM data flows through a custom <strong>MCP bridge</strong>; a Dockerized FastAPI webhook receiver turns CRM events into agent runs.</p>
+              <p>A <strong>7-agent orchestrated pipeline</strong>: master router, partner research agent, deterministic 11-metric scoring across 700+ records, proposal drafting, QC review, batch delivery, and campaign analytics. CRM data flows through a custom <strong>MCP bridge</strong>; a Dockerized FastAPI webhook receiver triggers agent runs with correlation IDs.</p>
             </div>
-            <p class="case__outcome"><span class="mono">outcome →</span> research-to-proposal time dropped to about <strong>3 minutes</strong> (&gt;95%), with consistent scoring instead of gut feel.</p>
+            <p class="case__outcome"><span class="mono">outcome →</span> research-to-proposal turnaround dropped to <strong>3 minutes</strong> (&gt;95% reduction), replacing subjective gut feel with deterministic scoring.</p>
             <p class="case__tags mono">multi-agent · MCP · FastAPI · CRM · Docker</p>
+
+            <details class="case__evidence mono">
+              <summary><span>▶ View Architecture &amp; Verification Evidence</span></summary>
+              <div class="evidence__box">
+                <p><strong>Pipeline Topology:</strong> Event Trigger → Python Router → MCP CRM Bridge (Bearer Auth) → Claude Sonnet → Pydantic ProposalDraftSchema → Human Approval Gate → CRM Dispatch.</p>
+                <p><strong>Evaluation Gate:</strong> 11-metric deterministic score calculated purely in Python; LLM only drafts narrative copy based on structured JSON numbers.</p>
+              </div>
+            </details>
           </article>
 
           <article class="case reveal">
-            <span class="case__id mono">CS-02 · client work · 2026</span>
-            <h3>Inventory Intelligence System</h3>
+            <span class="case__id mono">CS-02 · Production Client System · 2026</span>
+            <h3>Inventory Intelligence &amp; Allocation System</h3>
             <div class="case__block">
               <span class="mono">problem</span>
-              <p>Warehouse teams needed transfer and replenishment recommendations across locations — but LLM arithmetic is not trustworthy for decisions that move real stock.</p>
+              <p>Warehouse and logistics teams needed accurate transfer and replenishment recommendations across facilities — but LLM arithmetic is inherently untrustworthy for decisions moving physical stock.</p>
             </div>
             <div class="case__block">
               <span class="mono">system</span>
-              <p>Python-first decision engine for days-of-inventory, demand trends, warehouse allocation, and transfer recommendations. Every recommendation carries a <strong>reason code</strong>. The LLM only writes the executive summary from computed JSON; it never calculates.</p>
+              <p>Python-first decision engine for days-of-inventory, demand velocity, warehouse allocation, and transfer proposals. Every recommendation carries an explicit <strong>deterministic reason code</strong>. The LLM only synthesizes the executive summary from computed JSON contracts; it never performs calculation.</p>
             </div>
-            <p class="case__outcome"><span class="mono">outcome →</span> auditable recommendations operations can act on without re-checking the math.</p>
+            <p class="case__outcome"><span class="mono">outcome →</span> fully auditable inventory recommendations operations can execute without recalculating numbers.</p>
             <p class="case__tags mono">decision engine · Python · SQL · LLM guardrails</p>
+
+            <details class="case__evidence mono">
+              <summary><span>▶ View Architecture &amp; Verification Evidence</span></summary>
+              <div class="evidence__box">
+                <p><strong>Rule Isolation:</strong> Days-of-inventory = (Current_Stock - Reserved) / Mean_Daily_Consumption. All arithmetic runs in SQLite / Python NumPy before payload creation.</p>
+                <p><strong>Guardrail:</strong> Low-confidence or boundary-condition inventory transfers trigger automated abstention flags instead of speculative advice.</p>
+              </div>
+            </details>
           </article>
 
           <article class="case reveal">
-            <span class="case__id mono">CS-03 · client work · ERP-adjacent</span>
+            <span class="case__id mono">CS-03 · Production Client System · ERP-Adjacent</span>
             <h3>Human-Reviewed ERP Receipt Posting</h3>
             <div class="case__block">
               <span class="mono">problem</span>
-              <p>Posting OCR-extracted receipts into SAP is a high-risk write: low-confidence fields, unit mismatches, approval policy, and uncertain network outcomes.</p>
+              <p>Posting OCR-extracted receipt payloads into SAP is a high-stakes irreversible write: low-confidence fields, currency/unit mismatches, approval hierarchies, and uncertain network timeouts.</p>
             </div>
             <div class="case__block">
               <span class="mono">system</span>
-              <p>Upload → OCR draft → human review → SAP preflight (GET) → controlled POST to InventoryGenEntries → read-back. Posting state is persisted before the write; correlation IDs support reconciliation after timeouts. A server gate blocks production DB writes; tests run against the test DB.</p>
+              <p>Upload → OCR draft → human review interface → SAP preflight (GET) → controlled POST to InventoryGenEntries → read-after-write verification. Posting state is persisted prior to the write; correlation IDs enable deterministic reconciliation. A server-side environment gate blocks production DB writes during testing.</p>
             </div>
-            <p class="case__outcome"><span class="mono">outcome →</span> <strong>88 focused tests passed</strong> and <strong>5/5 SAP read-back field checks</strong> matched. The OCR confidence gate intentionally routes low-confidence fields to a human.</p>
-            <p class="case__note mono">test-database evidence — not a production ERP rollout</p>
+            <p class="case__outcome"><span class="mono">outcome →</span> <strong>88 focused tests passed</strong> and <strong>5/5 SAP read-back field checks</strong> matched. OCR confidence gates automatically route uncertain fields to human operators.</p>
+            <p class="case__note mono">test-database evidence — isolated from live production SAP ERP</p>
             <p class="case__tags mono">OCR · human-in-the-loop · SAP · state machine · pytest</p>
+
+            <details class="case__evidence mono">
+              <summary><span>▶ View Architecture &amp; Verification Evidence</span></summary>
+              <div class="evidence__box">
+                <p><strong>Verification Suite:</strong> 88 pytest cases verifying: Field validation, Negative item bounds, Timeout idempotency, Correlation ID tracking, and 5/5 SAP read-back schema parity.</p>
+                <p><strong>State Recovery:</strong> Persistent transition journal ensures interrupted network requests resume safely without duplicate journal entries.</p>
+              </div>
+            </details>
           </article>
 
           <article class="case reveal">
-            <span class="case__id mono">CS-04 · client work · operations</span>
-            <h3>Enterprise Agent Operations</h3>
+            <span class="case__id mono">CS-04 · Production Client System · Operations</span>
+            <h3>Enterprise Agent Operations &amp; Operator UIs</h3>
             <div class="case__block">
               <span class="mono">problem</span>
-              <p>Event, HR, and email operations needed config-driven workflows and operator UIs — not one-off chat prompts.</p>
+              <p>Corporate events, HR pipelines, and email workflows required config-driven multi-agent orchestration and operator consoles — not fragile, one-off chat prompts.</p>
             </div>
             <div class="case__block">
               <span class="mono">system</span>
-              <p>Education/event platform with a <strong>12-table schema</strong>, 3 agents (reflection mentor, FAQ bot, admin insights), 5 event triggers, 3 scheduled jobs, and SMS/OA/SMTP connectors. Email runtime with queue, preflight, pause/resume, and reporting. HR workflow with Playwright QA. HTML/JS mini-apps use postMessage auth and localStorage fallback.</p>
+              <p>Event and operations platform backed by a <strong>12-table relational schema</strong>, 3 specialized agents (reflection mentor, FAQ assistant, admin insights), 5 event triggers, 3 scheduled background jobs, and SMTP/SMS connectors. Operator mini-apps use postMessage authentication with localStorage fallback.</p>
             </div>
-            <p class="case__outcome"><span class="mono">outcome →</span> one reusable pattern: business rules live in the database, actions are explicit, and operators get dashboards, review screens, and status timelines.</p>
+            <p class="case__outcome"><span class="mono">outcome →</span> unified architectural pattern: business rules reside in the database, actions are explicit, and human operators inspect dashboards, review screens, and status timelines.</p>
             <p class="case__tags mono">workflows · scheduled jobs · HTML/JS · Playwright</p>
+
+            <details class="case__evidence mono">
+              <summary><span>▶ View Architecture &amp; Verification Evidence</span></summary>
+              <div class="evidence__box">
+                <p><strong>Schema &amp; Auth:</strong> 12 relational tables with foreign keys and enum state columns. Browser mini-apps communicate via secured postMessage parent-handshake tokens.</p>
+                <p><strong>Automated QA:</strong> Playwright test harness running end-to-end regression sweeps on forms, file uploads, and session persistence.</p>
+              </div>
+            </details>
           </article>
         </div>
 
         <div class="also reveal">
-          <h3 class="also__title mono">also built &amp; researched</h3>
+          <h3 class="also__title mono">Related Architecture &amp; Research</h3>
           <div class="also__grid">
             <div class="also__item">
               <strong>Search Agent API</strong>
-              <p>FastAPI + SSE + Pydantic service that streams research phase/tool/result events, enforces 1–20 target counts and 0–100 lead scores, and saves normalized leads to CRM.</p>
+              <p>FastAPI + SSE + Pydantic service that streams research tool execution events, enforces 1–20 target constraints and 0–100 lead scores, and normalizes leads into CRM.</p>
             </div>
             <div class="also__item">
               <strong>MCP CRM Bridge</strong>
-              <p>MCP server exposing CRM REST operations as tools over Streamable HTTP, with bearer auth and a Dockerfile.</p>
+              <p>Custom MCP server exposing CRM operations as typed tools over Streamable HTTP with bearer token authentication and Docker runtime.</p>
             </div>
             <div class="also__item">
-              <strong>Playwright runner</strong>
-              <p>Auth-aware browser automation for platform QA: forms, chat, uploads/downloads, health checks, screenshots, traces, and deterministic selectors.</p>
+              <strong>Playwright QA Runner</strong>
+              <p>Auth-aware headless browser automation for platform QA: forms, chat, file uploads/downloads, health checks, screenshots, and deterministic selector assertions.</p>
             </div>
             <div class="also__item">
-              <strong>PPG blood-pressure research</strong>
-              <p>End-to-end MIMIC-III pipeline, PPG2BP-Net evaluation (SBP MAE 9.76 ± 8.99 mmHg), and a model zoo; companion STM32 + Android/TFLite prototype.</p>
+              <strong>PPG Blood Pressure Research</strong>
+              <p>End-to-end MIMIC-III pipeline, PPG2BP-Net evaluation (SBP MAE 9.76 ± 8.99 mmHg), model zoo, and STM32 + Android/TFLite edge prototype.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ============ 04 EXPERIENCE ============ -->
+      <!-- ============ CAPABILITIES ============ -->
+      <section class="section" id="capabilities">
+        <h2 class="section__title mono reveal">Core Engineering Capabilities</h2>
+        <p class="section__note mono reveal">technical domains delivered from architecture to deployment</p>
+
+        <div class="capabilities">
+          <article class="capability reveal">
+            <span class="capability__id mono">CAP-01</span>
+            <h3>LLM Systems &amp; Agents</h3>
+            <p>Multi-agent orchestration with master/specialist routing, tool calling, persistent memory, execution recovery, and human approval gates. MCP integrations for external systems.</p>
+          </article>
+          <article class="capability reveal">
+            <span class="capability__id mono">CAP-02</span>
+            <h3>Backend Services &amp; APIs</h3>
+            <p>FastAPI microservices, Server-Sent Events (SSE) progress streams, Pydantic data contracts, webhooks, scheduled background jobs, relational SQL persistence, and Docker containers.</p>
+          </article>
+          <article class="capability reveal">
+            <span class="capability__id mono">CAP-03</span>
+            <h3>Reliability &amp; Evaluation</h3>
+            <p>Deterministic cores, strict JSON schema output validation, fallback routing, human-in-the-loop review, pytest and Playwright test coverage, and read-after-write verification.</p>
+          </article>
+          <article class="capability reveal">
+            <span class="capability__id mono">CAP-04</span>
+            <h3>Product Surfaces &amp; Mini-Apps</h3>
+            <p>Operator mini-apps built with vanilla HTML/CSS/JavaScript: review screens, dashboards, status timelines, evidence drawers, postMessage authentication, and localStorage fallback.</p>
+          </article>
+          <article class="capability reveal">
+            <span class="capability__id mono">CAP-05</span>
+            <h3>ML Systems &amp; Signal Processing</h3>
+            <p>Data engineering pipelines, waveform ingestion and cleaning, digital signal filtering (Butterworth, VPG), PyTorch and TensorFlow/Keras training, MAE/RMSE evaluation, and TFLite export.</p>
+          </article>
+          <article class="capability reveal">
+            <span class="capability__id mono">CAP-06</span>
+            <h3>Embedded &amp; Edge Prototyping</h3>
+            <p>STM32 firmware with MAX30102 sensor acquisition, I2C/UART/SPI interfaces, Bluetooth LE streaming, Android companion apps in Kotlin, and on-device TFLite inference.</p>
+          </article>
+        </div>
+
+        <div class="principles reveal">
+          <h3 class="principles__title mono">Operating Principles</h3>
+          <ol>
+            <li><strong>Deterministic core, LLM at the edges.</strong> Arithmetic, scoring, pricing, and state transitions run in Python. The model handles language and interpretation.</li>
+            <li><strong>Contracts before prompts.</strong> Strict JSON schemas, Pydantic models, typed enums, explicit status fields, and schema validation before anything reaches a user.</li>
+            <li><strong>Human review before irreversible actions.</strong> Explicit approval gates for sends, posts, exports, and ERP writes. Always show the source data next to the proposed output.</li>
+            <li><strong>Evidence-based release criteria.</strong> Comprehensive pytest, Playwright, contract tests, and read-after-write verification. A release is PASS, FAIL, BLOCKED, or NOT TESTABLE — never “looks fine.”</li>
+            <li><strong>Local-first verification.</strong> Isolated adapters and test fixtures allow workflows to run without touching production. Deployment boundaries are documented, not assumed.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============ EXPERIENCE ============ -->
       <section class="section" id="experience">
-        <h2 class="section__title mono reveal">04 · experience</h2>
+        <h2 class="section__title mono reveal">Work Experience</h2>
 
         <div class="jobs">
           <article class="job reveal">
-            <span class="job__dates mono">Feb 2026 — present</span>
+            <span class="job__dates mono">Feb 2026 — Present</span>
             <div class="job__body">
-              <h3>AI Engineer / Agent Builder <span class="job__company">· MaxflowAI</span></h3>
+              <h3>AI Systems Engineer / Agent Builder <span class="job__company">· MaxflowAI</span></h3>
               <ul>
-                <li>Build AI systems for real clients across B2B sales, inventory logistics, event operations, email pipelines, HR, and ERP-adjacent document workflows.</li>
-                <li>Built a <strong>7-agent sales pipeline</strong> — master router, research, deterministic 11-metric scoring across 700+ records, proposal generation, QC, delivery, and campaign analytics — cutting a 2–3 hour manual cycle to about <strong>3 minutes</strong> (&gt;95%).</li>
-                <li>Built the reliability layer: strict JSON contracts, Pydantic validation, typed enums, fallbacks, persistent state, human confirmation gates, and correlation-based reconciliation for uncertain writes.</li>
-                <li>Built FastAPI/SSE services, a custom <strong>MCP CRM bridge</strong>, Dockerized webhook receivers, scheduled jobs, and HTML/JS operator mini-apps with postMessage authentication and localStorage fallback.</li>
-                <li>Wrote pytest/Playwright coverage, including an ERP receipt workflow with <strong>88 focused tests</strong> and <strong>5/5 SAP read-back checks</strong>; debug through transcripts, payloads, browser traces, and reproducible steps.</li>
+                <li>Architect and ship multi-agent systems and Python backends for enterprise clients across B2B sales automation, inventory logistics, event operations, email processing, and ERP workflows.</li>
+                <li>Built a <strong>7-agent sales pipeline</strong> (master router, partner research, deterministic 11-metric scoring across 700+ records, proposal drafting, QC review, batch delivery, analytics), cutting a 2–3 hour manual process to <strong>~3 minutes</strong> (&gt;95%).</li>
+                <li>Built the deterministic reliability layer: strict JSON contracts, Pydantic validation, typed enums, fallbacks, persistent state machines, human approval gates, and correlation IDs for network reconciliation.</li>
+                <li>Developed FastAPI/SSE streaming services, a custom <strong>MCP CRM bridge</strong>, Dockerized webhook receivers, scheduled background tasks, and operator mini-apps with postMessage authentication.</li>
+                <li>Authored pytest and Playwright test suites, including an ERP receipt workflow with <strong>88 focused tests</strong> and <strong>5/5 SAP read-back checks</strong>; debug complex runs through transcripts, payloads, and browser traces.</li>
               </ul>
               <p class="chips mono"><span>Python</span><span>FastAPI</span><span>MCP</span><span>Playwright</span><span>HTML/JS</span><span>Docker</span></p>
             </div>
@@ -430,133 +492,211 @@
             <div class="job__body">
               <h3>Product Reviewer / AI QA Collaborator <span class="job__company">· SNOW Vietnam</span></h3>
               <ul>
-                <li>Evaluated AI image and video features (AR filters, computer-vision effects) across low light, occlusion, and unusual inputs.</li>
-                <li>Turned failures into reproducible, severity-ranked defect reports in Jira; verified fixes and tracked regressions with product, engineering, and CV research.</li>
+                <li>Evaluated AI image and video processing features (AR filters, computer vision effects) across challenging edge conditions: low light, rapid motion, occlusion, and non-standard inputs.</li>
+                <li>Documented failure modes into reproducible, severity-ranked defect reports in Jira; collaborated with engineering and computer vision research teams to verify fixes and prevent regressions.</li>
               </ul>
-              <p class="chips mono"><span>AI QA</span><span>Computer vision</span><span>Jira</span></p>
+              <p class="chips mono"><span>AI QA</span><span>Computer Vision</span><span>Jira</span><span>Defect Analysis</span></p>
             </div>
           </article>
 
           <article class="job reveal">
             <span class="job__dates mono">Nov 2024 — Jan 2025</span>
             <div class="job__body">
-              <h3>AI Engineer Intern, Deep Learning &amp; Data Pipelines <span class="job__company">· ITR VN</span></h3>
+              <h3>AI Engineer Intern, Deep Learning &amp; Signal Pipelines <span class="job__company">· ITR VN</span></h3>
               <ul>
-                <li>Implemented and evaluated PPG2BP-Net for cuffless blood pressure estimation: <strong>SBP MAE 9.76 ± 8.99 mmHg</strong>, DBP 5.25 ± 5.26 mmHg, MAP 6.26 ± 5.89 mmHg on MIMIC-III.</li>
-                <li>Built end-to-end waveform ingestion, cleaning, preprocessing, feature extraction, training, and evaluation; cut data-processing latency <strong>~40%</strong> with NumPy vectorization.</li>
-                <li>Prototyped an STM32 + MAX30102 device with Bluetooth streaming to a mobile app for real-time visualization.</li>
+                <li>Implemented and evaluated PPG2BP-Net for cuffless blood pressure estimation: achieved <strong>SBP MAE 9.76 ± 8.99 mmHg</strong>, DBP 5.25 ± 5.26 mmHg, and MAP 6.26 ± 5.89 mmHg on MIMIC-III.</li>
+                <li>Built an end-to-end waveform ingestion and DSP cleaning pipeline; reduced data-processing latency by <strong>~40%</strong> through NumPy vectorization.</li>
+                <li>Prototyped a portable STM32 + MAX30102 sensor device with Bluetooth LE streaming to an Android app for real-time cardiac visualization.</li>
               </ul>
-              <p class="chips mono"><span>TensorFlow/Keras</span><span>MIMIC-III</span><span>NumPy</span><span>STM32</span></p>
+              <p class="chips mono"><span>TensorFlow/Keras</span><span>MIMIC-III</span><span>DSP</span><span>NumPy</span><span>STM32</span></p>
             </div>
           </article>
         </div>
       </section>
 
-      <!-- ============ 05 OPEN SOURCE ============ -->
+      <!-- ============ OPEN SOURCE ============ -->
       <section class="section" id="open-source">
-        <h2 class="section__title mono reveal">05 · open source &amp; research</h2>
+        <h2 class="section__title mono reveal">Open Source &amp; Research</h2>
         <p class="section__note mono reveal">selected repositories — github.com/BuccKyy</p>
 
         <div class="repos">
           <a class="repo reveal" href="https://github.com/BuccKyy/verification-pack-generator" target="_blank" rel="noopener">
             <div class="repo__top mono"><span class="repo__lang">Python</span></div>
             <h3>verification-pack-generator</h3>
-            <p>BM25 claim checker for legal documents: pinpoint evidence citations, negation awareness, and conservative <strong>INSUFFICIENT</strong> labels instead of invented support.</p>
+            <p>BM25 claim-checker for legal documents: pinpoint evidence citations, negation awareness, and conservative <strong>INSUFFICIENT</strong> labels instead of speculative hallucinated support.</p>
           </a>
 
           <a class="repo reveal" href="https://github.com/BuccKyy/Deep-PPG-Research-Core" target="_blank" rel="noopener">
             <div class="repo__top mono"><span class="repo__lang">Python</span><span>★ 3</span></div>
             <h3>Deep-PPG-Research-Core</h3>
-            <p>End-to-end research framework for PPG-based blood pressure prediction — filtering, signal-quality checks, a model zoo (CNN-LSTM, U-Net, ResNet, Transformer), and evaluation protocols.</p>
+            <p>End-to-end research framework for PPG-based blood pressure estimation — digital filtering, signal-quality metrics (SQI), model zoo (CNN-LSTM, U-Net, ResNet, Transformer), and standard evaluation protocols.</p>
           </a>
 
           <a class="repo reveal" href="https://github.com/BuccKyy/Cuffless-BP-IoT-System" target="_blank" rel="noopener">
-            <div class="repo__top mono"><span class="repo__lang">C</span></div>
+            <div class="repo__top mono"><span class="repo__lang">C / C++</span></div>
             <h3>Cuffless-BP-IoT-System</h3>
-            <p>Full hardware-to-app stack: STM32 + MAX30102 acquisition, Bluetooth streaming, TFLite on-device inference, and an Android companion app.</p>
+            <p>Full hardware-to-app telemetry stack: STM32 + MAX30102 sensor acquisition, Bluetooth LE streaming, on-device TFLite inference, and Android companion application.</p>
           </a>
 
           <a class="repo reveal" href="https://github.com/BuccKyy/Video-Translation-Tool" target="_blank" rel="noopener">
             <div class="repo__top mono"><span class="repo__lang">Python</span></div>
             <h3>Video-Translation-Tool</h3>
-            <p>Whisper ASR → Llama 3.3 translation → Edge TTS → FFmpeg remux. Modular pipeline with separate stages.</p>
+            <p>Modular media pipeline: Whisper ASR transcription → Llama 3.3 translation → Edge TTS synthesis → FFmpeg audio-video remuxing with per-stage recovery.</p>
           </a>
 
           <a class="repo reveal" href="https://github.com/BuccKyy/prompt-master-for-codex" target="_blank" rel="noopener">
             <div class="repo__top mono"><span class="repo__lang">Python</span><span>★ 2</span></div>
             <h3>prompt-master-for-codex</h3>
-            <p>Instruction-only Codex plugin that turns rough requests into scoped, testable work — with evidence, validation, and residual-risk reporting.</p>
+            <p>Instruction-driven Codex plugin that turns unstructured requirements into scoped, testable engineering tasks with evidence requirements and residual risk reporting.</p>
           </a>
 
           <a class="repo reveal" href="https://github.com/BuccKyy/AI-agnet" target="_blank" rel="noopener">
-            <div class="repo__top mono"><span class="repo__lang">n8n</span></div>
+            <div class="repo__top mono"><span class="repo__lang">n8n / LLM</span></div>
             <h3>AI-agnet</h3>
-            <p>n8n workflow that ingests 27 RSS sources, analyzes items with Groq/LLaMA, filters by score, and sends a prioritized Telegram digest every 30 minutes.</p>
+            <p>n8n workflow that ingests 27 RSS intelligence sources, analyzes content with Groq/LLaMA, applies threshold scoring, and delivers a prioritized Telegram digest every 30 minutes.</p>
           </a>
 
           <a class="repo reveal" href="https://github.com/BuccKyy/SGX-Downloader" target="_blank" rel="noopener">
             <div class="repo__top mono"><span class="repo__lang">Python</span></div>
             <h3>SGX-Downloader</h3>
-            <p>Derivatives-data downloader with exponential backoff, SQLite state tracking, and smart caching that makes repeat runs <strong>62% faster</strong>.</p>
+            <p>Financial derivatives data downloader with exponential backoff, SQLite state tracking, and content-hash caching making repeat runs <strong>62% faster</strong>.</p>
           </a>
 
           <a class="repo reveal" href="https://github.com/BuccKyy/PPG-MoNi-Android-App" target="_blank" rel="noopener">
             <div class="repo__top mono"><span class="repo__lang">Kotlin</span></div>
             <h3>PPG-MoNi-Android-App</h3>
-            <p>Android app for real-time PPG visualization, Bluetooth device connection, Room history, and on-device TFLite blood-pressure inference.</p>
+            <p>Native Android app for real-time PPG waveform plotting, Bluetooth device pairing, Room SQLite history persistence, and on-device TFLite inference.</p>
           </a>
 
           <a class="repo repo--more reveal" href="https://github.com/BuccKyy" target="_blank" rel="noopener">
             <div class="repo__top mono"><span class="repo__lang">GitHub</span></div>
-            <h3>More repositories →</h3>
-            <p>PPG signal-processing tools, STM32 firmware, an ultrasound clinic booking system, and other experiments.</p>
+            <h3>View All Repositories →</h3>
+            <p>Additional PPG signal processing utilities, STM32 firmware, clinic booking systems, and machine-learning prototypes.</p>
           </a>
         </div>
       </section>
 
-      <!-- ============ 06 SKILLS ============ -->
+      <!-- ============ TECH STACK ============ -->
       <section class="section" id="skills">
-        <h2 class="section__title mono reveal">06 · skills</h2>
+        <h2 class="section__title mono reveal">Technical Stack &amp; Tooling</h2>
 
-        <div class="skills">
-          <div class="skill-group reveal">
-            <h3 class="mono">ai &amp; llm systems</h3>
-            <p>Multi-agent orchestration · master-specialist routing · tool/function calling · structured outputs · memory &amp; context · state &amp; recovery · human-in-the-loop review · prompt engineering · RAG concepts · embeddings basics · MCP · n8n · Claude · GPT · Llama 3.3 (Groq)</p>
+        <div class="skills-grid">
+          <div class="skill-card reveal">
+            <div class="skill-card__header mono">
+              <span class="skill-card__icon">◆</span>
+              <h3>AI &amp; Multi-Agent Systems</h3>
+            </div>
+            <div class="skill-tags">
+              <span>Multi-Agent Orchestration</span>
+              <span>Master/Specialist Routing</span>
+              <span>Tool &amp; Function Calling</span>
+              <span>Structured Outputs</span>
+              <span>Pydantic Guardrails</span>
+              <span>Human-in-the-Loop Gates</span>
+              <span>Model Context Protocol (MCP)</span>
+              <span>Claude Sonnet / Haiku</span>
+              <span>GPT-4o</span>
+              <span>Llama 3.3 (Groq)</span>
+              <span>n8n Workflows</span>
+            </div>
           </div>
-          <div class="skill-group reveal">
-            <h3 class="mono">retrieval &amp; evaluation</h3>
-            <p>BM25 retrieval · claim verification · evidence packs · conservative abstention · negation checks · structured-output validation · deterministic evaluation harnesses</p>
+
+          <div class="skill-card reveal">
+            <div class="skill-card__header mono">
+              <span class="skill-card__icon">◆</span>
+              <h3>Retrieval &amp; Evaluation</h3>
+            </div>
+            <div class="skill-tags">
+              <span>BM25 Retrieval</span>
+              <span>Evidence Grounding</span>
+              <span>Claim Verification</span>
+              <span>Conservative Abstention</span>
+              <span>Negation Checking</span>
+              <span>Deterministic Eval Harnesses</span>
+              <span>Regression Testing</span>
+              <span>Audit Trails</span>
+            </div>
           </div>
-          <div class="skill-group reveal">
-            <h3 class="mono">backend &amp; data</h3>
-            <p>Python · FastAPI · SSE · Pydantic · REST · webhooks · SQL / SQLite · relational schemas · JSON/CSV/XLSX · Pandas · NumPy · Docker · Cloud Run deployment path</p>
+
+          <div class="skill-card reveal">
+            <div class="skill-card__header mono">
+              <span class="skill-card__icon">◆</span>
+              <h3>Backend &amp; Systems</h3>
+            </div>
+            <div class="skill-tags">
+              <span>Python 3.12</span>
+              <span>FastAPI</span>
+              <span>SSE Progress Streams</span>
+              <span>RESTful APIs</span>
+              <span>SQL / SQLite</span>
+              <span>PostgreSQL</span>
+              <span>Relational Schemas</span>
+              <span>Pandas &amp; NumPy</span>
+              <span>Docker &amp; Containers</span>
+              <span>Webhooks &amp; Retries</span>
+              <span>Scheduled Jobs</span>
+            </div>
           </div>
-          <div class="skill-group reveal">
-            <h3 class="mono">frontend &amp; product</h3>
-            <p>HTML · CSS · JavaScript · responsive mini-apps · dashboards · review screens · status timelines · postMessage authentication · localStorage fallback</p>
+
+          <div class="skill-card reveal">
+            <div class="skill-card__header mono">
+              <span class="skill-card__icon">◆</span>
+              <h3>QA &amp; Reliability</h3>
+            </div>
+            <div class="skill-tags">
+              <span>pytest</span>
+              <span>Playwright Automation</span>
+              <span>Contract Testing</span>
+              <span>Read-After-Write Verification</span>
+              <span>Correlation IDs</span>
+              <span>Transcript Debugging</span>
+              <span>Defect Reproduction</span>
+              <span>Jira &amp; Bug Tracking</span>
+            </div>
           </div>
-          <div class="skill-group reveal">
-            <h3 class="mono">ml &amp; signals</h3>
-            <p>TensorFlow/Keras · PyTorch · scikit-learn · OpenCV · digital signal processing · model evaluation (MAE/RMSE) · TFLite · MIMIC-III</p>
+
+          <div class="skill-card reveal">
+            <div class="skill-card__header mono">
+              <span class="skill-card__icon">◆</span>
+              <h3>Biomedical DSP &amp; ML</h3>
+            </div>
+            <div class="skill-tags">
+              <span>MIMIC-III Benchmark</span>
+              <span>PPG Waveform Ingestion</span>
+              <span>Butterworth Filtering</span>
+              <span>VPG First Derivative</span>
+              <span>Systolic Peak Detection</span>
+              <span>TensorFlow / Keras</span>
+              <span>PyTorch</span>
+              <span>scikit-learn</span>
+              <span>MAE / RMSE Protocols</span>
+              <span>TensorFlow Lite</span>
+            </div>
           </div>
-          <div class="skill-group reveal">
-            <h3 class="mono">qa &amp; reliability</h3>
-            <p>pytest · Playwright · Selenium · contract and integration tests · regression testing · defect reproduction and severity · transcript/payload debugging · Jira</p>
-          </div>
-          <div class="skill-group reveal">
-            <h3 class="mono">embedded &amp; mobile</h3>
-            <p>C/C++ · STM32 · MAX30102 · I2C/UART/SPI · Bluetooth · Kotlin / Android · Camera2 · Room · TFLite · OAuth / Google Drive</p>
-          </div>
-          <div class="skill-group reveal">
-            <h3 class="mono">tools &amp; workflow</h3>
-            <p>Git · Linux · Docker · FFmpeg · Claude Code · Codex · Cursor · n8n · technical writing · deployment documentation · async remote collaboration</p>
+
+          <div class="skill-card reveal">
+            <div class="skill-card__header mono">
+              <span class="skill-card__icon">◆</span>
+              <h3>Edge, Mobile &amp; Frontend</h3>
+            </div>
+            <div class="skill-tags">
+              <span>C / C++ (Embedded)</span>
+              <span>STM32 Firmware</span>
+              <span>MAX30102 Sensor</span>
+              <span>I2C / UART / SPI</span>
+              <span>Bluetooth LE</span>
+              <span>Android / Kotlin</span>
+              <span>Vanilla HTML/CSS/JS</span>
+              <span>Operator Mini-Apps</span>
+              <span>postMessage Auth</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- ============ 07 EDUCATION ============ -->
+      <!-- ============ EDUCATION ============ -->
       <section class="section" id="education">
-        <h2 class="section__title mono reveal">07 · education &amp; awards</h2>
+        <h2 class="section__title mono reveal">Education &amp; Credentials</h2>
 
         <div class="edu-grid">
           <div class="edu-card reveal">
@@ -564,42 +704,42 @@
             <h3>University of Science, VNU-HCM</h3>
             <p class="edu-degree">B.Eng. Electronics &amp; Telecommunication Engineering · <strong>GPA 3.4 / 4.0</strong></p>
             <p class="edu-course">Coursework: Machine Learning, Deep Learning, Digital Signal Processing, Embedded Systems, Data Structures &amp; Algorithms, Probability &amp; Statistics, Software Engineering.</p>
-            <p class="edu-course">Research focus: PPG signal processing, cuffless blood-pressure estimation, MIMIC-III, and model evaluation.</p>
+            <p class="edu-course">Thesis: PPG signal processing, cuffless blood-pressure estimation on MIMIC-III, and model evaluation protocols.</p>
           </div>
 
           <div class="awards reveal">
-            <h3 class="mono awards__title">awards &amp; certifications</h3>
+            <h3 class="mono awards__title">Awards &amp; Competitions</h3>
             <ul>
-              <li><strong>VPBank Technology Hackathon 2025</strong> — Senior Track</li>
-              <li><strong>Biomedical Engineering Innovation Competition 2025</strong> — Team Lead, IoT blood-pressure monitoring; 90% user satisfaction across 20+ test participants</li>
-              <li><strong>Coursera</strong> — Machine Learning with Python · Deep Learning &amp; Neural Networks with Keras · Building Deep Learning Models with Keras and TensorFlow</li>
+              <li><strong>VPBank Technology Hackathon 2025</strong> — Senior Track Finalist</li>
+              <li><strong>Biomedical Engineering Innovation Competition 2025</strong> — Team Lead, IoT blood-pressure monitoring; 90% user satisfaction across 20+ clinical test participants</li>
+              <li><strong>Professional Certifications</strong> — Deep Learning Specialization (Keras/TensorFlow) · Machine Learning with Python (Coursera)</li>
             </ul>
-            <p class="awards__lang mono">Languages: Vietnamese (native) · English (professional)</p>
+            <p class="awards__lang mono">Languages: Vietnamese (native) · English (professional proficiency)</p>
           </div>
         </div>
       </section>
 
-      <!-- ============ 08 CONTACT ============ -->
+      <!-- ============ CONTACT ============ -->
       <section class="section" id="contact">
-        <h2 class="section__title mono reveal">08 · contact</h2>
+        <h2 class="section__title mono reveal">Get in Touch</h2>
         <div class="contact reveal">
           <p class="contact__lead">
-            I'm open to remote roles in<br>
-            <em>AI engineering</em>, <em>ML engineering</em>, and <em>AI-adjacent backend work</em>.
+            Open to remote roles in<br>
+            <em>AI Systems Engineering</em>, <em>ML Systems</em>, and <em>Applied AI Backend</em>.
           </p>
           <a class="contact__email" href="mailto:trantrungduc313@gmail.com">trantrungduc313@gmail.com<span class="contact__email-arrow" aria-hidden="true">→</span></a>
           <div class="contact__links mono">
-            <a href="TranTrungDuc-AI-Engineer-CV.pdf" download>download cv ↓</a>
+            <a href="TranTrungDuc-AI-Engineer-CV.pdf" download>download cv (pdf) ↓</a>
             <a href="https://github.com/BuccKyy" target="_blank" rel="me noopener">github.com/BuccKyy ↗</a>
             <a href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="me noopener">linkedin ↗</a>
           </div>
-          <p class="contact__note mono">Ho Chi Minh City · UTC+7 · async-first · Vietnamese / English</p>
+          <p class="contact__note mono">Ho Chi Minh City · UTC+7 · Async-First Communication · Vietnamese / English</p>
         </div>
       </section>
 
       <footer class="footer mono">
-        <span>© 2026 Tran Trung Duc</span>
-        <span>Ho Chi Minh City · UTC+7 · open to remote</span>
+        <span>© 2026 Tran Trung Duc — AI Systems Engineer</span>
+        <span>Ho Chi Minh City · UTC+7 · Open to Remote</span>
       </footer>
 
     </main>
