@@ -50,36 +50,58 @@
     reveals.forEach(function (el) { el.classList.add('visible'); });
   }
 
-  // Highlight the section currently in view. This is separate from the
-  // reveal animation so it still works when reduced motion is enabled.
-  if (supportsIO) {
-    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+  // Highlight the section currently in view. A scroll-position calculation
+  // is more reliable than a center-band observer for short final sections.
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+  var sections = links.map(function (link) {
+    return document.getElementById(link.getAttribute('href').slice(1));
+  }).filter(Boolean);
 
-    function setActive(id) {
-      links.forEach(function (link) {
-        var active = link.getAttribute('href') === '#' + id;
-        link.classList.toggle('active', active);
-        if (active) {
-          link.setAttribute('aria-current', 'location');
-        } else {
-          link.removeAttribute('aria-current');
-        }
-      });
-    }
-
-    var spy = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) setActive(entry.target.id);
-      });
-    }, { rootMargin: '-35% 0px -55% 0px' });
-
+  function setActive(id) {
     links.forEach(function (link) {
-      var section = document.getElementById(link.getAttribute('href').slice(1));
-      if (section) spy.observe(section);
+      var active = link.getAttribute('href') === '#' + id;
+      link.classList.toggle('active', active);
+      if (active) {
+        link.setAttribute('aria-current', 'location');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  }
+
+  function updateActiveSection() {
+    if (!sections.length) return;
+    var target = window.scrollY + window.innerHeight * 0.33;
+    var current = sections[0].id;
+
+    sections.forEach(function (section) {
+      if (section.getBoundingClientRect().top + window.scrollY <= target) {
+        current = section.id;
+      }
     });
 
-    setActive(location.hash ? location.hash.slice(1) : 'about');
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+      current = sections[sections.length - 1].id;
+    }
+
+    setActive(current);
   }
+
+  var navTicking = false;
+  var navRaf = window.requestAnimationFrame || function (fn) { fn(); };
+
+  function onNavScroll() {
+    if (navTicking) return;
+    navTicking = true;
+    navRaf(function () {
+      updateActiveSection();
+      navTicking = false;
+    });
+  }
+
+  window.addEventListener('scroll', onNavScroll, { passive: true });
+  window.addEventListener('resize', onNavScroll);
+  updateActiveSection();
 
   // Cursor spotlight, skipped on touch devices and for reduced motion.
   // Reads are batched into a single animation frame to avoid layout churn.

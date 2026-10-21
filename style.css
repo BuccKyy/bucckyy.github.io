@@ -450,6 +450,10 @@ button:focus-visible {
   gap: 1.1rem;
 }
 
+@media (min-width: 1280px) {
+  .capabilities { grid-template-columns: repeat(3, 1fr); }
+}
+
 .capability {
   position: relative;
   border: 1px solid var(--line);
@@ -465,12 +469,14 @@ button:focus-visible {
   box-shadow: 0 12px 32px -20px var(--accent-glow);
 }
 
-.capability:nth-child(2) {
+.capability:nth-child(2),
+.capability:nth-child(5) {
   --accent: var(--accent2);
   --accent-dim: color-mix(in srgb, var(--accent2) 55%, transparent);
   --accent-glow: color-mix(in srgb, var(--accent2) 28%, transparent);
 }
-.capability:nth-child(3) {
+.capability:nth-child(3),
+.capability:nth-child(6) {
   --accent: var(--accent3);
   --accent-dim: color-mix(in srgb, var(--accent3) 55%, transparent);
   --accent-glow: color-mix(in srgb, var(--accent3) 28%, transparent);
@@ -676,8 +682,8 @@ button:focus-visible {
 
 .also__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem 1.75rem;
 }
 
 .also__item {
@@ -1012,6 +1018,7 @@ button:focus-visible {
 
 @media (max-width: 1120px) {
   .layout { display: block; }
+  .theme-toggle { position: absolute; }
   .sidebar {
     position: static;
     height: auto;
