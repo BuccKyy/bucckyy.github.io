@@ -123,6 +123,9 @@ body::after {
   .repos:hover .repo,
   .jobs:hover .job,
   .capabilities:hover .capability { opacity: 1; }
+  .case:hover,
+  .repo:hover,
+  .capability:hover { transform: none; }
 }
 
 .mono {
@@ -240,35 +243,40 @@ button:focus-visible {
   margin-bottom: 1.8rem;
 }
 
-.sidebar__wave { margin-bottom: 2.1rem; max-width: 400px; }
+.sidebar__orb { margin-bottom: 1.8rem; max-width: 400px; }
 
-.sidebar__wave svg {
+.sidebar__orb-stage {
+  position: relative;
+  height: 168px;
+  isolation: isolate;
+}
+
+.sidebar__orb-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    circle at 50% 42%,
+    color-mix(in srgb, var(--accent2) 9%, transparent),
+    transparent 66%
+  );
+  pointer-events: none;
+}
+
+.sidebar__orb canvas {
   display: block;
   width: 100%;
-  height: 58px;
-  overflow: visible;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-.wave-path {
-  stroke: url(#wavegrad);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  filter: drop-shadow(0 0 6px var(--accent-glow));
-  stroke-dasharray: 900;
-  stroke-dashoffset: 900;
-  animation: draw-wave 4s linear forwards, pulse-wave 3s ease-in-out 4s infinite;
-}
-
-@keyframes draw-wave { to { stroke-dashoffset: 0; } }
-@keyframes pulse-wave {
-  0%, 100% { filter: drop-shadow(0 0 4px var(--accent-glow)) hue-rotate(0deg); opacity: 0.85; }
-  50%      { filter: drop-shadow(0 0 14px var(--accent-glow)) hue-rotate(-30deg); opacity: 1; }
-}
+.sidebar__orb.is-ready canvas { opacity: 1; }
 
 .sidebar__wave-label {
   color: var(--ink-muted);
-  margin-top: 0.55rem;
+  margin-top: 0.35rem;
   font-size: 0.7rem;
 }
 
@@ -459,13 +467,12 @@ button:focus-visible {
   border: 1px solid var(--line);
   background: color-mix(in srgb, var(--bg-panel) 82%, transparent);
   padding: 1.4rem 1.35rem 1.3rem;
-  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.3s ease;
 }
 .capabilities:hover .capability { opacity: 0.6; }
 .capabilities:hover .capability:hover { opacity: 1; }
 .capability:hover {
   border-color: var(--accent-dim);
-  transform: translateY(-3px);
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-3px);
   box-shadow: 0 12px 32px -20px var(--accent-glow);
 }
 
@@ -574,13 +581,12 @@ button:focus-visible {
   border: 1px solid var(--line);
   background: var(--bg-panel);
   padding: 1.55rem 1.45rem 1.35rem;
-  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.3s ease;
 }
 .cases:hover .case { opacity: 0.6; }
 .cases:hover .case:hover { opacity: 1; }
 .case:hover {
   border-color: var(--accent-dim);
-  transform: translateY(-4px);
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px);
   box-shadow: 0 12px 32px -18px var(--accent-glow);
 }
 
@@ -776,14 +782,13 @@ button:focus-visible {
   text-decoration: none;
   border: 1px solid var(--line);
   padding: 1.3rem 1.35rem;
-  transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, opacity 0.3s ease;
 }
 .repos:hover .repo { opacity: 0.6; }
 .repos:hover .repo:hover { opacity: 1; }
 .repo:hover {
   border-color: var(--accent-dim);
   background: var(--bg-panel);
-  transform: translateY(-4px);
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px);
   box-shadow: 0 14px 36px -20px var(--accent-glow);
 }
 
@@ -967,24 +972,40 @@ button:focus-visible {
 
 /* ============ REVEAL ============ */
 
+/* The reveal uses the individual `translate` property so it never
+   collides with the 3D tilt transform on cards. */
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  translate: 0 18px;
+  transition: opacity 0.6s ease, translate 0.6s ease;
 }
 .reveal.visible {
   opacity: 1;
-  transform: none;
+  translate: none;
+}
+
+/* Cards own their transform transition so the 3D tilt stays snappy
+   while the reveal animation still fades and slides on `translate`. */
+.case.reveal,
+.capability.reveal,
+.repo.reveal {
+  transition:
+    opacity 0.45s ease,
+    translate 0.6s ease,
+    transform 0.14s ease-out,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; transition: none; }
-  .wave-path { animation: none; stroke-dashoffset: 0; }
+  .reveal { opacity: 1; translate: none; transition: none; }
   .sidebar__meta::before { animation: none; }
   .status-dot { animation: none; }
   .case:hover, .repo:hover, .capability:hover { transform: none; }
   .case::before, .capability::before, .nav-line { transition: none; }
+  .case.reveal, .capability.reveal, .repo.reveal { transition: none; }
   .spotlight { display: none; }
   .jobs:hover .job, .cases:hover .case, .repos:hover .repo, .capabilities:hover .capability { opacity: 1; }
 }
@@ -1006,14 +1027,14 @@ button:focus-visible {
   }
   .sidebar__role { font-size: 1rem; margin-bottom: 0.65rem; }
   .sidebar__tagline { margin-bottom: 1.1rem; }
-  .sidebar__wave { margin-bottom: 1.3rem; }
-  .sidebar__wave svg { height: 46px; }
+  .sidebar__orb { margin-bottom: 1.3rem; }
+  .sidebar__orb-stage { height: 138px; }
   .sidebar__nav { gap: 0.55rem; }
   .sidebar__cta { margin-bottom: 0.8rem; }
 }
 
 @media (min-width: 1121px) and (max-height: 780px) {
-  .sidebar__wave { display: none; }
+  .sidebar__orb { display: none; }
 }
 
 @media (max-width: 1120px) {
@@ -1043,7 +1064,8 @@ button:focus-visible {
   .sidebar__name { font-size: clamp(2.7rem, 10vw, 3.6rem); }
   .sidebar__role { font-size: 1rem; }
   .sidebar__tagline { margin-bottom: 1.4rem; }
-  .sidebar__wave { margin-bottom: 1.6rem; }
+  .sidebar__orb { margin-bottom: 1.6rem; }
+  .sidebar__orb-stage { height: 156px; }
 
   .stats { grid-template-columns: repeat(2, 1fr); gap: 1.25rem 1.4rem; }
   .capabilities,
@@ -1089,12 +1111,12 @@ button:focus-visible {
 /* ============ PRINT ============ */
 
 @media print {
-  .spotlight, .theme-toggle, .skip-link, .sidebar__wave, .sidebar__nav,
+  .spotlight, .theme-toggle, .skip-link, .sidebar__orb, .sidebar__nav,
   .sidebar__bottom, .sidebar__cta, body::after { display: none !important; }
   .layout { display: block; max-width: none; padding: 0; }
   .sidebar { position: static; height: auto; padding: 0 0 1.5rem; }
   .content { padding: 0; }
   .section { padding-bottom: 2rem; break-inside: avoid; }
-  .reveal { opacity: 1; transform: none; }
+  .reveal { opacity: 1; translate: none; }
   body { background: #fff; color: #111; }
 }

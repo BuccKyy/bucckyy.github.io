@@ -117,19 +117,11 @@
           safe to use.
         </p>
 
-        <div class="sidebar__wave" aria-hidden="true">
-          <svg viewBox="0 0 400 90" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="wavegrad" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" style="stop-color: var(--accent)"/>
-                <stop offset="0.5" style="stop-color: var(--accent2)"/>
-                <stop offset="1" style="stop-color: var(--accent3)"/>
-              </linearGradient>
-            </defs>
-            <path class="wave-path" fill="none"
-              d="M0,58 L40,58 L52,50 L62,72 L76,22 L90,78 L104,42 L118,54 L150,54 L180,58 L220,58 L232,50 L242,72 L256,22 L270,78 L284,42 L298,54 L330,54 L360,58 L400,58" />
-          </svg>
-          <p class="sidebar__wave-label mono">sig: ppg · signals in, decisions out</p>
+        <div class="sidebar__orb" aria-hidden="true">
+          <div class="sidebar__orb-stage">
+            <canvas id="signal-orb"></canvas>
+          </div>
+          <p class="sidebar__wave-label mono">sig: neural field · signals in, decisions out</p>
         </div>
 
         <nav class="sidebar__nav mono" aria-label="Sections">
