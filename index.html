@@ -34,6 +34,7 @@
   <link rel="preload" href="fonts/ibm-plex-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/ibm-plex-mono-500-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="hathaway.css">
   <noscript><style>
     .reveal { opacity: 1; transform: none; }
     #clock { display: none; }
@@ -89,6 +90,8 @@
 </head>
 <body>
 
+  <canvas id="hw-scene" aria-hidden="true"></canvas>
+  <div class="hw-overlay" aria-hidden="true"></div>
   <canvas id="bg-field" aria-hidden="true"></canvas>
 
   <div class="spotlight" aria-hidden="true"></div>
@@ -1057,5 +1060,6 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
   <div class="telemetry-toast mono" id="telemetry-toast" role="status" aria-live="polite" hidden></div>
 
   <script src="script.js"></script>
+  <script type="module" src="hero3d.js"></script>
 </body>
 </html>
