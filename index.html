@@ -107,10 +107,15 @@
         <a href="#education" class="nav-link"><span class="nav-line"></span>education</a>
         <a href="#contact" class="nav-link"><span class="nav-line"></span>contact</a>
       </div>
-      <button id="theme-toggle" type="button" class="theme-toggle mono" aria-label="Toggle color theme" aria-pressed="false" title="Toggle color theme">
-        <span class="theme-toggle__dark" aria-hidden="true">◐ dark</span>
-        <span class="theme-toggle__light" aria-hidden="true">◑ light</span>
-      </button>
+      <div class="topnav__actions">
+        <button id="cmd-open-btn" type="button" class="cmd-trigger mono" aria-label="Open command palette (Command+K)" title="Open Command Palette (⌘K or /)">
+          <span>⌘K</span>
+        </button>
+        <button id="theme-toggle" type="button" class="theme-toggle mono" aria-label="Toggle color theme" aria-pressed="false" title="Toggle color theme">
+          <span class="theme-toggle__dark" aria-hidden="true">◐ dark</span>
+          <span class="theme-toggle__light" aria-hidden="true">◑ light</span>
+        </button>
+      </div>
     </div>
     <span class="topnav__progress" aria-hidden="true"></span>
   </nav>
@@ -200,6 +205,10 @@
               <button type="button" class="stage-btn" data-stage="vpg">3. 1st Deriv (VPG ΔV/Δt)</button>
               <button type="button" class="stage-btn" data-stage="peaks">4. Systolic Peak &amp; SBP Extraction</button>
             </div>
+            <div class="instrument__sim-controls" role="group" aria-label="Live sensor perturbation controls">
+              <button type="button" class="sim-btn" id="dsp-artifact-btn" aria-pressed="false">⚡ Inject Motion Artifact</button>
+              <button type="button" class="sim-btn" id="dsp-bpm-btn" data-bpm="72">♥ HR: 72 BPM</button>
+            </div>
             <div class="instrument__hint">
               <span class="hint__icon">▸</span>
               <span id="dsp-stage-desc">Raw 125Hz PPG optical sensor stream showing respiratory baseline wander (0.4Hz) and motion artifacts before filtering.</span>
@@ -216,9 +225,14 @@
               <span class="legend-item"><span class="legend-dot dot-gate"></span> Pydantic / HITL Gate</span>
               <span class="legend-item"><span class="legend-dot dot-erp"></span> SAP ERP Write</span>
             </div>
-            <button type="button" class="dag-trigger-btn" id="dag-run-btn">
-              <span class="play-icon" aria-hidden="true">▶</span> Simulate Pipeline Execution
-            </button>
+            <div class="dag__hud-actions">
+              <button type="button" class="dag-fault-btn" id="dag-fault-btn" aria-pressed="false">
+                ⚠ Simulate Bad Math: OFF
+              </button>
+              <button type="button" class="dag-trigger-btn" id="dag-run-btn">
+                <span class="play-icon" aria-hidden="true">▶</span> Execute Pipeline Trace
+              </button>
+            </div>
           </div>
 
           <div class="instrument__stage dag__stage">
@@ -226,14 +240,17 @@
           </div>
 
           <div class="dag__controls mono">
-            <div class="dag__node-pills" role="tablist" aria-label="Inspect pipeline node contract">
-              <button type="button" class="dag-pill" data-node="0">01. CRM Event</button>
-              <button type="button" class="dag-pill" data-node="1">02. FastAPI Router</button>
-              <button type="button" class="dag-pill" data-node="2">03. BM25 Grounding</button>
-              <button type="button" class="dag-pill" data-node="3">04. Claude Sonnet</button>
-              <button type="button" class="dag-pill active" data-node="4">05. Pydantic Gate</button>
-              <button type="button" class="dag-pill" data-node="5">06. Human Review</button>
-              <button type="button" class="dag-pill" data-node="6">07. SAP Read-Back</button>
+            <div class="dag__action-bar">
+              <div class="dag__node-pills" role="tablist" aria-label="Inspect pipeline node contract">
+                <button type="button" class="dag-pill" data-node="0">01. CRM Event</button>
+                <button type="button" class="dag-pill" data-node="1">02. FastAPI Router</button>
+                <button type="button" class="dag-pill" data-node="2">03. BM25 Grounding</button>
+                <button type="button" class="dag-pill" data-node="3">04. Claude Sonnet</button>
+                <button type="button" class="dag-pill is-selected" data-node="4">05. Pydantic Gate</button>
+                <button type="button" class="dag-pill" data-node="5">06. Human Review</button>
+                <button type="button" class="dag-pill" data-node="6">07. SAP Read-Back</button>
+              </div>
+              <span class="dag__active-step" id="dag-step-label">Click any node or run pipeline trace to inspect JSON contract</span>
             </div>
 
             <div class="dag__inspector" id="dag-inspector" aria-live="polite">
@@ -328,9 +345,9 @@
                 <h3>B2B Sales Automation Platform</h3>
               </div>
               <div class="pipeline-tabs mono" role="tablist" aria-label="CS-01 pipeline stages">
-                <button type="button" class="pipeline-tab active" role="tab" aria-selected="true" data-stage="input">1. Webhook &amp; CRM</button>
-                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="gate">2. 11-Metric Python Gate</button>
-                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="output">3. Audited Proposal</button>
+                <button type="button" class="pipeline-tab active" role="tab" aria-selected="true" data-stage="input" data-label="STAGE 01 // FASTAPI WEBHOOK &amp; MCP INGEST">1. Webhook &amp; CRM</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="gate" data-label="STAGE 02 // 11-METRIC PYTHON SCORING GATE">2. 11-Metric Python Gate</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="output" data-label="STAGE 03 // QC-VERIFIED PROPOSAL PAYLOAD">3. Audited Proposal</button>
               </div>
             </div>
 
@@ -346,6 +363,13 @@
                 </div>
                 <p class="case__outcome"><span class="mono">Outcome →</span> Research-to-proposal turnaround dropped from <strong>2–3 hours to 3 minutes</strong> (&gt;95% reduction), replacing gut feel with deterministic scoring.</p>
                 <p class="case__tags mono">multi-agent · MCP · FastAPI · Pydantic · Docker</p>
+                <details class="case__evidence">
+                  <summary class="mono">▸ Engineering Evidence &amp; Verification</summary>
+                  <div class="evidence__box mono">
+                    <p><strong>Scoring Gate:</strong> 11 weighted fit metrics computed in pure Python across 700+ historical CRM records before any LLM prompt is constructed.</p>
+                    <p><strong>MCP Transport:</strong> Streamable HTTP bridge with bearer token authentication, schema-validated tool arguments, and deterministic retry policy.</p>
+                  </div>
+                </details>
               </div>
 
               <div class="case__inspector mono" aria-live="polite">
@@ -387,9 +411,9 @@ draft_spec = ProposalDraftSchema(score=score, tier=tier, reasons=reason_codes)</
                 <h3>Inventory Intelligence &amp; Allocation System</h3>
               </div>
               <div class="pipeline-tabs mono" role="tablist" aria-label="CS-02 pipeline stages">
-                <button type="button" class="pipeline-tab active" role="tab" aria-selected="true" data-stage="input">1. Stock Snapshot</button>
-                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="gate">2. Python Solver</button>
-                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="output">3. Reason-Coded Brief</button>
+                <button type="button" class="pipeline-tab active" role="tab" aria-selected="true" data-stage="input" data-label="STAGE 01 // MULTI-WAREHOUSE SQL SNAPSHOT">1. Stock Snapshot</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="gate" data-label="STAGE 02 // PYTHON INVENTORY SOLVER">2. Python Solver</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="output" data-label="STAGE 03 // REASON-CODED ACTION BRIEF">3. Reason-Coded Brief</button>
               </div>
             </div>
 
@@ -405,6 +429,13 @@ draft_spec = ProposalDraftSchema(score=score, tier=tier, reasons=reason_codes)</
                 </div>
                 <p class="case__outcome"><span class="mono">Outcome →</span> 100% auditable inventory recommendations operations teams execute without recalculating numbers.</p>
                 <p class="case__tags mono">decision engine · Python · SQL · reason codes · abstention gates</p>
+                <details class="case__evidence">
+                  <summary class="mono">▸ Engineering Evidence &amp; Verification</summary>
+                  <div class="evidence__box mono">
+                    <p><strong>Zero-LLM Math Invariant:</strong> Days-of-inventory (DOI), safety stock buffers, and inter-warehouse transfer quantities are solved 100% in Python/NumPy.</p>
+                    <p><strong>Abstention Gate:</strong> Missing SKU lead-time or stale warehouse sync automatically triggers <code>INSUFFICIENT_TELEMETRY</code> instead of guessing.</p>
+                  </div>
+                </details>
               </div>
 
               <div class="case__inspector mono" aria-live="polite">
@@ -442,9 +473,9 @@ reasons = ["SOUTH_DOI_0.9D_CRITICAL", "NORTH_SURPLUS_140U"]</code></pre>
                 <h3>Human-Reviewed ERP Receipt Posting</h3>
               </div>
               <div class="pipeline-tabs mono" role="tablist" aria-label="CS-03 pipeline stages">
-                <button type="button" class="pipeline-tab active" role="tab" aria-selected="true" data-stage="input">1. OCR Draft &amp; Gate</button>
-                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="gate">2. Preflight &amp; Journal</button>
-                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="output">3. 5/5 SAP Read-Back</button>
+                <button type="button" class="pipeline-tab active" role="tab" aria-selected="true" data-stage="input" data-label="STAGE 01 // OCR CONFIDENCE &amp; HITL GATE">1. OCR Draft &amp; Gate</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="gate" data-label="STAGE 02 // SAP PREFLIGHT &amp; INTENT JOURNAL">2. Preflight &amp; Journal</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="output" data-label="STAGE 03 // 5/5 SAP READ-AFTER-WRITE PARITY">3. 5/5 SAP Read-Back</button>
               </div>
             </div>
 
@@ -460,6 +491,13 @@ reasons = ["SOUTH_DOI_0.9D_CRITICAL", "NORTH_SURPLUS_140U"]</code></pre>
                 </div>
                 <p class="case__outcome"><span class="mono">Outcome →</span> <strong>88/88 focused pytest checks passed</strong> and <strong>5/5 SAP read-back field checks matched</strong> on the isolated test database.</p>
                 <p class="case__tags mono">OCR · human-in-the-loop · SAP ERP · state machine · 88 pytest suite</p>
+                <details class="case__evidence">
+                  <summary class="mono">▸ Engineering Evidence &amp; Verification</summary>
+                  <div class="evidence__box mono">
+                    <p><strong>Test Suite:</strong> 88 focused pytest cases covering OCR field validation, state machine transitions, environment write guards, and timeout reconciliation.</p>
+                    <p><strong>Read-After-Write:</strong> Post-commit GET verifies 5/5 SAP fields (<code>DocEntry</code>, <code>CardCode</code>, <code>ItemCode</code>, <code>Quantity</code>, <code>Price</code>) against the journaled intent.</p>
+                  </div>
+                </details>
               </div>
 
               <div class="case__inspector mono" aria-live="polite">
@@ -499,9 +537,9 @@ resp = sap_client.post("/InventoryGenEntries", json=verified_payload)</code></pr
                 <h3>Enterprise Agent Operations &amp; Operator UIs</h3>
               </div>
               <div class="pipeline-tabs mono" role="tablist" aria-label="CS-04 pipeline stages">
-                <button type="button" class="pipeline-tab active" role="tab" aria-selected="true" data-stage="input">1. Mini-App Auth</button>
-                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="gate">2. 12-Table State</button>
-                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="output">3. Playwright E2E</button>
+                <button type="button" class="pipeline-tab active" role="tab" aria-selected="true" data-stage="input" data-label="STAGE 01 // OPERATOR MINI-APP HANDSHAKE">1. Mini-App Auth</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="gate" data-label="STAGE 02 // 12-TABLE RELATIONAL ROUTING">2. 12-Table State</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="output" data-label="STAGE 03 // PLAYWRIGHT E2E VERIFICATION">3. Playwright E2E</button>
               </div>
             </div>
 
@@ -517,6 +555,13 @@ resp = sap_client.post("/InventoryGenEntries", json=verified_payload)</code></pr
                 </div>
                 <p class="case__outcome"><span class="mono">Outcome →</span> Business rules live in the relational schema, actions are explicit, and operators inspect live dashboards, review queues, and status timelines.</p>
                 <p class="case__tags mono">12-table SQL · scheduled jobs · HTML/JS mini-apps · Playwright E2E</p>
+                <details class="case__evidence">
+                  <summary class="mono">▸ Engineering Evidence &amp; Verification</summary>
+                  <div class="evidence__box mono">
+                    <p><strong>Relational Core:</strong> 12 normalized tables track event lifecycles, specialist agent sessions, scheduled dispatches, and operator audit logs.</p>
+                    <p><strong>Browser E2E:</strong> Automated Playwright harness verifies <code>postMessage</code> auth handshakes, form submissions, file uploads, and status timeline updates.</p>
+                  </div>
+                </details>
               </div>
 
               <div class="case__inspector mono" aria-live="polite">
@@ -677,11 +722,9 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
 
       <!-- ============ OPEN SOURCE ============ -->
       <section class="section" id="open-source">
+        <h2 class="section__title reveal">Open Source &amp; Research</h2>
         <div class="repos-header reveal">
-          <div>
-            <h2 class="section__title">Open Source &amp; Research</h2>
-            <p class="section__sub mono">Selected repositories on github.com/BuccKyy — filter by engineering domain</p>
-          </div>
+          <p class="section__sub mono">Selected repositories on github.com/BuccKyy — filter by engineering domain</p>
           <div class="repo-filters mono" role="group" aria-label="Filter repositories by domain">
             <button type="button" class="repo-filter active" data-filter="all">All (9)</button>
             <button type="button" class="repo-filter" data-filter="signal">Signal &amp; Edge (3)</button>
@@ -901,11 +944,12 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
           </p>
           <a class="contact__email" href="mailto:trantrungduc313@gmail.com">trantrungduc313@gmail.com<span class="contact__email-arrow" aria-hidden="true">→</span></a>
           <div class="contact__links mono">
+            <button type="button" class="contact__btn" id="copy-email-btn" data-email="trantrungduc313@gmail.com">⧉ Copy Email Address</button>
             <a class="contact__btn" href="TranTrungDuc-AI-Engineer-CV.pdf" download>↓ Download CV (PDF)</a>
             <a class="contact__btn" href="https://github.com/BuccKyy" target="_blank" rel="me noopener">GitHub / BuccKyy ↗</a>
             <a class="contact__btn" href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="me noopener">LinkedIn Profile ↗</a>
           </div>
-          <p class="contact__note mono">Ho Chi Minh City · UTC+7 · Async-First Communication · Vietnamese / English</p>
+          <p class="contact__note mono">Ho Chi Minh City · UTC+7 · Async-First Communication · Press ⌘K or / for Quick Command Bar</p>
         </div>
       </section>
 
@@ -916,6 +960,57 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
 
     </main>
   </div>
+
+  <!-- ============ QUICK COMMAND PALETTE (⌘K / /) ============ -->
+  <div class="cmd-backdrop" id="cmd-palette" hidden role="dialog" aria-modal="true" aria-labelledby="cmd-palette-title">
+    <div class="cmd-modal mono">
+      <div class="cmd-modal__header">
+        <span id="cmd-palette-title">QUICK INSTRUMENT &amp; NAVIGATION PALETTE</span>
+        <button type="button" class="cmd-modal__close" id="cmd-close-btn" aria-label="Close command palette">ESC</button>
+      </div>
+      <div class="cmd-modal__search-wrap">
+        <label for="cmd-input" class="cmd-modal__prompt" aria-hidden="true">&gt;</label>
+        <input type="text" id="cmd-input" class="cmd-modal__input mono" placeholder="Type to filter commands (e.g. 'sap', 'dsp', 'fault', 'cv', 'email')..." autocomplete="off" />
+      </div>
+      <div class="cmd-modal__list" id="cmd-list" role="listbox" aria-label="Available commands">
+        <button type="button" class="cmd-item" data-cmd="dsp-artifact">
+          <span class="cmd-item__tag" data-domain="signal">DSP</span>
+          <span class="cmd-item__label">Toggle PPG Motion Artifact Injection (125Hz Sensor)</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="dag-fault">
+          <span class="cmd-item__tag" data-domain="verify">GATE</span>
+          <span class="cmd-item__label">Simulate LLM Bad Math Caught by Pydantic Gate (7-Node DAG)</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="goto-cs01">
+          <span class="cmd-item__tag" data-domain="agentic">CS-01</span>
+          <span class="cmd-item__label">Inspect B2B Sales Automation Platform (7 Agents · 3min)</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="goto-cs02">
+          <span class="cmd-item__tag" data-domain="verify">CS-02</span>
+          <span class="cmd-item__label">Inspect Inventory Intelligence &amp; Allocation Solver</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="goto-cs03">
+          <span class="cmd-item__tag" data-domain="verify">CS-03</span>
+          <span class="cmd-item__label">Inspect Human-Reviewed SAP ERP Receipt Posting (88/88 Tests)</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="goto-cs04">
+          <span class="cmd-item__tag" data-domain="agentic">CS-04</span>
+          <span class="cmd-item__label">Inspect Enterprise Agent Operations &amp; 12-Table Schema</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="copy-email">
+          <span class="cmd-item__tag" data-domain="agentic">COPY</span>
+          <span class="cmd-item__label">Copy Email Address (trantrungduc313@gmail.com)</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="toggle-theme">
+          <span class="cmd-item__tag" data-domain="signal">UI</span>
+          <span class="cmd-item__label">Switch Dark / Light Instrument Theme</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TELEMETRY TOAST ============ -->
+  <div class="telemetry-toast mono" id="telemetry-toast" role="status" aria-live="polite" hidden></div>
 
   <script src="script.js"></script>
 </body>
