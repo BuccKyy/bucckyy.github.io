@@ -1,45 +1,107 @@
-// Theme toggle (initial theme set inline in <head> before paint)
-document.getElementById('theme-toggle').addEventListener('click', function () {
-  var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-});
+(function () {
+  'use strict';
 
-// Reveal-on-scroll
-var reveals = document.querySelectorAll('.reveal');
-if ('IntersectionObserver' in window) {
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        io.unobserve(e.target);
-      }
+  var root = document.documentElement;
+  var themeToggle = document.getElementById('theme-toggle');
+
+  function saveTheme(theme) {
+    try {
+      localStorage.setItem('theme', theme);
+    } catch (err) {
+      // Storage can be unavailable in private or sandboxed contexts.
+    }
+  }
+
+  function syncThemeButton() {
+    if (!themeToggle) return;
+    var isDark = root.getAttribute('data-theme') === 'dark';
+    themeToggle.setAttribute('aria-pressed', String(isDark));
+    themeToggle.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', isDark ? '#0b0e14' : '#f6f3ec');
+  }
+
+  if (themeToggle) {
+    syncThemeButton();
+    themeToggle.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      saveTheme(next);
+      syncThemeButton();
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  reveals.forEach(function (el) { io.observe(el); });
+  }
 
-  // Sidebar nav scrollspy — highlight the section in view
-  var links = document.querySelectorAll('.nav-link');
-  var spy = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) {
-        links.forEach(function (l) {
-          l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
+  var reveals = document.querySelectorAll('.reveal');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var supportsIO = 'IntersectionObserver' in window;
+
+  if (supportsIO && !reduceMotion) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('visible'); });
+  }
+
+  // Highlight the section currently in view. This is separate from the
+  // reveal animation so it still works when reduced motion is enabled.
+  if (supportsIO) {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+
+    function setActive(id) {
+      links.forEach(function (link) {
+        var active = link.getAttribute('href') === '#' + id;
+        link.classList.toggle('active', active);
+        if (active) {
+          link.setAttribute('aria-current', 'location');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+    }
+
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { rootMargin: '-35% 0px -55% 0px' });
+
+    links.forEach(function (link) {
+      var section = document.getElementById(link.getAttribute('href').slice(1));
+      if (section) spy.observe(section);
+    });
+
+    setActive(location.hash ? location.hash.slice(1) : 'about');
+  }
+
+  // Cursor spotlight, skipped on touch devices and for reduced motion.
+  // Reads are batched into a single animation frame to avoid layout churn.
+  if (window.matchMedia('(pointer: fine)').matches && !reduceMotion) {
+    var spot = document.querySelector('.spotlight');
+    if (spot) {
+      var pending = false;
+      var mx = 0;
+      var my = 0;
+      var raf = window.requestAnimationFrame || function (fn) { fn(); };
+
+      document.addEventListener('mousemove', function (event) {
+        mx = event.clientX;
+        my = event.clientY;
+        if (pending) return;
+        pending = true;
+        raf(function () {
+          spot.style.setProperty('--mx', mx + 'px');
+          spot.style.setProperty('--my', my + 'px');
+          pending = false;
         });
-      }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px' });
-  document.querySelectorAll('.section').forEach(function (s) { spy.observe(s); });
-} else {
-  reveals.forEach(function (el) { el.classList.add('visible'); });
-}
-
-// Cursor spotlight (skipped for touch devices and reduced motion)
-if (window.matchMedia('(pointer: fine)').matches &&
-    !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  var spot = document.querySelector('.spotlight');
-  document.addEventListener('mousemove', function (e) {
-    spot.style.setProperty('--mx', e.clientX + 'px');
-    spot.style.setProperty('--my', e.clientY + 'px');
-  }, { passive: true });
-}
+      }, { passive: true });
+    }
+  }
+})();
