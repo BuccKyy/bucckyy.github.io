@@ -42,7 +42,7 @@
     trust: {
       chip: "Why trust the output?", focus: 2,
       a: "Scoring, arithmetic and state transitions live in Python. Pydantic gates, human review and read-after-write checks sit between the model and anything that writes to SAP.",
-      stats: [["Tests passed", 88, "/88"], ["SAP read-backs matched", "5/5"], ["Corrupt writes", "zero"]],
+      stats: [["Tests passed", 88, "/88"], ["SAP read-backs matched", "5/5"], ["Test environment", "SAP sandbox"]],
     },
     ops: {
       chip: null, focus: 3,
@@ -66,6 +66,14 @@
   var selected = -1;       // radar lock: contact index, -1 = all
   var token = 0;           // cancels an answer that is still typing
 
+  // The visible log types out character by character; announce only the finished answer.
+  logEl.removeAttribute("role");
+  logEl.setAttribute("aria-live", "off");
+  var srEl = document.createElement("div");
+  srEl.setAttribute("aria-live", "polite");
+  srEl.style.cssText = "position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap";
+  logEl.parentNode.insertBefore(srEl, logEl);
+
   // ---------- voice bars ----------
   for (var i = 0; i < 28; i++) {
     var bar = document.createElement("i");
@@ -81,10 +89,26 @@
     b.type = "button";
     b.className = "comms__chip mono";
     b.textContent = QA[key].chip;
+    b.setAttribute("aria-pressed", "false");
     b.addEventListener("click", function () { ask(key); });
     chipsEl.appendChild(b);
     chipBtns[key] = b;
   });
+
+  // Keyboard route to every radar contact (the canvas itself is pointer-only).
+  var contactsEl = document.createElement("div");
+  contactsEl.className = "comms__contacts sr-only-until-focus";
+  contactsEl.setAttribute("role", "group");
+  contactsEl.setAttribute("aria-label", "Radar contacts");
+  CONTACTS.forEach(function (c) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "comms__chip comms__contact-btn mono";
+    b.textContent = c.tag + " · " + c.name;
+    b.addEventListener("click", function () { ask(c.qa); });
+    contactsEl.appendChild(b);
+  });
+  chipsEl.parentNode.appendChild(contactsEl);
 
   // ---------- stats ----------
   function renderStats(list, myToken) {
@@ -115,7 +139,10 @@
     var my = ++token;
     selected = qa.focus;
     labelEl.textContent = selected < 0 ? "SCANNING · 5 CONTACTS" : "LOCKED · " + CONTACTS[selected].tag + " · " + CONTACTS[selected].name;
-    Object.keys(chipBtns).forEach(function (k) { chipBtns[k].classList.toggle("is-active", k === key); });
+    Object.keys(chipBtns).forEach(function (k) {
+      chipBtns[k].classList.toggle("is-active", k === key);
+      chipBtns[k].setAttribute("aria-pressed", String(k === key));
+    });
 
     logEl.textContent = "";
     var q = document.createElement("p");
@@ -132,14 +159,15 @@
     var n = 0, text = qa.a;
     (function step() {
       if (my !== token) return;
-      n = Math.min(text.length, n + 2);
+      n = Math.min(text.length, n + 4);
       a.textContent = text.slice(0, n);
-      if (n < text.length) setTimeout(step, 16); else finish();
+      if (n < text.length) setTimeout(step, 14); else finish();
     })();
 
     function finish() {
       if (my !== token) return;
       a.textContent = qa.a;
+      srEl.textContent = (qa.chip || CONTACTS[qa.focus].tag + " status") + ". " + qa.a;
       voiceEl.classList.remove("is-talking");
       if (qa.link) {
         var l = document.createElement("a");

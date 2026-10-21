@@ -331,6 +331,59 @@ html, body { overflow-x: clip; }
 .content::before { opacity: var(--veil, 0); transition: opacity 0.5s ease; }
 [data-clear="1"] .content::before { opacity: 0; }
 
+/* ---------- audit fixes ---------- */
+/* chamfered controls clip their own outline, so draw the focus ring inside the box */
+.cv-button:focus-visible, .comms__chip:focus-visible, .pipeline-tab:focus-visible, .stage-btn:focus-visible,
+.sim-btn:focus-visible, .dag-pill:focus-visible, .repo-filter:focus-visible, .contact__btn:focus-visible,
+.hero__ghost:focus-visible, .nav-cta:focus-visible, .comms__contact-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+  box-shadow: inset 0 0 0 4px var(--accent2);
+}
+/* "PDF" tag was orange on an orange button */
+.cv-button .cv-button__meta { color: #0a0716; opacity: 0.75; }
+/* hero text sits on a darker floor and the clock gets its own pill */
+.hero__stage::before { height: 78%; background: linear-gradient(to top, rgba(7, 6, 26, 0.96) 0%, rgba(7, 6, 26, 0.86) 50%, rgba(7, 6, 26, 0) 100%); }
+.hero__meta { background: rgba(7, 6, 26, 0.72); padding: 0.25rem 0.8rem; text-shadow: none; }
+.hero__status { color: #ece9fb; }
+/* bare text blocks over art get their own backing */
+.section__sub, .contact__note, .awards__lang, .also__title, .principles__title {
+  background: rgba(7, 6, 26, 0.66);
+  padding: 0.5rem 0.8rem;
+}
+.section__sub { color: #ece9fb; font-size: 0.9rem; }
+.about, .edu-card, .awards { background: rgba(10, 9, 32, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.about { padding: 1.2rem 1.4rem; }
+.content::before { background: radial-gradient(ellipse 66% 120% at 50% 50%, rgba(7, 6, 26, 0.85) 0%, rgba(7, 6, 26, 0.62) 72%, rgba(7, 6, 26, 0) 100%); }
+/* the sample payloads are illustrative, not client data */
+.case__inspector::after {
+  content: "Illustrative payload · not client data";
+  display: block;
+  padding: 0.45rem 0.9rem 0.6rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.comms__bar { font-size: 0.8rem; }
+.nav-cta { display: none; }
+.sr-only-until-focus:not(:focus-within) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.comms__contacts { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+@media (max-width: 760px) {
+  /* Contact must be reachable from the nav on phones; the palette is keyboard-only */
+  .nav-cta {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 1rem;
+    color: #0a0716; background: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.78rem;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+  .cmd-trigger { display: none; }
+  .nav-link, .comms__chip, .pipeline-tab, .repo-filter, .contact__btn, #copy-email-btn, summary.mono, .hero__socials a {
+    min-height: 44px; display: inline-flex; align-items: center;
+  }
+  .hero__socials a { padding: 0 0.5rem; }
+}
+
 /* readable panels */
 [data-theme="dark"], [data-theme="light"] {
   --bg-panel: rgba(10, 9, 32, 0.8);
@@ -357,3 +410,7 @@ html, body { overflow-x: clip; }
   #hw-scene, .hw-overlay { display: none !important; }
   html { background: #fff; }
 }
+
+.comms__contact-btn { color: var(--ink); background: rgba(7, 6, 26, 0.85); }
+
+.hero__ghost, .nav-cta { text-decoration: none; }
