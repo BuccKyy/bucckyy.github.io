@@ -36,32 +36,34 @@
 }
 
 [data-theme="dark"] {
-  --bg: #0e0b14;
-  --bg-panel: #161221;
-  --bg-subtle: #211a30;
-  --ink: #f4eef2;
-  --ink-muted: #ab9cb8;
-  --accent: #ff85b3;
-  --accent2: #4fd6be;
-  --accent3: #ffb454;
-  --accent-dim: rgba(255, 133, 179, 0.45);
-  --line: #2e233e;
-  --grid-line: rgba(255, 143, 184, 0.06);
+  --bg: #080c14;
+  --bg-panel: #0e1524;
+  --bg-subtle: #151f33;
+  --ink: #eef2f8;
+  --ink-muted: #8fa2be;
+  --accent: #f5b700;
+  --accent2: #00e5a3;
+  --accent3: #ff334b;
+  --gundam-blue: #2563eb;
+  --accent-dim: rgba(245, 183, 0, 0.45);
+  --line: #1e2d47;
+  --grid-line: rgba(0, 229, 163, 0.06);
   color-scheme: dark;
 }
 
 [data-theme="light"] {
-  --bg: #fbf6f8;
+  --bg: #f1f5f9;
   --bg-panel: #ffffff;
-  --bg-subtle: #f4e8ee;
-  --ink: #1e1624;
-  --ink-muted: #695975;
-  --accent: #c82869;
-  --accent2: #0e7490;
-  --accent3: #b2580a;
-  --accent-dim: rgba(200, 40, 105, 0.45);
-  --line: #e4d2dc;
-  --grid-line: rgba(200, 40, 105, 0.05);
+  --bg-subtle: #e2e8f0;
+  --ink: #0c1424;
+  --ink-muted: #475569;
+  --accent: #d97706;
+  --accent2: #059669;
+  --accent3: #e11d48;
+  --gundam-blue: #1d4ed8;
+  --accent-dim: rgba(217, 119, 6, 0.45);
+  --line: #cbd5e1;
+  --grid-line: rgba(5, 150, 105, 0.06);
   color-scheme: light;
 }
 
@@ -94,9 +96,9 @@ body {
   font-family: var(--font-display);
   background-color: var(--bg);
   background-image:
-    radial-gradient(ellipse 75% 48% at 82% 6%, rgba(255, 133, 179, 0.14), transparent 70%),
-    radial-gradient(ellipse 60% 42% at 12% 16%, rgba(255, 180, 84, 0.07), transparent 68%),
-    radial-gradient(ellipse 70% 50% at 50% 95%, rgba(255, 133, 179, 0.08), transparent 72%);
+    radial-gradient(ellipse 75% 48% at 84% 8%, rgba(0, 229, 163, 0.11), transparent 70%),
+    radial-gradient(ellipse 60% 42% at 14% 16%, rgba(37, 99, 235, 0.12), transparent 68%),
+    radial-gradient(ellipse 70% 50% at 50% 95%, rgba(245, 183, 0, 0.06), transparent 72%);
   background-attachment: fixed;
   color: var(--ink);
   line-height: 1.6;
@@ -1011,12 +1013,12 @@ body {
   line-height: 1.45;
 }
 
-/* ============ CASES (FULL-WIDTH ARCHITECTURAL SELECTED WORK) ============ */
+/* ============ CASES (MOBILE SUIT GUNDAM HANGAR DECK) ============ */
 
 .cases {
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
+  gap: 1.85rem;
 }
 
 .case {
@@ -1026,13 +1028,68 @@ body {
   min-width: 0;
   max-width: 100%;
   border: 1px solid var(--line);
-  background: var(--bg-panel);
-  padding: 1.65rem 1.6rem 1.5rem;
-  border-radius: 6px;
+  background:
+    linear-gradient(225deg, var(--domain-color, var(--accent)) 9px, transparent 9px),
+    linear-gradient(45deg, var(--domain-color, var(--accent)) 9px, transparent 9px),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-subtle) 55%, var(--bg-panel)) 0%, var(--bg-panel) 100%);
+  padding: 1.35rem 1.6rem 1.55rem;
+  clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 13px 100%, 0 calc(100% - 13px));
+  box-shadow: 0 6px 14px -4px rgba(0, 0, 0, 0.42);
   transition: border-color 0.25s ease;
+}
+.case::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 13px;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--gundam-blue) 0%,
+    var(--gundam-blue) 32%,
+    var(--accent) 32%,
+    var(--accent) 62%,
+    var(--accent3) 62%,
+    var(--accent3) 82%,
+    var(--accent2) 82%,
+    var(--accent2) 100%
+  );
+  pointer-events: none;
 }
 .case:hover {
   border-color: var(--domain-color, var(--accent));
+}
+
+/* Mobile Suit Gundam Spec Telemetry Strip */
+.ms-spec-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem 1rem;
+  padding: 0.48rem 0.85rem;
+  margin-bottom: 1.05rem;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  border: 1px solid var(--line);
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+}
+.ms-spec__unit {
+  color: var(--accent);
+  font-weight: 600;
+}
+.ms-spec__item {
+  color: var(--ink-muted);
+}
+.ms-spec__item strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.ms-spec__status {
+  color: var(--accent2);
+  font-weight: 600;
 }
 
 .case__header {
@@ -1188,17 +1245,20 @@ body {
   color: var(--ink);
 }
 
-/* Right-hand Interactive Code/Payload Inspector */
+/* Right-hand Gundam Linear Seat Cockpit MFD Inspector */
 .case__inspector {
   min-width: 0;
   max-width: 100%;
-  background: #090c12;
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  padding: 0.75rem 0.9rem;
+  background:
+    linear-gradient(225deg, var(--accent2) 6.5px, transparent 6.5px),
+    linear-gradient(45deg, var(--accent2) 6.5px, transparent 6.5px),
+    #060a11;
+  border: 1px solid color-mix(in srgb, var(--accent2) 35%, var(--line));
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  padding: 0.8rem 0.95rem;
 }
 [data-theme="light"] .case__inspector {
-  background: #131720;
+  background: #0c1322;
 }
 
 .case__inspector-bar {

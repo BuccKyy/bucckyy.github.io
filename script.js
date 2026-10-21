@@ -146,7 +146,7 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  /* ============ BACKGROUND SAKURA PETAL & KOMOREBI CANVAS ============ */
+  /* ============ BACKGROUND MOBILE SUIT GUNDAM COCKPIT HUD & PSYCHO-FRAME CANVAS ============ */
   (function initBgCanvas() {
     var canvas = document.getElementById("bg-field");
     if (!canvas || !canvas.getContext) return;
@@ -165,242 +165,240 @@
     window.addEventListener("resize", resize, { passive: true });
     resize();
 
-    var rightBlossoms = [
-      { ox: 65, oy: 74, scale: 1.05, rot: 0.25, alpha: 0.72 },
-      { ox: 125, oy: 98, scale: 1.25, rot: -0.32, alpha: 0.82 },
-      { ox: 198, oy: 124, scale: 0.92, rot: 0.52, alpha: 0.76 },
-      { ox: 278, oy: 142, scale: 1.08, rot: -0.14, alpha: 0.78 },
-      { ox: 322, oy: 104, scale: 0.74, rot: 0.38, alpha: 0.64 },
-      { ox: 378, oy: 164, scale: 0.84, rot: -0.42, alpha: 0.66 },
-      { ox: 432, oy: 184, scale: 0.64, rot: 0.24, alpha: 0.54 },
-      { ox: 168, oy: 164, scale: 0.96, rot: 0.68, alpha: 0.74 },
-      { ox: 235, oy: 210, scale: 1.02, rot: -0.26, alpha: 0.72 },
-      { ox: 305, oy: 244, scale: 0.78, rot: 0.48, alpha: 0.62 }
-    ];
+    var hudClock = 0;
+    var yawTarget = 0, yawCurrent = 0;
+    var pitchTarget = 0, pitchCurrent = 0;
 
-    var leftBlossoms = [
-      { ox: 48, oy: 78, scale: 0.92, rot: -0.28, alpha: 0.66 },
-      { ox: 118, oy: 108, scale: 1.06, rot: 0.42, alpha: 0.72 },
-      { ox: 192, oy: 144, scale: 0.82, rot: -0.35, alpha: 0.64 },
-      { ox: 268, oy: 178, scale: 0.68, rot: 0.22, alpha: 0.54 },
-      { ox: 158, oy: 184, scale: 0.76, rot: 0.58, alpha: 0.58 }
-    ];
-
-    function drawFullSakuraFlower(x, y, scale, rot, alpha, sway) {
-      ctx.save();
-      ctx.translate(x + sway * 4, y + Math.abs(sway) * 1.5);
-      ctx.rotate(rot + sway * 0.08);
-      ctx.scale(scale, scale);
-
-      for (var k = 0; k < 5; k++) {
-        ctx.save();
-        ctx.rotate((k * Math.PI * 2) / 5);
-        ctx.fillStyle = "rgba(255, 148, 190, " + (alpha * 0.68).toFixed(2) + ")";
-        ctx.strokeStyle = "rgba(255, 220, 235, " + (alpha * 0.55).toFixed(2) + ")";
-        ctx.lineWidth = 0.8;
-
-        ctx.beginPath();
-        ctx.moveTo(0, -3);
-        ctx.bezierCurveTo(-6, -12, -13, -22, -7.5, -29);
-        ctx.lineTo(-2.5, -32);
-        ctx.lineTo(0, -27.5);
-        ctx.lineTo(2.5, -32);
-        ctx.lineTo(7.5, -29);
-        ctx.bezierCurveTo(13, -22, 6, -12, 0, -3);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-        ctx.restore();
-      }
-
-      // Golden Sakura Stamens & Pistil
-      ctx.fillStyle = "rgba(255, 180, 84, " + (alpha * 0.85).toFixed(2) + ")";
-      ctx.beginPath();
-      ctx.arc(0, 0, 3.8, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = "rgba(255, 240, 246, " + (alpha * 0.85).toFixed(2) + ")";
-      for (var st = 0; st < 5; st++) {
-        var ang = (st * Math.PI * 2) / 5 + 0.3;
-        ctx.beginPath();
-        ctx.arc(Math.cos(ang) * 6.5, Math.sin(ang) * 6.5, 1.2, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.restore();
-    }
-
-    var breezeClock = 0;
-
-    function drawSakuraCanopy(advance) {
-      if (advance) breezeClock += 0.014;
-      var sway = Math.sin(breezeClock);
-      var canopyScale = w < 768 ? 0.62 : 1;
-
-      // 1. Anime Twilight Moon Halo & Japanese Torii Silhouette (top-right sky)
-      var moonX = w - 155 * canopyScale;
-      var moonY = 128 * canopyScale + 24;
-      var grad = ctx.createRadialGradient(moonX, moonY, 8, moonX, moonY, 150 * canopyScale);
-      grad.addColorStop(0, "rgba(255, 133, 179, 0.22)");
-      grad.addColorStop(0.55, "rgba(255, 180, 84, 0.07)");
-      grad.addColorStop(1, "rgba(255, 133, 179, 0)");
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(moonX, moonY, 150 * canopyScale, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.strokeStyle = "rgba(255, 165, 202, 0.22)";
-      ctx.fillStyle = "rgba(255, 133, 179, 0.04)";
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      ctx.arc(moonX, moonY, 52 * canopyScale, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-
-      // Torii Gate silhouette inside the Moon
-      ctx.save();
-      ctx.translate(moonX, moonY + 24 * canopyScale);
-      ctx.scale(canopyScale, canopyScale);
-      ctx.strokeStyle = "rgba(255, 165, 202, 0.24)";
-      ctx.lineWidth = 2;
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(-32, 0);
-      ctx.quadraticCurveTo(0, -8, 32, 0);
-      ctx.moveTo(-26, 8);
-      ctx.lineTo(26, 8);
-      ctx.moveTo(-18, 0);
-      ctx.lineTo(-20, 28);
-      ctx.moveTo(18, 0);
-      ctx.lineTo(20, 28);
-      ctx.moveTo(0, -1);
-      ctx.lineTo(0, 8);
-      ctx.stroke();
-      ctx.restore();
-
-      // 2. Right Overhanging Sakura Boughs
-      ctx.save();
-      ctx.strokeStyle = "rgba(125, 86, 122, 0.48)";
-      ctx.lineCap = "round";
-      ctx.lineWidth = 4.8 * canopyScale;
-      ctx.beginPath();
-      ctx.moveTo(w + 10, 54);
-      ctx.bezierCurveTo(w - 90 * canopyScale, 72, w - 165 * canopyScale, 110 + sway * 2, w - 255 * canopyScale, 132 + sway * 3);
-      ctx.bezierCurveTo(w - 325 * canopyScale, 150 + sway * 3.5, w - 385 * canopyScale, 152 + sway * 4, w - 445 * canopyScale, 184 + sway * 5);
-      ctx.stroke();
-
-      ctx.lineWidth = 3.0 * canopyScale;
-      ctx.beginPath();
-      ctx.moveTo(w - 110 * canopyScale, 84);
-      ctx.bezierCurveTo(w - 155 * canopyScale, 134, w - 205 * canopyScale, 182 + sway * 2, w - 285 * canopyScale, 224 + sway * 4);
-      ctx.stroke();
-      ctx.restore();
-
-      for (var r = 0; r < rightBlossoms.length; r++) {
-        var rb = rightBlossoms[r];
-        drawFullSakuraFlower(
-          w - rb.ox * canopyScale,
-          rb.oy * canopyScale + 20,
-          rb.scale * canopyScale,
-          rb.rot,
-          rb.alpha * (w < 768 ? 0.62 : 1),
-          sway * (0.6 + r * 0.08)
-        );
-      }
-
-      // 3. Left Overhanging Sakura Bough
-      ctx.save();
-      ctx.strokeStyle = "rgba(125, 86, 122, 0.38)";
-      ctx.lineCap = "round";
-      ctx.lineWidth = 3.8 * canopyScale;
-      ctx.beginPath();
-      ctx.moveTo(-10, 64);
-      ctx.bezierCurveTo(68 * canopyScale, 78, 138 * canopyScale, 114 + sway * 2, 228 * canopyScale, 156 + sway * 3.5);
-      ctx.stroke();
-      ctx.restore();
-
-      for (var l = 0; l < leftBlossoms.length; l++) {
-        var lb = leftBlossoms[l];
-        drawFullSakuraFlower(
-          lb.ox * canopyScale,
-          lb.oy * canopyScale + 20,
-          lb.scale * canopyScale,
-          lb.rot,
-          lb.alpha * (w < 768 ? 0.52 : 1),
-          sway * (0.5 + l * 0.1)
-        );
-      }
-    }
-
-    var petalPalette = [
-      "rgba(255, 143, 184, ",
-      "rgba(255, 179, 207, ",
-      "rgba(255, 209, 227, ",
-      "rgba(255, 117, 168, "
-    ];
-
-    var petals = [];
-    var petalCount = 34;
-    for (var i = 0; i < petalCount; i++) {
-      petals.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        s: 5.5 + Math.random() * 6.0,
-        vx: 0.28 + Math.random() * 0.55,
-        vy: 0.42 + Math.random() * 0.68,
-        swayPhase: Math.random() * Math.PI * 2,
-        swaySpeed: 0.012 + Math.random() * 0.018,
-        rot: Math.random() * Math.PI * 2,
-        vRot: (Math.random() - 0.5) * 0.024,
-        flipPhase: Math.random() * Math.PI * 2,
-        flipSpeed: 0.018 + Math.random() * 0.025,
-        colorBase: petalPalette[i % petalPalette.length],
-        alpha: 0.28 + Math.random() * 0.34
-      });
-    }
-
-    var motes = [];
-    var moteCount = 16;
-    for (var m = 0; m < moteCount; m++) {
-      motes.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: 1.1 + Math.random() * 1.8,
-        vy: -0.15 - Math.random() * 0.25,
-        vx: (Math.random() - 0.5) * 0.2,
-        phase: Math.random() * Math.PI * 2
-      });
-    }
-
-    var windTarget = 0;
-    var windCurrent = 0;
     window.addEventListener("mousemove", function (evt) {
-      if (!w) return;
-      windTarget = ((evt.clientX / w) - 0.5) * 0.55;
+      if (!w || !h) return;
+      yawTarget = ((evt.clientX / w) - 0.5) * 14;
+      pitchTarget = ((evt.clientY / h) - 0.5) * 10;
     }, { passive: true });
 
-    function drawSakuraPetal(p) {
+    // Drifting Minovsky & Psycho-Frame Hex/Diamond Particles
+    var minovskyPalette = [
+      "rgba(0, 229, 163, ",   // Psycho-Frame Emerald Green
+      "rgba(245, 183, 0, ",   // Gundam V-Fin Gold
+      "rgba(59, 130, 246, ",  // E.F.S.F. Cobalt Blue
+      "rgba(255, 51, 75, "    // NT-D Crimson
+    ];
+
+    var particles = [];
+    var particleCount = 32;
+    for (var i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        s: 2.2 + Math.random() * 4.2,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: -0.22 - Math.random() * 0.45,
+        rot: Math.random() * Math.PI * 2,
+        vRot: (Math.random() - 0.5) * 0.02,
+        phase: Math.random() * Math.PI * 2,
+        colorBase: minovskyPalette[i % minovskyPalette.length],
+        alpha: 0.22 + Math.random() * 0.36
+      });
+    }
+
+    function drawFinFunnel(x, y, scale, angle, glowAlpha) {
       ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.rot);
-      var flipScale = 0.35 + 0.65 * Math.abs(Math.cos(p.flipPhase));
-      ctx.scale(1, flipScale);
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+      ctx.scale(scale, scale);
 
-      var s = p.s;
-      ctx.fillStyle = p.colorBase + p.alpha.toFixed(2) + ")";
-      ctx.strokeStyle = "rgba(255, 224, 236, " + (p.alpha * 0.55).toFixed(2) + ")";
-      ctx.lineWidth = 0.65;
-
-      // Authentic Japanese Sakura notched petal silhouette
+      // Outer Lunar Titanium Fin Funnel Pylon
+      ctx.fillStyle = "rgba(21, 31, 51, 0.55)";
+      ctx.strokeStyle = "rgba(143, 162, 190, 0.38)";
+      ctx.lineWidth = 1.1;
       ctx.beginPath();
-      ctx.moveTo(0, s);
-      ctx.bezierCurveTo(-s * 0.88, s * 0.35, -s * 0.96, -s * 0.65, -s * 0.28, -s);
-      ctx.lineTo(0, -s * 0.66);
-      ctx.lineTo(s * 0.28, -s);
-      ctx.bezierCurveTo(s * 0.96, -s * 0.65, s * 0.88, s * 0.35, 0, s);
+      ctx.moveTo(-9, -46);
+      ctx.lineTo(9, -38);
+      ctx.lineTo(9, 38);
+      ctx.lineTo(-9, 46);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
+
+      // Inner Glowing Psycho-Frame Core Strip
+      ctx.fillStyle = "rgba(0, 229, 163, " + (0.35 + glowAlpha * 0.35).toFixed(2) + ")";
+      ctx.beginPath();
+      ctx.moveTo(-3, -34);
+      ctx.lineTo(3, -30);
+      ctx.lineTo(3, 30);
+      ctx.lineTo(-3, 34);
+      ctx.closePath();
+      ctx.fill();
+
+      // Gold Thruster Tip
+      ctx.fillStyle = "rgba(245, 183, 0, 0.55)";
+      ctx.fillRect(-5, -42, 10, 4);
       ctx.restore();
+    }
+
+    function drawGundamCockpitHUD(advance) {
+      if (advance) hudClock += 0.014;
+      var pulse = 0.5 + 0.5 * Math.sin(hudClock * 2.2);
+      var hudScale = w < 768 ? 0.58 : 1;
+
+      var cx = w - 195 * hudScale + yawCurrent * 0.6;
+      var cy = 152 * hudScale + 24 + pitchCurrent * 0.6;
+
+      // 1. Psycho-Frame Radial Aura
+      var aura = ctx.createRadialGradient(cx, cy, 10, cx, cy, 185 * hudScale);
+      aura.addColorStop(0, "rgba(0, 229, 163, 0.16)");
+      aura.addColorStop(0.5, "rgba(37, 99, 235, 0.08)");
+      aura.addColorStop(1, "rgba(0, 229, 163, 0)");
+      ctx.fillStyle = aura;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 185 * hudScale, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 2. 360° Linear Seat Panoramic Radar Rings
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.scale(hudScale, hudScale);
+
+      ctx.strokeStyle = "rgba(0, 229, 163, 0.22)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(0, 0, 148, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.save();
+      ctx.rotate(hudClock * 0.25);
+      ctx.setLineDash([8, 12]);
+      ctx.strokeStyle = "rgba(245, 183, 0, 0.26)";
+      ctx.beginPath();
+      ctx.arc(0, 0, 122, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+
+      // Pitch Ladder & Target Brackets
+      ctx.strokeStyle = "rgba(143, 162, 190, 0.22)";
+      ctx.beginPath();
+      ctx.moveTo(-165, 0); ctx.lineTo(-132, 0);
+      ctx.moveTo(132, 0); ctx.lineTo(165, 0);
+      ctx.moveTo(0, -165); ctx.lineTo(0, -132);
+      ctx.moveTo(0, 132); ctx.lineTo(0, 165);
+      ctx.stroke();
+
+      // 3. Iconic Mobile Suit Gundam Quad V-Fin & Twin-Eye Head Crest
+      // Helmet Crest & Cheek Guards
+      ctx.fillStyle = "rgba(238, 242, 248, 0.07)";
+      ctx.strokeStyle = "rgba(238, 242, 248, 0.26)";
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(0, -54);
+      ctx.lineTo(38, -24);
+      ctx.lineTo(32, 32);
+      ctx.lineTo(14, 52);
+      ctx.lineTo(0, 58);
+      ctx.lineTo(-14, 52);
+      ctx.lineTo(-32, 32);
+      ctx.lineTo(-38, -24);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Iconic Golden Quad V-Fin Antenna (Upper & Lower Blades)
+      ctx.fillStyle = "rgba(245, 183, 0, 0.72)";
+      ctx.strokeStyle = "rgba(255, 224, 102, 0.85)";
+      ctx.lineWidth = 1.2;
+
+      // Left Main V-Fin Blade
+      ctx.beginPath();
+      ctx.moveTo(-6, -24);
+      ctx.lineTo(-118, -86);
+      ctx.lineTo(-104, -66);
+      ctx.lineTo(-8, -14);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Right Main V-Fin Blade
+      ctx.beginPath();
+      ctx.moveTo(6, -24);
+      ctx.lineTo(118, -86);
+      ctx.lineTo(104, -66);
+      ctx.lineTo(8, -14);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Left Secondary V-Fin Blade
+      ctx.beginPath();
+      ctx.moveTo(-8, -16);
+      ctx.lineTo(-88, -48);
+      ctx.lineTo(-76, -34);
+      ctx.lineTo(-8, -9);
+      ctx.closePath();
+      ctx.fill();
+
+      // Right Secondary V-Fin Blade
+      ctx.beginPath();
+      ctx.moveTo(8, -16);
+      ctx.lineTo(88, -48);
+      ctx.lineTo(76, -34);
+      ctx.lineTo(8, -9);
+      ctx.closePath();
+      ctx.fill();
+
+      // Central Crimson V-Fin Forehead Crest Sensor
+      ctx.fillStyle = "rgba(255, 51, 75, 0.88)";
+      ctx.strokeStyle = "rgba(255, 180, 190, 0.8)";
+      ctx.beginPath();
+      ctx.moveTo(0, -36);
+      ctx.lineTo(10, -22);
+      ctx.lineTo(7, -6);
+      ctx.lineTo(-7, -6);
+      ctx.lineTo(-10, -22);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Glowing Emerald Twin-Eye Cameras (Left & Right)
+      var eyeAlpha = 0.65 + pulse * 0.32;
+      ctx.fillStyle = "rgba(0, 229, 163, " + eyeAlpha.toFixed(2) + ")";
+      ctx.beginPath();
+      ctx.moveTo(-8, 4);
+      ctx.lineTo(-27, -1);
+      ctx.lineTo(-24, 9);
+      ctx.lineTo(-7, 11);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(8, 4);
+      ctx.lineTo(27, -1);
+      ctx.lineTo(24, 9);
+      ctx.lineTo(7, 11);
+      ctx.closePath();
+      ctx.fill();
+
+      // Crimson Chin Armor Block
+      ctx.fillStyle = "rgba(255, 51, 75, 0.78)";
+      ctx.beginPath();
+      ctx.moveTo(-7, 38);
+      ctx.lineTo(7, 38);
+      ctx.lineTo(5, 50);
+      ctx.lineTo(-5, 50);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.restore();
+
+      // 4. Flanking RX-93 ν Gundam Fin Funnels (Left & Right Wing Pylons)
+      var funnelSway = Math.sin(hudClock * 1.4) * 4;
+      drawFinFunnel(cx - 175 * hudScale, cy - 22 * hudScale + funnelSway, 0.85 * hudScale, -0.22, pulse);
+      drawFinFunnel(cx - 210 * hudScale, cy + 28 * hudScale - funnelSway, 0.76 * hudScale, -0.32, pulse);
+      drawFinFunnel(cx + 158 * hudScale, cy + 18 * hudScale + funnelSway, 0.82 * hudScale, 0.24, pulse);
+
+      // Left-side Hangar Fin-Funnel Pylon Array (Top-Left viewport)
+      var lx = 92 * hudScale - yawCurrent * 0.4;
+      var ly = 115 * hudScale + 20;
+      drawFinFunnel(lx, ly + funnelSway, 0.82 * hudScale, 0.28, pulse);
+      drawFinFunnel(lx + 42 * hudScale, ly + 32 * hudScale - funnelSway, 0.7 * hudScale, 0.38, pulse);
     }
 
     var rafId = 0;
@@ -408,47 +406,46 @@
 
     function renderFrame(advance) {
       ctx.clearRect(0, 0, w, h);
-      windCurrent += (windTarget - windCurrent) * 0.04;
+      yawCurrent += (yawTarget - yawCurrent) * 0.05;
+      pitchCurrent += (pitchTarget - pitchCurrent) * 0.05;
 
-      // Overhead Japanese Anime Sakura Canopy, Blossoms & Twilight Moon
-      drawSakuraCanopy(advance);
+      drawGundamCockpitHUD(advance);
 
-      // Soft Komorebi light motes
-      for (var m = 0; m < moteCount; m++) {
-        var mt = motes[m];
+      // Drifting Minovsky / Psycho-Frame Geometric Particles
+      for (var i = 0; i < particleCount; i++) {
+        var p = particles[i];
         if (advance) {
-          mt.phase += 0.02;
-          mt.x += mt.vx + windCurrent * 0.3;
-          mt.y += mt.vy;
-          if (mt.y < -10) mt.y = h + 10;
-          if (mt.x < -10) mt.x = w + 10;
-          if (mt.x > w + 10) mt.x = -10;
-        }
-        var glowAlpha = 0.14 + 0.16 * Math.sin(mt.phase);
-        ctx.fillStyle = "rgba(255, 198, 218, " + glowAlpha.toFixed(2) + ")";
-        ctx.beginPath();
-        ctx.arc(mt.x, mt.y, mt.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      // Falling Sakura Petals
-      for (var i = 0; i < petalCount; i++) {
-        var p = petals[i];
-        if (advance) {
-          p.swayPhase += p.swaySpeed;
-          p.flipPhase += p.flipSpeed;
-          p.rot += p.vRot + Math.sin(p.swayPhase) * 0.006;
-          p.x += p.vx + Math.sin(p.swayPhase) * 0.48 + windCurrent;
-          p.y += p.vy + Math.cos(p.swayPhase) * 0.12;
-
-          if (p.y > h + 20) {
-            p.y = -18;
+          p.phase += 0.025;
+          p.rot += p.vRot;
+          p.x += p.vx + yawCurrent * 0.015;
+          p.y += p.vy;
+          if (p.y < -16) {
+            p.y = h + 16;
             p.x = Math.random() * w;
           }
-          if (p.x > w + 24) p.x = -20;
-          if (p.x < -24) p.x = w + 20;
+          if (p.x < -16) p.x = w + 16;
+          if (p.x > w + 16) p.x = -16;
         }
-        drawSakuraPetal(p);
+
+        var a = p.alpha * (0.65 + 0.35 * Math.sin(p.phase));
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.colorBase + a.toFixed(2) + ")";
+        ctx.strokeStyle = p.colorBase + (a * 1.25).toFixed(2) + ")";
+        ctx.lineWidth = 0.8;
+
+        // Diamond / Psycho-Frame Shard
+        var s = p.s;
+        ctx.beginPath();
+        ctx.moveTo(0, -s);
+        ctx.lineTo(s * 0.72, 0);
+        ctx.lineTo(0, s);
+        ctx.lineTo(-s * 0.72, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
       }
     }
 
@@ -497,17 +494,17 @@
       if (!tacticalAlert) return;
       if (activeMode === "signal" && motionArtifact && currentStage === "raw") {
         tacticalAlert.removeAttribute("hidden");
-        if (tacticalAlertCode) tacticalAlertCode.textContent = "⚠ CAUTION // ARTIFACT BURST DETECTED";
+        if (tacticalAlertCode) tacticalAlertCode.textContent = "⚠ NT-D BIO-SENSOR ALERT // ARTIFACT BURST";
         if (tacticalAlertMsg) tacticalAlertMsg.textContent = "HIGH-AMPLITUDE MOTION BURST ON 125Hz STREAM (SQI 61.2%) — SWITCH TO STAGE 02 BUTTERWORTH TO CLEAN";
-        if (statusTagEl) statusTagEl.innerHTML = '<span class="instrument__status-dot"></span> ✿ SYNC 61.2% // ARTIFACT WARNING';
+        if (statusTagEl) statusTagEl.innerHTML = '<span class="instrument__status-dot"></span> ◢ NT-D ALERT 61.2% // ARTIFACT WARNING';
       } else if (activeMode === "agent" && faultMode) {
         tacticalAlert.removeAttribute("hidden");
-        if (tacticalAlertCode) tacticalAlertCode.textContent = "⛔ GATE REJECT // ARITHMETIC DRIFT INTERCEPTED";
+        if (tacticalAlertCode) tacticalAlertCode.textContent = "⛔ I-FIELD BARRIER ENGAGED // ARITHMETIC DRIFT";
         if (tacticalAlertMsg) tacticalAlertMsg.textContent = "NODE 05 PYDANTIC GATE BLOCKED LLM PRICING DRIFT (€14,200 vs €15,840) — SAP ERP WRITE PREVENTED";
-        if (statusTagEl) statusTagEl.innerHTML = '<span class="instrument__status-dot"></span> ✿ SHIELD ACTIVE // GATE INTERCEPT LOCKED';
+        if (statusTagEl) statusTagEl.innerHTML = '<span class="instrument__status-dot"></span> ◢ I-FIELD ACTIVE // GATE INTERCEPT LOCKED';
       } else {
         tacticalAlert.setAttribute("hidden", "");
-        if (statusTagEl) statusTagEl.innerHTML = '<span class="instrument__status-dot"></span> ✿ SYNC 98.4% // TELEMETRY LOCKED · 125 Hz';
+        if (statusTagEl) statusTagEl.innerHTML = '<span class="instrument__status-dot"></span> ◢ PSYCHO-FRAME SYNC 98.4% // 125 Hz';
       }
     }
 
@@ -781,10 +778,10 @@
         ctx.lineTo(sweepX, height);
         ctx.stroke();
 
-        // Tactical Anime HUD Callout Watermark inside Oscilloscope Stage
-        ctx.fillStyle = "rgba(255, 168, 205, 0.52)";
+        // Tactical Gundam Cockpit HUD Callout Watermark inside Oscilloscope Stage
+        ctx.fillStyle = "rgba(0, 229, 163, 0.55)";
         ctx.font = "10.5px " + getComputedStyle(root).getPropertyValue("--font-mono");
-        ctx.fillText("[ CH-01 // OPTICAL PPG SENSOR · 125Hz STREAM ]", 12, 18);
+        ctx.fillText("[ E.F.S.F. BIO-MONITOR // PILOT PPG SENSOR · 125Hz STREAM ]", 12, 18);
         ctx.fillText("[ TARGET // MIMIC-III SBP REGRESSION ]", width - 265, height - 10);
 
         animId = requestAnimationFrame(draw);
@@ -1135,10 +1132,10 @@
           ctx.fillText(isFaultNode ? "GATE BLOCKED" : ("NODE " + node.code), rx + 10, ry + 35);
         }
 
-        // Tactical Anime HUD Callout Watermark inside DAG Stage
-        ctx.fillStyle = "rgba(255, 168, 205, 0.52)";
+        // Tactical Gundam Cockpit HUD Callout Watermark inside DAG Stage
+        ctx.fillStyle = "rgba(0, 229, 163, 0.55)";
         ctx.font = "10.5px " + monoFont;
-        ctx.fillText("[ SAKURA-DAG // DETERMINISTIC CONTROL · 7-NODE PIPELINE ]", 12, 18);
+        ctx.fillText("[ ANAHEIM OS // RX-93 DETERMINISTIC FIN-FUNNEL DAG · 7 NODES ]", 12, 18);
 
         animId = requestAnimationFrame(draw);
       }
