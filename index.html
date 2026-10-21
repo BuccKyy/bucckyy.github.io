@@ -33,7 +33,7 @@
   <link rel="preload" href="fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/ibm-plex-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
-  <noscript><style>.reveal { opacity: 1; transform: none; }</style></noscript>
+  <noscript><style>.reveal { opacity: 1; translate: none; }</style></noscript>
   <script>
     // Set theme before paint to avoid a flash.
     (function () {
@@ -94,59 +94,61 @@
 </head>
 <body>
 
+  <canvas id="bg-field" aria-hidden="true"></canvas>
+
   <div class="spotlight" aria-hidden="true"></div>
 
   <a class="skip-link" href="#about">Skip to content</a>
 
-  <button id="theme-toggle" type="button" class="theme-toggle mono" aria-label="Toggle color theme" aria-pressed="false" title="Toggle color theme">
-    <span class="theme-toggle__dark" aria-hidden="true">◐</span>
-    <span class="theme-toggle__light" aria-hidden="true">◑</span>
-  </button>
+  <nav class="topnav" aria-label="Sections">
+    <div class="topnav__inner mono">
+      <div class="topnav__links">
+        <a href="#about" class="nav-link"><span class="nav-line"></span>about</a>
+        <a href="#capabilities" class="nav-link"><span class="nav-line"></span>capabilities</a>
+        <a href="#work" class="nav-link"><span class="nav-line"></span>work</a>
+        <a href="#experience" class="nav-link"><span class="nav-line"></span>experience</a>
+        <a href="#open-source" class="nav-link"><span class="nav-line"></span>open source</a>
+        <a href="#skills" class="nav-link"><span class="nav-line"></span>skills</a>
+        <a href="#education" class="nav-link"><span class="nav-line"></span>education</a>
+        <a href="#contact" class="nav-link"><span class="nav-line"></span>contact</a>
+      </div>
+      <button id="theme-toggle" type="button" class="theme-toggle mono" aria-label="Toggle color theme" aria-pressed="false" title="Toggle color theme">
+        <span class="theme-toggle__dark" aria-hidden="true">◐</span>
+        <span class="theme-toggle__light" aria-hidden="true">◑</span>
+      </button>
+    </div>
+  </nav>
 
   <div class="layout">
 
-    <!-- ================= SIDEBAR ================= -->
-    <header class="sidebar">
-      <div class="sidebar__top">
-        <p class="sidebar__meta mono">Ho Chi Minh City · UTC+7 · open to remote</p>
-        <h1 class="sidebar__name">Tran<br>Trung&nbsp;Duc</h1>
-        <p class="sidebar__role">AI Engineer · LLM Systems, Backend &amp; ML</p>
-        <p class="sidebar__tagline">
-          I build <em>AI systems</em> that do real work —
-          and the <em>evaluation layer</em> that makes model output
-          safe to use.
-        </p>
+    <!-- ================= HERO ================= -->
+    <header class="hero">
+      <p class="hero__meta mono">Ho Chi Minh City · UTC+7 · open to remote</p>
+      <h1 class="hero__name">Tran Trung Duc</h1>
+      <p class="hero__role">AI Engineer · LLM Systems, Backend &amp; ML</p>
+      <p class="hero__tagline">
+        I build <em>AI systems</em> that do real work —
+        and the <em>evaluation layer</em> that makes model output
+        safe to use.
+      </p>
 
-        <div class="sidebar__orb" aria-hidden="true">
-          <div class="sidebar__orb-stage">
-            <canvas id="signal-orb"></canvas>
-          </div>
-          <p class="sidebar__wave-label mono">sig: neural field · signals in, decisions out</p>
-        </div>
-
-        <nav class="sidebar__nav mono" aria-label="Sections">
-          <a href="#about" class="nav-link"><span class="nav-line"></span>about</a>
-          <a href="#capabilities" class="nav-link"><span class="nav-line"></span>capabilities</a>
-          <a href="#work" class="nav-link"><span class="nav-line"></span>work</a>
-          <a href="#experience" class="nav-link"><span class="nav-line"></span>experience</a>
-          <a href="#open-source" class="nav-link"><span class="nav-line"></span>open source</a>
-          <a href="#skills" class="nav-link"><span class="nav-line"></span>skills</a>
-          <a href="#education" class="nav-link"><span class="nav-line"></span>education</a>
-          <a href="#contact" class="nav-link"><span class="nav-line"></span>contact</a>
-        </nav>
-      </div>
-
-      <div class="sidebar__cta">
+      <div class="hero__actions">
         <a class="cv-button mono" href="TranTrungDuc-AI-Engineer-CV.pdf" download>
           <span class="cv-button__icon" aria-hidden="true">↓</span> download cv <span class="cv-button__meta">pdf</span>
         </a>
-        <p class="sidebar__status mono"><span class="status-dot" aria-hidden="true"></span> open to remote roles</p>
+        <p class="hero__status mono"><span class="status-dot" aria-hidden="true"></span> open to remote roles</p>
+        <div class="hero__socials mono">
+          <a href="https://github.com/BuccKyy" target="_blank" rel="me noopener">github ↗</a>
+          <a href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="me noopener">linkedin ↗</a>
+          <a href="mailto:trantrungduc313@gmail.com">email ↗</a>
+        </div>
       </div>
 
-      <div class="sidebar__bottom mono">
-        <a href="https://github.com/BuccKyy" target="_blank" rel="me noopener">github ↗</a>
-        <a href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="me noopener">linkedin ↗</a>
-        <a href="mailto:trantrungduc313@gmail.com">email ↗</a>
+      <div class="hero__orb" aria-hidden="true">
+        <div class="hero__orb-stage">
+          <canvas id="signal-orb"></canvas>
+        </div>
+        <p class="hero__orb-label mono">sig: neural field · signals in, decisions out</p>
       </div>
     </header>
 
