@@ -101,7 +101,7 @@ function boot() {
   embers.position.z = 3;
   scene.add(embers);
 
-  let vw = 1, vh = 1, fit = 1;
+  let vw = 1, vh = 1, fit = 1, portrait = false, baseY = 0;
   function seedEmbers() {
     const p = eGeo.attributes.position;
     for (let i = 0; i < N; i++) {
@@ -119,8 +119,16 @@ function boot() {
     camera.top = vh / 2; camera.bottom = -vh / 2;
     camera.updateProjectionMatrix();
     wash.scale.set(vw, vh, 1);
-    // cover the viewport; keep a little headroom for parallax travel
-    fit = Math.max(vw / W, vh / H) * 1.06;
+    portrait = vw / vh < 0.9;
+    if (portrait) {
+      // phones: show ~82% of the duel width, pinned under the nav; CSS fades it into the title card
+      fit = vw / (W * 0.82);
+      baseY = vh / 2 - (H * fit) / 2 - 64;
+    } else {
+      // cover the viewport; keep a little headroom for parallax travel
+      fit = Math.max(vw / W, vh / H) * 1.06;
+      baseY = 0;
+    }
     seedEmbers();
   }
   window.addEventListener("resize", resize);
@@ -140,6 +148,20 @@ function boot() {
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
+  // veil strength follows scroll; title card and interludes switch it off entirely
+  const root = document.documentElement;
+  const setVeil = () => root.style.setProperty("--veil", String(Math.min(1, Math.max(0, (window.scrollY - window.innerHeight * 0.3) / (window.innerHeight * 0.5)))));
+  window.addEventListener("scroll", setVeil, { passive: true });
+  setVeil();
+  if ("IntersectionObserver" in window) {
+    const clear = new Set();
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) (e.isIntersecting ? clear.add(e.target) : clear.delete(e.target));
+      if (clear.size) root.setAttribute("data-clear", "1"); else root.removeAttribute("data-clear");
+    }, { threshold: 0.5 });
+    document.querySelectorAll(".hw-clear").forEach((el) => io.observe(el));
+  }
+
   const clock = new THREE.Clock();
   let visible = true;
   document.addEventListener("visibilitychange", () => { visible = !document.hidden; });
@@ -152,9 +174,12 @@ function boot() {
     mouse.y += (mouse.ty - mouse.y) * 0.05;
     scroll += (scrollT - scroll) * 0.06;
 
+    // opening move: slow push-in from a wider frame, easing out over ~3s
+    const intro = reduceMotion ? 0 : Math.max(0, 1 - clock.elapsedTime / 3);
+    const ease = intro * intro * intro;
     // scrolling pushes the camera in and lifts it toward the sky
-    stack.scale.setScalar(fit * (1 + scroll * 0.16));
-    stack.position.y = scroll * vh * 0.1;
+    stack.scale.setScalar(fit * (1 + scroll * 0.16 + ease * 0.14));
+    stack.position.y = baseY + scroll * vh * 0.1;
 
     for (const m of meshes) {
       const L = m.userData;

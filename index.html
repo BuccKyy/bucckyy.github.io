@@ -127,34 +127,31 @@
 
     <!-- ================= HERO ================= -->
     <header class="hero">
-      <div class="hero__top-bar mono">
-        <p class="hero__meta"><span class="sakura-glyph" aria-hidden="true">◢</span> E.F.S.F. // ANAHEIM ELECTRONICS · RX-93v2 OS · HCMC UTC+7 · <span id="clock">00:00:00</span></p>
-        <div class="domain-legend" aria-label="Engineering domain color key">
-          <span class="domain-pill" data-domain="agentic"><i></i>MS-01 · Agentic Orchestration</span>
-          <span class="domain-pill" data-domain="verify"><i></i>MS-02 · I-Field Guardrails</span>
-          <span class="domain-pill" data-domain="signal"><i></i>MS-03 · Biomedical DSP &amp; Edge</span>
-        </div>
-      </div>
+      <!-- Title card: sits on the dark ocean below the duel so the key art stays unobstructed. -->
+      <div class="hero__stage hw-clear">
+        <p class="hero__meta mono">HCMC UTC+7 · <span id="clock">00:00:00</span></p>
+        <h1 class="hero__name">Tran Trung Duc</h1>
+        <p class="hero__role">AI Systems Engineer · Multi-Agent Workflows &amp; Biomedical DSP</p>
+        <p class="hero__tagline">
+          I build <em class="tone-agentic">AI agents that run real business operations</em> —
+          with an <em class="tone-verify">evaluation layer</em> that keeps every LLM output safe, auditable, and reliable.
+        </p>
 
-      <h1 class="hero__name">Tran Trung Duc</h1>
-      <p class="hero__role">AI Systems Engineer · Multi-Agent Workflows &amp; Biomedical DSP</p>
-      <p class="hero__tagline">
-        I engineer <em class="tone-agentic">deterministic AI systems</em> that run real business operations —
-        and the <em class="tone-verify">evaluation layer</em> that makes LLM outputs safe, auditable, and reliable.
-      </p>
-
-      <div class="hero__actions">
-        <a class="cv-button mono" href="TranTrungDuc-AI-Engineer-CV.pdf" download>
-          <span class="cv-button__icon" aria-hidden="true">↓</span>
-          <span>download pilot dossier (cv)</span>
-          <span class="cv-button__meta">PDF</span>
-        </a>
-        <p class="hero__status mono"><span class="status-indicator" aria-hidden="true"></span> Sortie Ready · Open to Remote Roles</p>
-        <div class="hero__socials mono">
-          <a href="https://github.com/BuccKyy" target="_blank" rel="me noopener">github ↗</a>
-          <a href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="me noopener">linkedin ↗</a>
-          <a href="mailto:trantrungduc313@gmail.com">email ↗</a>
+        <div class="hero__actions">
+          <a class="cv-button mono" href="TranTrungDuc-AI-Engineer-CV.pdf" download>
+            <span class="cv-button__icon" aria-hidden="true">↓</span>
+            <span>Download CV</span>
+            <span class="cv-button__meta">PDF</span>
+          </a>
+          <a class="hero__ghost mono" href="#work">See selected work →</a>
+          <p class="hero__status mono"><span class="status-indicator" aria-hidden="true"></span> Open to remote roles</p>
+          <div class="hero__socials mono">
+            <a href="https://github.com/BuccKyy" target="_blank" rel="me noopener">github ↗</a>
+            <a href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="me noopener">linkedin ↗</a>
+            <a href="mailto:trantrungduc313@gmail.com">email ↗</a>
+          </div>
         </div>
+        <a class="hero__scroll mono" href="#about" aria-label="Scroll to content"><span>scroll</span><i aria-hidden="true"></i></a>
       </div>
 
       <!-- ============ HERO ENGINEERING INSTRUMENT ============ -->
@@ -340,6 +337,13 @@
             <span class="stat__label mono">MIMIC-III SBP MAE (± 8.99 mmHg) cuffless blood-pressure research</span>
           </div>
         </div>
+      </section>
+
+      <!-- ============ INTERLUDE 1: key art breathes ============ -->
+      <section class="interlude hw-clear" aria-label="Engineering principle">
+        <p class="interlude__kicker mono">◢ principle</p>
+        <p class="interlude__quote">Deterministic core.<br><em>LLM at the edges.</em></p>
+        <p class="interlude__sub mono">Arithmetic, scoring and state live in Python. The model only handles language.</p>
       </section>
 
       <!-- ============ SELECTED WORK (MOBILE SUIT GUNDAM HANGAR DECK) ============ -->
@@ -979,6 +983,13 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
             <p class="awards__lang mono">Languages: Vietnamese (native) · English (professional working proficiency)</p>
           </div>
         </div>
+      </section>
+
+      <!-- ============ INTERLUDE 2 ============ -->
+      <section class="interlude hw-clear" aria-label="Call to action">
+        <p class="interlude__kicker mono">◢ next sortie</p>
+        <p class="interlude__quote">Let's build something<br><em>that ships.</em></p>
+        <a class="cv-button mono interlude__cta" href="#contact">Get in touch →</a>
       </section>
 
       <!-- ============ CONTACT ============ -->
