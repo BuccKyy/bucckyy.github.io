@@ -154,129 +154,30 @@
         <a class="hero__scroll mono" href="#about" aria-label="Scroll to content"><span>scroll</span><i aria-hidden="true"></i></a>
       </div>
 
-      <!-- ============ HERO ENGINEERING INSTRUMENT ============ -->
-      <section class="hero__instrument" id="hero-instrument" aria-label="Interactive Systems &amp; Signal Instrument">
+      <!-- ============ COMMS LINK: ask the pilot ============ -->
+      <section class="comms" id="comms" aria-label="Pilot comms link: ask about my work">
         <span class="reticle reticle--tl" aria-hidden="true">⌜</span>
         <span class="reticle reticle--tr" aria-hidden="true">⌝</span>
         <span class="reticle reticle--bl" aria-hidden="true">⌞</span>
         <span class="reticle reticle--br" aria-hidden="true">⌟</span>
 
-        <div class="instrument__header mono">
-          <div class="instrument__tabs" role="tablist" aria-label="Instrument Mode Selector">
-            <button type="button" class="instrument__tab active" id="tab-signal" role="tab" aria-selected="true" aria-controls="panel-signal" data-mode="signal">
-              <span class="instrument__tab-led"></span>
-              <span class="instrument__tab-name">RX-01 // PILOT BIO-MONITOR · 125Hz PPG</span>
-            </button>
-            <button type="button" class="instrument__tab" id="tab-agent" role="tab" aria-selected="false" aria-controls="panel-agent" data-mode="agent">
-              <span class="instrument__tab-led"></span>
-              <span class="instrument__tab-name">RX-02 // PSYCHO-FRAME AGENT DAG · 7-NODE FUNNEL</span>
-            </button>
-          </div>
-          <div class="instrument__meta">
-            <span class="instrument__status-tag" id="instrument-status-tag"><span class="instrument__status-dot"></span> ◢ PSYCHO-FRAME SYNC 98.4% // 125 Hz</span>
-          </div>
+        <div class="comms__bar mono">
+          <span class="comms__live"><i aria-hidden="true"></i> COMMS LINK · CH-01</span>
+          <span class="comms__who">PILOT: TRAN TRUNG DUC</span>
+          <span class="comms__sync">SYNC <b id="comms-sync">98.4</b>%</span>
         </div>
 
-        <!-- Tactical Alert Strip (activates on Motion Artifact or Bad Math Simulation) -->
-        <div class="tactical-alert mono" id="tactical-alert" hidden role="status" aria-live="polite">
-          <span class="tactical-alert__code" id="tactical-alert-code">⚠ NT-D BIO-SENSOR ALERT // ARTIFACT BURST</span>
-          <span class="tactical-alert__msg" id="tactical-alert-msg">HIGH-AMPLITUDE MOTION ARTIFACT DETECTED ON 125Hz STREAM — SWITCH TO BUTTERWORTH STAGE TO ISOLATE</span>
-        </div>
-
-        <!-- PANEL 1: BIOMEDICAL DSP OSCILLOSCOPE -->
-        <div class="instrument__panel active" id="panel-signal" role="tabpanel" aria-labelledby="tab-signal">
-          <div class="dsp__hud mono">
-            <div class="dsp__metric" data-domain="signal">
-              <span class="dsp__label">Heart Rate</span>
-              <span class="dsp__val" id="dsp-hr">72 <small>BPM · 125 Hz</small></span>
-            </div>
-            <div class="dsp__metric" data-domain="agentic">
-              <span class="dsp__label">Estimated BP</span>
-              <span class="dsp__val" id="dsp-bp">118.4 / 76.2 <small>mmHg</small></span>
-            </div>
-            <div class="dsp__metric" data-domain="verify">
-              <span class="dsp__label">MIMIC-III SBP MAE</span>
-              <span class="dsp__val" id="dsp-mae">9.76 <small>± 8.99 mmHg</small></span>
-            </div>
-            <div class="dsp__metric" data-domain="signal">
-              <span class="dsp__label">Probe Readout</span>
-              <span class="dsp__val" id="dsp-probe">SQI 98.4% <small>move cursor on wave</small></span>
-            </div>
+        <div class="comms__body">
+          <div class="comms__radar">
+            <canvas id="comms-radar" width="420" height="420" aria-label="Radar showing four production projects and a research lab"></canvas>
+            <p class="comms__radar-label mono" id="comms-radar-label">SCANNING · 5 CONTACTS</p>
           </div>
 
-          <div class="instrument__stage">
-            <canvas id="dsp-canvas" width="1120" height="230" aria-label="Interactive PPG oscilloscope canvas"></canvas>
-          </div>
-
-          <div class="instrument__controls mono">
-            <div class="instrument__filter-buttons" role="group" aria-label="Signal processing filter stage">
-              <span class="controls__title">DSP Stage:</span>
-              <button type="button" class="stage-btn active" data-stage="raw">1. Raw Acquisition (Noise &amp; Drift)</button>
-              <button type="button" class="stage-btn" data-stage="bandpass">2. 0.5–8Hz Butterworth (Clean)</button>
-              <button type="button" class="stage-btn" data-stage="vpg">3. 1st Deriv (VPG ΔV/Δt)</button>
-              <button type="button" class="stage-btn" data-stage="peaks">4. Systolic Peak &amp; SBP Extraction</button>
-            </div>
-            <div class="instrument__sim-controls" role="group" aria-label="Live sensor perturbation controls">
-              <button type="button" class="sim-btn" id="dsp-artifact-btn" aria-pressed="false">⚡ Inject Motion Artifact</button>
-              <button type="button" class="sim-btn" id="dsp-bpm-btn" data-bpm="72">♥ HR: 72 BPM</button>
-            </div>
-            <div class="instrument__hint">
-              <span class="hint__icon">▸</span>
-              <span id="dsp-stage-desc">Raw 125Hz PPG optical sensor stream showing respiratory baseline wander (0.4Hz) and motion artifacts before filtering.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- PANEL 2: ENTERPRISE AGENT DAG INSPECTOR -->
-        <div class="instrument__panel" id="panel-agent" role="tabpanel" aria-labelledby="tab-agent">
-          <div class="dag__hud mono">
-            <div class="dag__legend">
-              <span class="legend-item"><span class="legend-dot dot-deterministic"></span> Deterministic Python</span>
-              <span class="legend-item"><span class="legend-dot dot-llm"></span> LLM Synthesis (Sonnet)</span>
-              <span class="legend-item"><span class="legend-dot dot-gate"></span> Pydantic / HITL Gate</span>
-              <span class="legend-item"><span class="legend-dot dot-erp"></span> SAP ERP Write</span>
-            </div>
-            <div class="dag__hud-actions">
-              <button type="button" class="dag-fault-btn" id="dag-fault-btn" aria-pressed="false">
-                ⚠ Simulate Bad Math: OFF
-              </button>
-              <button type="button" class="dag-trigger-btn" id="dag-run-btn">
-                <span class="play-icon" aria-hidden="true">▶</span> Execute Pipeline Trace
-              </button>
-            </div>
-          </div>
-
-          <div class="instrument__stage dag__stage">
-            <canvas id="dag-canvas" width="1120" height="230" aria-label="7-node enterprise agent pipeline DAG"></canvas>
-          </div>
-
-          <div class="dag__controls mono">
-            <div class="dag__action-bar">
-              <div class="dag__node-pills" role="tablist" aria-label="Inspect pipeline node contract">
-                <button type="button" class="dag-pill" data-node="0">01. CRM Event</button>
-                <button type="button" class="dag-pill" data-node="1">02. FastAPI Router</button>
-                <button type="button" class="dag-pill" data-node="2">03. BM25 Grounding</button>
-                <button type="button" class="dag-pill" data-node="3">04. Claude Sonnet</button>
-                <button type="button" class="dag-pill is-selected" data-node="4">05. Pydantic Gate</button>
-                <button type="button" class="dag-pill" data-node="5">06. Human Review</button>
-                <button type="button" class="dag-pill" data-node="6">07. SAP Read-Back</button>
-              </div>
-              <span class="dag__active-step" id="dag-step-label">Click any node or run pipeline trace to inspect JSON contract</span>
-            </div>
-
-            <div class="dag__inspector" id="dag-inspector" aria-live="polite">
-              <div class="inspector__header">
-                <span class="inspector__title" id="inspector-title">NODE 05 CONTRACT // Pydantic Validation Gate</span>
-                <span class="inspector__badge" id="inspector-badge">PASS · DETERMINISTIC GATE</span>
-              </div>
-              <pre class="inspector__code" id="inspector-code"><code>{
-  "validator": "PydanticV2",
-  "model": "ProposalDraftPayload",
-  "arithmetic_guard": "VERIFIED_EXTERNAL_PYTHON",
-  "checks": { "status_enum": "VALID", "score_range": [0, 100], "read_back": "MATCHED" },
-  "result": "PASS (88/88 test suite)"
-}</code></pre>
-            </div>
+          <div class="comms__console">
+            <div class="comms__voice" id="comms-voice" aria-hidden="true"></div>
+            <div class="comms__log" id="comms-log" role="log" aria-live="polite"></div>
+            <dl class="comms__stats mono" id="comms-stats"></dl>
+            <div class="comms__chips" id="comms-chips" role="group" aria-label="Questions you can ask"></div>
           </div>
         </div>
       </section>
@@ -1031,14 +932,6 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
         <input type="text" id="cmd-input" class="cmd-modal__input mono" placeholder="Type to filter commands (e.g. 'sap', 'dsp', 'fault', 'cv', 'email')..." autocomplete="off" />
       </div>
       <div class="cmd-modal__list" id="cmd-list" role="listbox" aria-label="Available commands">
-        <button type="button" class="cmd-item" data-cmd="dsp-artifact">
-          <span class="cmd-item__tag" data-domain="signal">DSP</span>
-          <span class="cmd-item__label">Toggle PPG Motion Artifact Injection (125Hz Sensor)</span>
-        </button>
-        <button type="button" class="cmd-item" data-cmd="dag-fault">
-          <span class="cmd-item__tag" data-domain="verify">GATE</span>
-          <span class="cmd-item__label">Simulate LLM Bad Math Caught by Pydantic Gate (7-Node DAG)</span>
-        </button>
         <button type="button" class="cmd-item" data-cmd="goto-cs01">
           <span class="cmd-item__tag" data-domain="agentic">CS-01</span>
           <span class="cmd-item__label">Inspect B2B Sales Automation Platform (7 Agents · 3min)</span>
@@ -1071,6 +964,7 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
   <div class="telemetry-toast mono" id="telemetry-toast" role="status" aria-live="polite" hidden></div>
 
   <script src="script.js"></script>
+  <script src="comms.js" defer></script>
   <script type="module" src="hero3d.js"></script>
 </body>
 </html>
