@@ -414,3 +414,8 @@ html, body { overflow-x: clip; }
 .comms__contact-btn { color: var(--ink); background: rgba(7, 6, 26, 0.85); }
 
 .hero__ghost, .nav-cta { text-decoration: none; }
+
+/* comms sits directly under the hero, introduced by a one-line prompt */
+.comms { margin-top: 0.6rem; }
+.comms__lead { text-align: center; letter-spacing: 0.14em; color: var(--accent2); text-transform: uppercase; font-size: 0.78rem; margin: 1.6rem 0 0.8rem; text-shadow: 0 0 10px #000; }
+.skills-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }

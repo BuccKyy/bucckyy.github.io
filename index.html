@@ -103,7 +103,6 @@
       <div class="topnav__links">
         <a href="#about" class="nav-link active"><span class="nav-line"></span>about</a>
         <a href="#work" class="nav-link"><span class="nav-line"></span>selected work</a>
-        <a href="#capabilities" class="nav-link"><span class="nav-line"></span>capabilities</a>
         <a href="#experience" class="nav-link"><span class="nav-line"></span>experience</a>
         <a href="#open-source" class="nav-link"><span class="nav-line"></span>open source</a>
         <a href="#skills" class="nav-link"><span class="nav-line"></span>tech stack</a>
@@ -155,6 +154,7 @@
         <a class="hero__scroll mono" href="#about" aria-label="Scroll to content"><span>scroll</span><i aria-hidden="true"></i></a>
       </div>
 
+      <p class="comms__lead mono">▾ Ask me anything — pick a question or click a contact on the radar</p>
       <!-- ============ COMMS LINK: ask the pilot ============ -->
       <section class="comms" id="comms" aria-label="Pilot comms link: ask about my work">
         <span class="reticle reticle--tl" aria-hidden="true">⌜</span>
@@ -250,21 +250,19 @@
 
       <!-- ============ SELECTED WORK (MOBILE SUIT GUNDAM HANGAR DECK) ============ -->
       <section class="section" id="work">
-        <h2 class="section__title reveal">Selected Work &amp; Enterprise Systems <span class="section__code mono" aria-hidden="true">◢ SEC-02 · MS HANGAR DECK</span></h2>
-        <p class="section__sub mono reveal">
-          ANAHEIM ELECTRONICS // Production client Mobile Suit architectures @ MaxflowAI — engage tactical mode selectors on any unit bay to inspect live input payloads, I-Field Python gates, and verified outputs.
-        </p>
+        <h2 class="section__title reveal">Selected Work &amp; Enterprise Systems <span class="section__code mono" aria-hidden="true">◢ SEC-02 · THE HANGAR</span></h2>
+        <p class="section__sub mono reveal">Production systems I built for clients at MaxflowAI. Open any case to see a sample payload, the Python rules wrapped around the model, and how the result was verified.</p>
 
         <div class="cases">
 
           <!-- CS-01: RX-78-2 GUNDAM -->
           <article class="case reveal" data-domain="agentic">
             <div class="ms-spec-bar mono">
-              <span class="ms-spec__unit">◢ BAY-01 // RX-78-2 ORCHESTRATOR</span>
-              <span class="ms-spec__item">GENERATOR: <strong>7-AGENT CORE</strong></span>
-              <span class="ms-spec__item">ARMAMENT: <strong>MCP CRM BRIDGE</strong></span>
-              <span class="ms-spec__item">SORTIE TIME: <strong>3 MIN (-95%)</strong></span>
-              <span class="ms-spec__status">STATUS: COMBAT READY</span>
+              <span class="ms-spec__unit">BAY-01 · Sales automation · RX-78-2</span>
+              <span class="ms-spec__item">AGENTS: <strong>7</strong></span>
+              <span class="ms-spec__item">INTEGRATION: <strong>MCP CRM BRIDGE</strong></span>
+              <span class="ms-spec__item">TURNAROUND: <strong>3 MIN (-95%)</strong></span>
+              <span class="ms-spec__status">IN PRODUCTION</span>
             </div>
             <div class="case__header">
               <div>
@@ -281,17 +279,17 @@
             <div class="case__grid">
               <div class="case__summary">
                 <div class="case__block">
-                  <span class="mono">Mission Brief</span>
+                  <span class="mono">The problem</span>
                   <p>Sales teams spent 2–3 hours per prospect manually researching company background, cross-checking CRM order history, scoring product fit, and drafting tailored proposals.</p>
                 </div>
                 <div class="case__block">
-                  <span class="mono">MS Architecture</span>
+                  <span class="mono">How it works</span>
                   <p>A <strong>7-agent orchestrated pipeline</strong>: master router, partner research agent, deterministic 11-metric scoring across 700+ records, proposal drafting, QC review, batch delivery, and campaign analytics connected via a custom <strong>MCP CRM bridge</strong> and Dockerized FastAPI webhooks.</p>
                 </div>
-                <p class="case__outcome"><span class="mono">Sortie Outcome →</span> Research-to-proposal turnaround dropped from <strong>2–3 hours to 3 minutes</strong> (&gt;95% reduction), replacing gut feel with deterministic scoring.</p>
+                <p class="case__outcome"><span class="mono">Result →</span> Research-to-proposal turnaround dropped from <strong>2–3 hours to 3 minutes</strong> (&gt;95% reduction), replacing gut feel with deterministic scoring.</p>
                 <p class="case__tags mono">multi-agent · MCP · FastAPI · Pydantic · Docker</p>
                 <details class="case__evidence">
-                  <summary class="mono">▸ Anaheim Black-Box Telemetry &amp; Verification</summary>
+                  <summary class="mono">▸ How it was verified</summary>
                   <div class="evidence__box mono">
                     <p><strong>Scoring Gate:</strong> 11 weighted fit metrics computed in pure Python across 700+ historical CRM records before any LLM prompt is constructed.</p>
                     <p><strong>MCP Transport:</strong> Streamable HTTP bridge with bearer token authentication, schema-validated tool arguments, and deterministic retry policy.</p>
@@ -335,11 +333,11 @@ draft_spec = ProposalDraftSchema(score=score, tier=tier, reasons=reason_codes)</
           <!-- CS-02: RX-93 NU GUNDAM FIN-FUNNEL SOLVER -->
           <article class="case reveal" data-domain="verify">
             <div class="ms-spec-bar mono">
-              <span class="ms-spec__unit">◢ BAY-02 // RX-93v2 FIN-FUNNEL SOLVER</span>
-              <span class="ms-spec__item">GENERATOR: <strong>PYTHON/NUMPY CORE</strong></span>
-              <span class="ms-spec__item">BARRIER: <strong>ZERO-LLM ARITHMETIC</strong></span>
-              <span class="ms-spec__item">PRECISION: <strong>100% AUDITABLE</strong></span>
-              <span class="ms-spec__status">STATUS: I-FIELD ACTIVE</span>
+              <span class="ms-spec__unit">BAY-02 · Inventory solver · RX-93v2</span>
+              <span class="ms-spec__item">CORE: <strong>PYTHON / NUMPY</strong></span>
+              <span class="ms-spec__item">LLM MATH: <strong>NONE</strong></span>
+              <span class="ms-spec__item">AUDIT: <strong>100% TRACEABLE</strong></span>
+              <span class="ms-spec__status">IN PRODUCTION</span>
             </div>
             <div class="case__header">
               <div>
@@ -356,17 +354,17 @@ draft_spec = ProposalDraftSchema(score=score, tier=tier, reasons=reason_codes)</
             <div class="case__grid">
               <div class="case__summary">
                 <div class="case__block">
-                  <span class="mono">Mission Brief</span>
+                  <span class="mono">The problem</span>
                   <p>Warehouse and logistics teams needed accurate transfer and replenishment recommendations across facilities — but LLM arithmetic is untrustworthy when moving physical stock.</p>
                 </div>
                 <div class="case__block">
-                  <span class="mono">MS Architecture</span>
+                  <span class="mono">How it works</span>
                   <p>Python-first decision engine computing days-of-inventory, demand velocity, warehouse allocation, and transfer proposals. Every recommendation carries an explicit <strong>deterministic reason code</strong>; the LLM only summarizes verified JSON contracts.</p>
                 </div>
-                <p class="case__outcome"><span class="mono">Sortie Outcome →</span> 100% auditable inventory recommendations operations teams execute without recalculating numbers.</p>
+                <p class="case__outcome"><span class="mono">Result →</span> 100% auditable inventory recommendations operations teams execute without recalculating numbers.</p>
                 <p class="case__tags mono">decision engine · Python · SQL · reason codes · abstention gates</p>
                 <details class="case__evidence">
-                  <summary class="mono">▸ Anaheim Black-Box Telemetry &amp; Verification</summary>
+                  <summary class="mono">▸ How it was verified</summary>
                   <div class="evidence__box mono">
                     <p><strong>Zero-LLM Math Invariant:</strong> Days-of-inventory (DOI), safety stock buffers, and inter-warehouse transfer quantities are solved 100% in Python/NumPy.</p>
                     <p><strong>Abstention Gate:</strong> Missing SKU lead-time or stale warehouse sync automatically triggers <code>INSUFFICIENT_TELEMETRY</code> instead of guessing.</p>
@@ -405,11 +403,11 @@ reasons = ["SOUTH_DOI_0.9D_CRITICAL", "NORTH_SURPLUS_140U"]</code></pre>
           <!-- CS-03: RX-0 UNICORN NT-D SAP SHIELD -->
           <article class="case reveal" data-domain="verify">
             <div class="ms-spec-bar mono">
-              <span class="ms-spec__unit">◢ BAY-03 // RX-0 NT-D SAP GUARDIAN</span>
-              <span class="ms-spec__item">TEST SUITE: <strong>88/88 PYTEST PASS</strong></span>
-              <span class="ms-spec__item">SHIELD: <strong>HITL + PREFLIGHT GET</strong></span>
-              <span class="ms-spec__item">PARITY: <strong>5/5 SAP READ-BACK</strong></span>
-              <span class="ms-spec__status">STATUS: ZERO CORRUPT WRITES</span>
+              <span class="ms-spec__unit">BAY-03 · SAP receipt guardian · RX-0 NT-D</span>
+              <span class="ms-spec__item">TESTS: <strong>88/88 PYTEST PASS</strong></span>
+              <span class="ms-spec__item">SAFEGUARD: <strong>HUMAN REVIEW + PREFLIGHT</strong></span>
+              <span class="ms-spec__item">VERIFIED: <strong>5/5 SAP READ-BACK</strong></span>
+              <span class="ms-spec__status">TESTED IN SAP SANDBOX</span>
             </div>
             <div class="case__header">
               <div>
@@ -426,17 +424,17 @@ reasons = ["SOUTH_DOI_0.9D_CRITICAL", "NORTH_SURPLUS_140U"]</code></pre>
             <div class="case__grid">
               <div class="case__summary">
                 <div class="case__block">
-                  <span class="mono">Mission Brief</span>
+                  <span class="mono">The problem</span>
                   <p>Posting OCR-extracted receipt payloads into SAP is a high-stakes irreversible write: low-confidence fields, unit mismatches, approval hierarchies, and network timeouts can corrupt ERP ledgers.</p>
                 </div>
                 <div class="case__block">
-                  <span class="mono">MS Architecture</span>
+                  <span class="mono">How it works</span>
                   <p>Upload → OCR draft → human review UI → SAP preflight (GET) → controlled POST to <code>InventoryGenEntries</code> → read-after-write verification. State is journaled before the write with correlation IDs and an environment gate blocking prod writes in test mode.</p>
                 </div>
-                <p class="case__outcome"><span class="mono">Sortie Outcome →</span> <strong>88/88 focused pytest checks passed</strong> and <strong>5/5 SAP read-back field checks matched</strong> on the isolated test database.</p>
+                <p class="case__outcome"><span class="mono">Result →</span> <strong>88/88 focused pytest checks passed</strong> and <strong>5/5 SAP read-back field checks matched</strong> on the isolated test database.</p>
                 <p class="case__tags mono">OCR · human-in-the-loop · SAP ERP · state machine · 88 pytest suite</p>
                 <details class="case__evidence">
-                  <summary class="mono">▸ Anaheim Black-Box Telemetry &amp; Verification</summary>
+                  <summary class="mono">▸ How it was verified</summary>
                   <div class="evidence__box mono">
                     <p><strong>Test Suite:</strong> 88 focused pytest cases covering OCR field validation, state machine transitions, environment write guards, and timeout reconciliation.</p>
                     <p><strong>Read-After-Write:</strong> Post-commit GET verifies 5/5 SAP fields (<code>DocEntry</code>, <code>CardCode</code>, <code>ItemCode</code>, <code>Quantity</code>, <code>Price</code>) against the journaled intent.</p>
@@ -477,11 +475,11 @@ resp = sap_client.post("/InventoryGenEntries", json=verified_payload)</code></pr
           <!-- CS-04: MSZ-006 ZETA COMMAND CONSOLE -->
           <article class="case reveal" data-domain="agentic">
             <div class="ms-spec-bar mono">
-              <span class="ms-spec__unit">◢ BAY-04 // MSZ-006 ZETA COMMAND</span>
-              <span class="ms-spec__item">RELATIONAL CORE: <strong>12 SQL TABLES</strong></span>
-              <span class="ms-spec__item">SUB-UNITS: <strong>3 SPECIALIST AGENTS</strong></span>
-              <span class="ms-spec__item">QA HARNESS: <strong>PLAYWRIGHT E2E</strong></span>
-              <span class="ms-spec__status">STATUS: BIO-SENSOR LOCKED</span>
+              <span class="ms-spec__unit">BAY-04 · Agent operations · MSZ-006</span>
+              <span class="ms-spec__item">DATABASE: <strong>12 SQL TABLES</strong></span>
+              <span class="ms-spec__item">AGENTS: <strong>3 SPECIALISTS</strong></span>
+              <span class="ms-spec__item">QA: <strong>PLAYWRIGHT E2E</strong></span>
+              <span class="ms-spec__status">IN PRODUCTION</span>
             </div>
             <div class="case__header">
               <div>
@@ -498,17 +496,17 @@ resp = sap_client.post("/InventoryGenEntries", json=verified_payload)</code></pr
             <div class="case__grid">
               <div class="case__summary">
                 <div class="case__block">
-                  <span class="mono">Mission Brief</span>
+                  <span class="mono">The problem</span>
                   <p>Corporate events, HR pipelines, and email workflows required config-driven multi-agent orchestration and operator consoles — not fragile, one-off chat prompts.</p>
                 </div>
                 <div class="case__block">
-                  <span class="mono">MS Architecture</span>
+                  <span class="mono">How it works</span>
                   <p>Operations platform backed by a <strong>12-table relational schema</strong>, 3 specialized agents (reflection mentor, FAQ assistant, admin insights), 5 event triggers, 3 scheduled jobs, and operator mini-apps using <code>postMessage</code> handshake auth with <code>localStorage</code> fallback.</p>
                 </div>
-                <p class="case__outcome"><span class="mono">Sortie Outcome →</span> Business rules live in the relational schema, actions are explicit, and operators inspect live dashboards, review queues, and status timelines.</p>
+                <p class="case__outcome"><span class="mono">Result →</span> Business rules live in the relational schema, actions are explicit, and operators inspect live dashboards, review queues, and status timelines.</p>
                 <p class="case__tags mono">12-table SQL · scheduled jobs · HTML/JS mini-apps · Playwright E2E</p>
                 <details class="case__evidence">
-                  <summary class="mono">▸ Anaheim Black-Box Telemetry &amp; Verification</summary>
+                  <summary class="mono">▸ How it was verified</summary>
                   <div class="evidence__box mono">
                     <p><strong>Relational Core:</strong> 12 normalized tables track event lifecycles, specialist agent sessions, scheduled dispatches, and operator audit logs.</p>
                     <p><strong>Browser E2E:</strong> Automated Playwright harness verifies <code>postMessage</code> auth handshakes, form submissions, file uploads, and status timeline updates.</p>
@@ -564,56 +562,6 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
               <p>End-to-end MIMIC-III pipeline, PPG2BP-Net evaluation (SBP MAE 9.76 ± 8.99 mmHg), model zoo, and STM32 + Android/TFLite edge prototype.</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      <!-- ============ CAPABILITIES ============ -->
-      <section class="section" id="capabilities">
-        <h2 class="section__title reveal">Core Engineering Capabilities <span class="section__code mono" aria-hidden="true">◢ SEC-03 · COMBAT CAPABILITIES</span></h2>
-        <p class="section__sub mono reveal">Technical domains delivered end-to-end from architecture and data contracts to production deployment.</p>
-
-        <div class="capabilities">
-          <article class="capability reveal" data-domain="agentic">
-            <span class="capability__id mono">CAP-01 · ORCHESTRATION</span>
-            <h3>LLM Systems &amp; Agents</h3>
-            <p>Multi-agent orchestration with master/specialist routing, tool calling, persistent memory, execution recovery, and human approval gates. MCP integrations for external systems.</p>
-          </article>
-          <article class="capability reveal" data-domain="agentic">
-            <span class="capability__id mono">CAP-02 · BACKEND</span>
-            <h3>Backend Services &amp; APIs</h3>
-            <p>FastAPI microservices, Server-Sent Events (SSE) progress streams, Pydantic data contracts, webhooks, scheduled background jobs, relational SQL persistence, and Docker containers.</p>
-          </article>
-          <article class="capability reveal" data-domain="verify">
-            <span class="capability__id mono">CAP-03 · GUARDRAILS</span>
-            <h3>Reliability &amp; Evaluation</h3>
-            <p>Deterministic cores, strict JSON schema output validation, fallback routing, human-in-the-loop review, pytest and Playwright test coverage, and read-after-write verification.</p>
-          </article>
-          <article class="capability reveal" data-domain="verify">
-            <span class="capability__id mono">CAP-04 · INTERFACES</span>
-            <h3>Product Surfaces &amp; Mini-Apps</h3>
-            <p>Operator mini-apps built with vanilla HTML/CSS/JavaScript: review screens, dashboards, status timelines, evidence drawers, postMessage authentication, and localStorage fallback.</p>
-          </article>
-          <article class="capability reveal" data-domain="signal">
-            <span class="capability__id mono">CAP-05 · SIGNAL &amp; ML</span>
-            <h3>ML Systems &amp; Signal Processing</h3>
-            <p>Data engineering pipelines, waveform ingestion and cleaning, digital signal filtering (Butterworth, VPG), PyTorch and TensorFlow/Keras training, MAE/RMSE evaluation, and TFLite export.</p>
-          </article>
-          <article class="capability reveal" data-domain="signal">
-            <span class="capability__id mono">CAP-06 · EMBEDDED EDGE</span>
-            <h3>Embedded &amp; Edge Prototyping</h3>
-            <p>STM32 firmware with MAX30102 sensor acquisition, I2C/UART/SPI interfaces, Bluetooth LE streaming, Android companion apps in Kotlin, and on-device TFLite inference.</p>
-          </article>
-        </div>
-
-        <div class="principles reveal">
-          <h3 class="principles__title">Operating Principles</h3>
-          <ol>
-            <li><strong>Deterministic core, LLM at the edges.</strong> Arithmetic, scoring, pricing, and state transitions run in Python. The model handles language and interpretation.</li>
-            <li><strong>Contracts before prompts.</strong> Strict JSON schemas, Pydantic models, typed enums, explicit status fields, and schema validation before anything reaches a user.</li>
-            <li><strong>Human review before irreversible actions.</strong> Explicit approval gates for sends, posts, exports, and ERP writes. Always show the source data next to the proposed output.</li>
-            <li><strong>Evidence-based release criteria.</strong> Comprehensive pytest, Playwright, contract tests, and read-after-write verification. A release is PASS, FAIL, BLOCKED, or NOT TESTABLE — never “looks fine.”</li>
-            <li><strong>Local-first verification.</strong> Isolated adapters and test fixtures allow workflows to run without touching production. Deployment boundaries are documented, not assumed.</li>
-          </ol>
         </div>
       </section>
 
@@ -750,112 +698,52 @@ schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre
         <div class="skills-grid">
           <div class="skill-card reveal" data-domain="agentic">
             <div class="skill-card__header">
-              <span class="skill-card__tag mono">DOMAIN 01 · ORCHESTRATION</span>
-              <h3>AI &amp; Multi-Agent Systems</h3>
+              <span class="skill-card__tag mono">01 · AGENTS</span>
+              <h3>AI &amp; Agent Systems</h3>
             </div>
             <div class="skill-tags mono">
               <span>Multi-Agent Orchestration</span>
-              <span>Master/Specialist Routing</span>
               <span>Tool &amp; Function Calling</span>
-              <span>Structured Outputs</span>
-              <span>Pydantic Guardrails</span>
+              <span>Structured Outputs &amp; Pydantic Guardrails</span>
               <span>Human-in-the-Loop Gates</span>
               <span>Model Context Protocol (MCP)</span>
-              <span>Claude Sonnet / Haiku</span>
-              <span>GPT-4o</span>
-              <span>Llama 3.3 (Groq)</span>
-              <span>n8n Workflows</span>
+              <span>Claude · GPT-4o · Llama 3.3</span>
+              <span>BM25 Retrieval &amp; Evidence Grounding</span>
+              <span>Deterministic Eval Harnesses</span>
             </div>
           </div>
 
           <div class="skill-card reveal" data-domain="verify">
             <div class="skill-card__header">
-              <span class="skill-card__tag mono">DOMAIN 02 · GROUNDING</span>
-              <h3>Retrieval &amp; Evaluation</h3>
-            </div>
-            <div class="skill-tags mono">
-              <span>BM25 Retrieval</span>
-              <span>Evidence Grounding</span>
-              <span>Claim Verification</span>
-              <span>Conservative Abstention</span>
-              <span>Negation Checking</span>
-              <span>Deterministic Eval Harnesses</span>
-              <span>Regression Testing</span>
-              <span>Audit Trails</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal" data-domain="agentic">
-            <div class="skill-card__header">
-              <span class="skill-card__tag mono">DOMAIN 01 · INFRASTRUCTURE</span>
-              <h3>Backend &amp; Systems</h3>
+              <span class="skill-card__tag mono">02 · BACKEND</span>
+              <h3>Backend &amp; Reliability</h3>
             </div>
             <div class="skill-tags mono">
               <span>Python 3.12</span>
               <span>FastAPI</span>
-              <span>SSE Progress Streams</span>
-              <span>RESTful APIs</span>
-              <span>SQL / SQLite</span>
-              <span>PostgreSQL</span>
-              <span>Relational Schemas</span>
-              <span>Pandas &amp; NumPy</span>
-              <span>Docker &amp; Containers</span>
-              <span>Webhooks &amp; Retries</span>
-              <span>Scheduled Jobs</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal" data-domain="verify">
-            <div class="skill-card__header">
-              <span class="skill-card__tag mono">DOMAIN 02 · VERIFICATION</span>
-              <h3>QA &amp; Reliability</h3>
-            </div>
-            <div class="skill-tags mono">
+              <span>REST &amp; Webhooks</span>
+              <span>SQL / PostgreSQL</span>
+              <span>Docker</span>
               <span>pytest</span>
               <span>Playwright Automation</span>
-              <span>Contract Testing</span>
               <span>Read-After-Write Verification</span>
-              <span>Correlation IDs</span>
-              <span>Transcript Debugging</span>
-              <span>Defect Reproduction</span>
-              <span>Jira &amp; Bug Tracking</span>
             </div>
           </div>
 
           <div class="skill-card reveal" data-domain="signal">
             <div class="skill-card__header">
-              <span class="skill-card__tag mono">DOMAIN 03 · SIGNAL &amp; ML</span>
-              <h3>Biomedical DSP &amp; ML</h3>
+              <span class="skill-card__tag mono">03 · SIGNAL &amp; EDGE</span>
+              <h3>Signal, ML &amp; Edge</h3>
             </div>
             <div class="skill-tags mono">
-              <span>MIMIC-III Benchmark</span>
-              <span>PPG Waveform Ingestion</span>
-              <span>Butterworth Filtering</span>
-              <span>VPG First Derivative</span>
-              <span>Systolic Peak Detection</span>
-              <span>TensorFlow / Keras</span>
-              <span>PyTorch</span>
+              <span>MIMIC-III PPG Pipelines</span>
+              <span>Butterworth &amp; VPG Features</span>
+              <span>TensorFlow / Keras · PyTorch</span>
               <span>scikit-learn</span>
-              <span>MAE / RMSE Protocols</span>
-              <span>TensorFlow Lite</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal" data-domain="signal">
-            <div class="skill-card__header">
-              <span class="skill-card__tag mono">DOMAIN 03 · EDGE &amp; UI</span>
-              <h3>Edge, Mobile &amp; Frontend</h3>
-            </div>
-            <div class="skill-tags mono">
-              <span>C / C++ (Embedded)</span>
-              <span>STM32 Firmware</span>
-              <span>MAX30102 Sensor</span>
-              <span>I2C / UART / SPI</span>
-              <span>Bluetooth LE</span>
+              <span>C / C++ · STM32 Firmware</span>
+              <span>MAX30102 · Bluetooth LE</span>
               <span>Android / Kotlin</span>
-              <span>Vanilla HTML/CSS/JS</span>
-              <span>Operator Mini-Apps</span>
-              <span>postMessage Auth</span>
+              <span>Operator Mini-Apps (HTML/JS)</span>
             </div>
           </div>
         </div>
