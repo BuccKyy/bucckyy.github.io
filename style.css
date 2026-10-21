@@ -36,32 +36,32 @@
 }
 
 [data-theme="dark"] {
-  --bg: #0b0e14;
-  --bg-panel: #11151f;
-  --bg-subtle: #171d2b;
-  --ink: #e8eaf0;
-  --ink-muted: #949db2;
-  --accent: #ffb454;
+  --bg: #0e0b14;
+  --bg-panel: #161221;
+  --bg-subtle: #211a30;
+  --ink: #f4eef2;
+  --ink-muted: #ab9cb8;
+  --accent: #ff85b3;
   --accent2: #4fd6be;
-  --accent3: #ff6b9d;
-  --accent-dim: rgba(255, 180, 84, 0.45);
-  --line: #222a3a;
-  --grid-line: rgba(148, 157, 178, 0.05);
+  --accent3: #ffb454;
+  --accent-dim: rgba(255, 133, 179, 0.45);
+  --line: #2e233e;
+  --grid-line: rgba(255, 143, 184, 0.06);
   color-scheme: dark;
 }
 
 [data-theme="light"] {
-  --bg: #f6f3ec;
-  --bg-panel: #fdfbf6;
-  --bg-subtle: #ede8dc;
-  --ink: #181b22;
-  --ink-muted: #5e6577;
-  --accent: #b2580a;
+  --bg: #fbf6f8;
+  --bg-panel: #ffffff;
+  --bg-subtle: #f4e8ee;
+  --ink: #1e1624;
+  --ink-muted: #695975;
+  --accent: #c82869;
   --accent2: #0e7490;
-  --accent3: #be185d;
-  --accent-dim: rgba(178, 88, 10, 0.45);
-  --line: #dcd6c8;
-  --grid-line: rgba(94, 101, 119, 0.05);
+  --accent3: #b2580a;
+  --accent-dim: rgba(200, 40, 105, 0.45);
+  --line: #e4d2dc;
+  --grid-line: rgba(200, 40, 105, 0.05);
   color-scheme: light;
 }
 
@@ -93,6 +93,11 @@ html {
 body {
   font-family: var(--font-display);
   background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 75% 48% at 82% 6%, rgba(255, 133, 179, 0.14), transparent 70%),
+    radial-gradient(ellipse 60% 42% at 12% 16%, rgba(255, 180, 84, 0.07), transparent 68%),
+    radial-gradient(ellipse 70% 50% at 50% 95%, rgba(255, 133, 179, 0.08), transparent 72%);
+  background-attachment: fixed;
   color: var(--ink);
   line-height: 1.6;
   font-size: 1.0625rem;
@@ -100,7 +105,7 @@ body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Background canvas pinned to viewport */
+/* Background Sakura Canopy & Falling Petal canvas pinned to viewport */
 #bg-field {
   position: fixed;
   inset: 0;
@@ -108,7 +113,15 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.35;
+  opacity: 0.88;
+}
+[data-theme="light"] #bg-field {
+  opacity: 0.72;
+}
+
+.sakura-glyph {
+  color: var(--accent);
+  font-size: 0.92rem;
 }
 
 .mono {
@@ -434,13 +447,13 @@ body {
   border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
 }
 
-/* Tactical Mecha/HUD Corner Crosshair Reticles */
+/* Japanese Sakura Corner Ornaments */
 .reticle {
   position: absolute;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   line-height: 1;
-  color: color-mix(in srgb, var(--accent2) 65%, var(--ink-muted));
+  color: color-mix(in srgb, var(--accent) 72%, var(--ink-muted));
   pointer-events: none;
   user-select: none;
 }
@@ -888,12 +901,12 @@ body {
   font-size: 0.76rem;
   font-weight: 500;
   letter-spacing: 0.03em;
-  color: var(--accent2);
+  color: var(--accent);
   background:
-    linear-gradient(225deg, var(--accent2) 4.5px, transparent 4.5px),
-    linear-gradient(45deg, var(--accent2) 4.5px, transparent 4.5px),
-    color-mix(in srgb, var(--bg-panel) 88%, transparent);
-  border: 1px solid var(--line);
+    linear-gradient(225deg, var(--accent) 4.5px, transparent 4.5px),
+    linear-gradient(45deg, var(--accent) 4.5px, transparent 4.5px),
+    color-mix(in srgb, var(--bg-panel) 90%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--line));
   padding: 0.2rem 0.65rem;
   clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
 }
@@ -1940,7 +1953,9 @@ body {
   .stats { grid-template-columns: 1fr; }
   .topnav__inner { min-height: 3.2rem; }
   .nav-link { font-size: 0.78rem; padding: 0.5rem 0.25rem; min-height: 42px; }
-  .instrument__header { flex-direction: column; align-items: flex-start; }
+  .instrument__header { flex-direction: column; align-items: stretch; }
+  .instrument__tabs { flex-direction: column; width: 100%; }
+  .instrument__tab { white-space: normal; text-align: left; }
   .instrument__meta { padding: 0.4rem 0.6rem; }
   .instrument__controls { flex-direction: column; align-items: flex-start; }
   .case { padding: 1.25rem 1.1rem; }
