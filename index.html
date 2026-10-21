@@ -33,7 +33,12 @@
   <link rel="preload" href="fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/ibm-plex-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
-  <noscript><style>.reveal { opacity: 1; translate: none; }</style></noscript>
+  <noscript><style>
+    .reveal, .hero__meta, .hero__name, .hero__role, .hero__tagline,
+    .hero__actions, .hero__orb { opacity: 1; translate: none; }
+    .hero__orb canvas { opacity: 1; }
+    #clock { display: none; }
+  </style></noscript>
   <script>
     // Set theme before paint to avoid a flash.
     (function () {
@@ -45,6 +50,23 @@
       document.documentElement.setAttribute('data-theme', t);
       var meta = document.querySelector('meta[name="theme-color"]');
       if (meta) meta.setAttribute('content', t === 'light' ? '#f6f3ec' : '#0b0e14');
+      document.documentElement.classList.add('js');
+
+      // Boot reveal: start once fonts are ready (capped at 650ms) so the
+      // headline never reflows mid-animation. Lives here so it still runs
+      // even if script.js fails to load.
+      document.addEventListener('DOMContentLoaded', function () {
+        var fired = false;
+        var start = function () {
+          if (fired) return;
+          fired = true;
+          document.body.classList.add('is-loaded');
+        };
+        if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+          document.fonts.ready.then(start);
+        }
+        window.setTimeout(start, 650);
+      });
     })();
   </script>
   <script type="application/ld+json">
@@ -117,13 +139,14 @@
         <span class="theme-toggle__light" aria-hidden="true">◑</span>
       </button>
     </div>
+    <span class="topnav__progress" aria-hidden="true"></span>
   </nav>
 
   <div class="layout">
 
     <!-- ================= HERO ================= -->
     <header class="hero">
-      <p class="hero__meta mono">Ho Chi Minh City · UTC+7 · open to remote</p>
+      <p class="hero__meta mono">Ho Chi Minh City · UTC+7 · <span id="clock">00:00:00</span></p>
       <h1 class="hero__name">Tran Trung Duc</h1>
       <p class="hero__role">AI Engineer · LLM Systems, Backend &amp; ML</p>
       <p class="hero__tagline">
@@ -151,6 +174,34 @@
         <p class="hero__orb-label mono">sig: neural field · signals in, decisions out</p>
       </div>
     </header>
+
+    <!-- ================= TICKER ================= -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track mono">
+        <div class="ticker__group">
+          <span>llm &amp; agent systems</span><i>◆</i>
+          <span>multi-agent orchestration</span><i>◆</i>
+          <span>evaluation harnesses</span><i>◆</i>
+          <span>fastapi services</span><i>◆</i>
+          <span>ml &amp; data pipelines</span><i>◆</i>
+          <span>biomedical signal processing</span><i>◆</i>
+          <span>document processing</span><i>◆</i>
+          <span>contracts &amp; validation</span><i>◆</i>
+          <span>human-in-the-loop review</span><i>◆</i>
+        </div>
+        <div class="ticker__group">
+          <span>llm &amp; agent systems</span><i>◆</i>
+          <span>multi-agent orchestration</span><i>◆</i>
+          <span>evaluation harnesses</span><i>◆</i>
+          <span>fastapi services</span><i>◆</i>
+          <span>ml &amp; data pipelines</span><i>◆</i>
+          <span>biomedical signal processing</span><i>◆</i>
+          <span>document processing</span><i>◆</i>
+          <span>contracts &amp; validation</span><i>◆</i>
+          <span>human-in-the-loop review</span><i>◆</i>
+        </div>
+      </div>
+    </div>
 
     <!-- ================= CONTENT ================= -->
     <main class="content">
@@ -536,7 +587,7 @@
             I'm open to remote roles in<br>
             <em>AI engineering</em>, <em>ML engineering</em>, and <em>AI-adjacent backend work</em>.
           </p>
-          <a class="contact__email" href="mailto:trantrungduc313@gmail.com">trantrungduc313@gmail.com</a>
+          <a class="contact__email" href="mailto:trantrungduc313@gmail.com">trantrungduc313@gmail.com<span class="contact__email-arrow" aria-hidden="true">→</span></a>
           <div class="contact__links mono">
             <a href="TranTrungDuc-AI-Engineer-CV.pdf" download>download cv ↓</a>
             <a href="https://github.com/BuccKyy" target="_blank" rel="me noopener">github.com/BuccKyy ↗</a>

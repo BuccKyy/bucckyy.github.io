@@ -68,6 +68,45 @@
     });
   }
 
+  /* ============ LIVE CLOCK ============ */
+
+  // Current time in Ho Chi Minh City, rendered in the hero meta line.
+  (function initClock() {
+    var el = document.getElementById('clock');
+    if (!el || typeof Intl === 'undefined' || !Intl.DateTimeFormat) return;
+    var fmt;
+    try {
+      fmt = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Ho_Chi_Minh',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      });
+    } catch (err) {
+      return;
+    }
+    var timer = 0;
+    function tick() {
+      el.textContent = fmt.format(new Date());
+    }
+    function start() {
+      if (timer) return;
+      tick();
+      timer = window.setInterval(tick, 1000);
+    }
+    function stop() {
+      if (!timer) return;
+      window.clearInterval(timer);
+      timer = 0;
+    }
+    start();
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stop();
+      else start();
+    });
+  })();
+
   /* ============ REVEAL ON SCROLL ============ */
 
   var reveals = document.querySelectorAll('.reveal');
@@ -129,12 +168,21 @@
 
   var navTicking = false;
   var navRaf = window.requestAnimationFrame || function (fn) { fn(); };
+  var progressEl = document.querySelector('.topnav__progress');
+
+  // Scroll-progress hairline pinned to the bottom of the sticky nav.
+  function updateProgress() {
+    if (!progressEl) return;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    progressEl.style.width = (max > 4 ? Math.min(1, window.scrollY / max) * 100 : 0) + '%';
+  }
 
   function onNavScroll() {
     if (navTicking) return;
     navTicking = true;
     navRaf(function () {
       updateActiveSection();
+      updateProgress();
       navTicking = false;
     });
   }
@@ -142,6 +190,50 @@
   window.addEventListener('scroll', onNavScroll, { passive: true });
   window.addEventListener('resize', onNavScroll);
   updateActiveSection();
+  updateProgress();
+
+  /* ============ STAT COUNT-UP ============ */
+
+  // Simple numeric stats tick up when scrolled into view, then settle on the
+  // exact original text. Compound values (88 / 88, 2–3h → 3min) stay static.
+  (function initCountUp() {
+    if (reduceMotion || !('IntersectionObserver' in window)) return;
+    var nums = Array.prototype.slice.call(document.querySelectorAll('.stat__num'));
+    if (!nums.length) return;
+
+    function parse(text) {
+      var m = text.match(/^(\D*?)(\d+(?:[.,]\d+)?)(\D*)$/);
+      if (!m) return null;
+      var value = parseFloat(m[2].replace(',', '.'));
+      if (isNaN(value)) return null;
+      var dot = m[2].indexOf('.') < 0 ? m[2].indexOf(',') : m[2].indexOf('.');
+      var decimals = dot < 0 ? 0 : m[2].length - dot - 1;
+      return { prefix: m[1], value: value, suffix: m[3], decimals: decimals };
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        io.unobserve(entry.target);
+        var el = entry.target;
+        var target = parse(el.textContent.trim());
+        if (!target) return;
+        var duration = 950;
+        var started = 0;
+        function step(now) {
+          if (!started) started = now;
+          var t = Math.min(1, (now - started) / duration);
+          var eased = t >= 1 ? 1 : 1 - Math.pow(2, -10 * t);
+          el.textContent = target.prefix + (target.value * eased).toFixed(target.decimals) + target.suffix;
+          if (t < 1) window.requestAnimationFrame(step);
+          else el.textContent = target.prefix + target.value.toFixed(target.decimals) + target.suffix;
+        }
+        window.requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+
+    nums.forEach(function (el) { io.observe(el); });
+  })();
 
   /* ============ CURSOR SPOTLIGHT ============ */
 
@@ -499,6 +591,11 @@
     var time = 0;
     var pointerX = 0;
     var pointerY = 0;
+    var pointerIn = false;
+    var bend = 0;
+    var retX = 0.5;
+    var retY = 0.5;
+    var retAlpha = 0;
     var rotY = 0.45;
     var rotX = -0.16;
     var shellRotY = -0.6;
@@ -660,6 +757,9 @@
       var d = x - pulseHead(phase);
       y += Math.exp(-(d * d * 30) / k) * 0.42
          - Math.exp(-Math.pow(d - 0.24 * k, 2) * 90 / k) * 0.17;
+      // The ribbon leans toward the cursor while it hovers the banner.
+      var pd = u - pointerX * 2;
+      y += Math.exp(-(pd * pd) / 0.05) * bend;
       return projectRibbon(x, y, z);
     }
 
@@ -800,6 +900,35 @@
         ctx.fill();
       });
       ctx.shadowBlur = 0;
+
+      // Cursor reticle with a live coordinate readout.
+      if (retAlpha > 0.02) {
+        var rx = retX * w;
+        var ry = retY * h;
+        ctx.save();
+        ctx.globalAlpha = retAlpha;
+        ctx.strokeStyle = rgba(palette.a, 0.45);
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 5]);
+        ctx.beginPath();
+        ctx.arc(rx, ry, 15, 0, TAU);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        ctx.moveTo(rx - 26, ry); ctx.lineTo(rx - 9, ry);
+        ctx.moveTo(rx + 9, ry); ctx.lineTo(rx + 26, ry);
+        ctx.moveTo(rx, ry - 26); ctx.lineTo(rx, ry - 9);
+        ctx.moveTo(rx, ry + 9); ctx.lineTo(rx, ry + 26);
+        ctx.stroke();
+        ctx.fillStyle = rgba(palette.a, 0.75);
+        ctx.font = '10px ui-monospace, "IBM Plex Mono", monospace';
+        ctx.textBaseline = 'middle';
+        var label = 'x ' + retX.toFixed(2) + '  y ' + retY.toFixed(2);
+        var lx = rx + 30;
+        if (lx + ctx.measureText(label).width > w - 4) lx = rx - 30 - ctx.measureText(label).width;
+        ctx.fillText(label, lx, ry);
+        ctx.restore();
+      }
     }
 
     function update(dt) {
@@ -814,6 +943,13 @@
       rotX += (autoX - rotX) * 0.08;
       shellRotY = -0.6 - time * 0.27;
       shellRotX = 0.38 + Math.sin(time * 0.31) * 0.16;
+      var bendTarget = pointerIn ? pointerY * 0.6 : 0;
+      bend += (bendTarget - bend) * 0.08;
+      retAlpha += ((pointerIn ? 1 : 0) - retAlpha) * 0.12;
+      if (pointerIn) {
+        retX += (pointerX + 0.5 - retX) * 0.2;
+        retY += (pointerY + 0.5 - retY) * 0.2;
+      }
       pulses.forEach(function (pl) {
         pl.t += pl.speed * dt;
         if (pl.t > 1) {
@@ -911,10 +1047,12 @@
         var rect = canvas.getBoundingClientRect();
         pointerX = (event.clientX - rect.left) / rect.width - 0.5;
         pointerY = (event.clientY - rect.top) / rect.height - 0.5;
+        pointerIn = true;
       }, { passive: true });
       canvas.addEventListener('pointerleave', function () {
         pointerX = 0;
         pointerY = 0;
+        pointerIn = false;
       });
     }
   })();
@@ -937,11 +1075,32 @@
           var py = (y - rect.top) / rect.height - 0.5;
           card.style.setProperty('--rx', (-py * 3.2).toFixed(2) + 'deg');
           card.style.setProperty('--ry', (px * 3.2).toFixed(2) + 'deg');
+          card.style.setProperty('--mx', ((px + 0.5) * 100).toFixed(1) + '%');
+          card.style.setProperty('--my', ((py + 0.5) * 100).toFixed(1) + '%');
         });
       }, { passive: true });
       card.addEventListener('pointerleave', function () {
         card.style.removeProperty('--rx');
         card.style.removeProperty('--ry');
+        card.style.removeProperty('--mx');
+        card.style.removeProperty('--my');
+      });
+    });
+  }
+
+  /* ============ MAGNETIC BUTTONS ============ */
+
+  // The CV buttons lean toward the cursor on pointer devices.
+  if (window.matchMedia('(pointer: fine)').matches && !reduceMotion) {
+    Array.prototype.forEach.call(document.querySelectorAll('.cv-button'), function (btn) {
+      btn.addEventListener('pointermove', function (event) {
+        var rect = btn.getBoundingClientRect();
+        var dx = (event.clientX - rect.left) / rect.width - 0.5;
+        var dy = (event.clientY - rect.top) / rect.height - 0.5;
+        btn.style.transform = 'translate(' + (dx * 9).toFixed(2) + 'px, ' + (dy * 7 - 2).toFixed(2) + 'px)';
+      }, { passive: true });
+      btn.addEventListener('pointerleave', function () {
+        btn.style.removeProperty('transform');
       });
     });
   }

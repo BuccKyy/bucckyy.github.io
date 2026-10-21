@@ -269,6 +269,17 @@ button:focus-visible {
   background: var(--accent);
 }
 
+/* Scroll-progress hairline across the bottom of the nav bar. */
+.topnav__progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  pointer-events: none;
+}
+
 /* ============ HERO ============ */
 
 .hero {
@@ -328,7 +339,7 @@ button:focus-visible {
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.7rem;
-  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.18s ease-out;
 }
 
 .cv-button:hover {
@@ -429,6 +440,72 @@ button:focus-visible {
   color: var(--ink-muted);
   margin-top: 0.4rem;
   font-size: 0.7rem;
+}
+
+/* Boot reveal — hero elements type in over the live field on load.
+   Scoped to html.js so no-JS visitors see everything immediately. */
+html.js .hero__meta,
+html.js .hero__name,
+html.js .hero__role,
+html.js .hero__tagline,
+html.js .hero__actions,
+html.js .hero__orb {
+  opacity: 0;
+  translate: 0 28px;
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+              translate 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html.js body.is-loaded .hero__meta { opacity: 1; translate: none; transition-delay: 0.04s; }
+html.js body.is-loaded .hero__name { opacity: 1; translate: none; transition-delay: 0.13s; }
+html.js body.is-loaded .hero__role { opacity: 1; translate: none; transition-delay: 0.23s; }
+html.js body.is-loaded .hero__tagline { opacity: 1; translate: none; transition-delay: 0.31s; }
+html.js body.is-loaded .hero__actions { opacity: 1; translate: none; transition-delay: 0.4s; }
+html.js body.is-loaded .hero__orb { opacity: 1; translate: none; transition-delay: 0.5s; }
+
+/* ============ TICKER ============ */
+
+/* Full-bleed status strip between hero and content. Duplicate groups make
+   the loop seamless; mask fades the edges. */
+.ticker {
+  margin: clamp(2.5rem, 6vh, 4rem) calc(50% - 50vw) 0;
+  padding-block: 0.7rem;
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.ticker__track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 52s linear infinite;
+}
+
+.ticker__group {
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+  padding-inline: 1.2rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.ticker__group i {
+  font-style: normal;
+  font-size: 0.45rem;
+  color: var(--accent);
+}
+.ticker__group i:nth-child(4n) { color: var(--accent2); }
+.ticker__group i:nth-child(4n + 2) { color: var(--accent3); }
+
+@keyframes ticker-scroll {
+  to { transform: translateX(-50%); }
 }
 
 /* ============ CONTENT ============ */
@@ -841,6 +918,7 @@ button:focus-visible {
 }
 
 .repo {
+  position: relative;
   display: block;
   text-decoration: none;
   border: 1px solid var(--line);
@@ -997,18 +1075,40 @@ button:focus-visible {
 }
 
 .contact__email {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: clamp(1rem, 2.2vw, 1.32rem);
-  color: var(--accent);
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4.6vw, 3.1rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
   text-decoration: none;
-  border-bottom: 2px solid var(--accent-dim);
-  padding-bottom: 0.2rem;
-  margin-bottom: 2rem;
-  transition: border-color 0.2s ease;
-  word-break: break-all;
+  margin-bottom: 2.4rem;
+  word-break: break-word;
+  transition: color 0.25s ease;
 }
-.contact__email:hover { border-color: var(--accent); }
+.contact__email::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.14em;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transform: scaleX(0.3);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.contact__email:hover { color: var(--accent); }
+.contact__email:hover::after { transform: scaleX(1); }
+.contact__email-arrow {
+  color: var(--accent);
+  font-family: var(--font-display);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.contact__email:hover .contact__email-arrow { transform: translateX(0.22em); }
 
 .contact__links { display: flex; flex-wrap: wrap; gap: 1.5rem 2rem; }
 .contact__links a {
@@ -1036,6 +1136,27 @@ button:focus-visible {
   color: var(--ink-muted);
   font-size: 0.73rem;
 }
+
+/* Cursor sheen: a soft accent glow tracking the pointer inside cards. */
+.case::after,
+.capability::after,
+.repo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    380px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--accent) 7%, transparent),
+    transparent 66%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.case:hover::after,
+.capability:hover::after,
+.repo:hover::after { opacity: 1; }
 
 /* ============ REVEAL ============ */
 
@@ -1068,8 +1189,15 @@ button:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; translate: none; transition: none; }
+  html.js .hero__meta,
+  html.js .hero__name,
+  html.js .hero__role,
+  html.js .hero__tagline,
+  html.js .hero__actions,
+  html.js .hero__orb { opacity: 1; translate: none; transition: none; }
   .hero__meta::before { animation: none; }
   .status-dot { animation: none; }
+  .ticker__track { animation: none; }
   .case:hover, .repo:hover, .capability:hover { transform: none; }
   .case::before, .capability::before, .nav-line { transition: none; }
   .case.reveal, .capability.reveal, .repo.reveal { transition: none; }
@@ -1127,6 +1255,7 @@ button:focus-visible {
   .nav-line { width: 0.6rem; }
   .nav-link:hover .nav-line, .nav-link.active .nav-line { width: 1.2rem; }
   .hero__meta { font-size: 0.68rem; line-height: 1.5; }
+  .ticker__group { gap: 1.7rem; font-size: 0.64rem; letter-spacing: 0.14em; }
   .stats { gap: 1rem 1.1rem; }
   .stat__num { font-size: 1.3rem; }
   .case { padding: 1.35rem 1.15rem 1.2rem; }
@@ -1138,7 +1267,7 @@ button:focus-visible {
 
 @media print {
   #bg-field, .spotlight, .theme-toggle, .skip-link, .topnav,
-  .hero__orb, .hero__actions, body::after { display: none !important; }
+  .hero__orb, .hero__actions, .ticker, #clock, body::after { display: none !important; }
   .layout { max-width: none; padding: 0; }
   .hero { padding: 0 0 1.5rem; }
   .content { padding: 0; }
