@@ -35,8 +35,7 @@
   <link rel="preload" href="fonts/ibm-plex-mono-500-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
   <noscript><style>
-    .reveal, .hero__meta, .hero__name, .hero__role, .hero__tagline,
-    .hero__actions, .hero__instrument { opacity: 1; translate: none; }
+    .reveal { opacity: 1; transform: none; }
     #clock { display: none; }
   </style></noscript>
   <script>
@@ -99,7 +98,7 @@
   <nav class="topnav" aria-label="Main Sections">
     <div class="topnav__inner mono">
       <div class="topnav__links">
-        <a href="#about" class="nav-link"><span class="nav-line"></span>about</a>
+        <a href="#about" class="nav-link active"><span class="nav-line"></span>about</a>
         <a href="#work" class="nav-link"><span class="nav-line"></span>selected work</a>
         <a href="#capabilities" class="nav-link"><span class="nav-line"></span>capabilities</a>
         <a href="#experience" class="nav-link"><span class="nav-line"></span>experience</a>
@@ -109,8 +108,8 @@
         <a href="#contact" class="nav-link"><span class="nav-line"></span>contact</a>
       </div>
       <button id="theme-toggle" type="button" class="theme-toggle mono" aria-label="Toggle color theme" aria-pressed="false" title="Toggle color theme">
-        <span class="theme-toggle__dark" aria-hidden="true">◐</span>
-        <span class="theme-toggle__light" aria-hidden="true">◑</span>
+        <span class="theme-toggle__dark" aria-hidden="true">◐ dark</span>
+        <span class="theme-toggle__light" aria-hidden="true">◑ light</span>
       </button>
     </div>
     <span class="topnav__progress" aria-hidden="true"></span>
@@ -120,17 +119,27 @@
 
     <!-- ================= HERO ================= -->
     <header class="hero">
-      <p class="hero__meta mono">Ho Chi Minh City · UTC+7 · <span id="clock">00:00:00</span></p>
+      <div class="hero__top-bar mono">
+        <p class="hero__meta">Ho Chi Minh City · UTC+7 · <span id="clock">00:00:00</span></p>
+        <div class="domain-legend" aria-label="Engineering domain color key">
+          <span class="domain-pill" data-domain="agentic"><i></i>Agentic Orchestration</span>
+          <span class="domain-pill" data-domain="verify"><i></i>Verification &amp; Guardrails</span>
+          <span class="domain-pill" data-domain="signal"><i></i>Biomedical DSP &amp; Edge ML</span>
+        </div>
+      </div>
+
       <h1 class="hero__name">Tran Trung Duc</h1>
       <p class="hero__role">AI Systems Engineer · Multi-Agent Workflows &amp; Biomedical DSP</p>
       <p class="hero__tagline">
-        I engineer <em>deterministic AI systems</em> that run real business operations —
-        and the <em>evaluation layer</em> that makes LLM outputs safe, auditable, and reliable.
+        I engineer <em class="tone-agentic">deterministic AI systems</em> that run real business operations —
+        and the <em class="tone-verify">evaluation layer</em> that makes LLM outputs safe, auditable, and reliable.
       </p>
 
       <div class="hero__actions">
         <a class="cv-button mono" href="TranTrungDuc-AI-Engineer-CV.pdf" download>
-          <span class="cv-button__icon" aria-hidden="true">↓</span> download cv <span class="cv-button__meta">pdf</span>
+          <span class="cv-button__icon" aria-hidden="true">↓</span>
+          <span>download cv</span>
+          <span class="cv-button__meta">PDF</span>
         </a>
         <p class="hero__status mono"><span class="status-indicator" aria-hidden="true"></span> open to remote roles</p>
         <div class="hero__socials mono">
@@ -141,7 +150,7 @@
       </div>
 
       <!-- ============ HERO ENGINEERING INSTRUMENT ============ -->
-      <section class="hero__instrument" id="hero-instrument" aria-label="Interactive Systems & Signal Instrument">
+      <section class="hero__instrument" id="hero-instrument" aria-label="Interactive Systems &amp; Signal Instrument">
         <div class="instrument__header mono">
           <div class="instrument__tabs" role="tablist" aria-label="Instrument Mode Selector">
             <button type="button" class="instrument__tab active" id="tab-signal" role="tab" aria-selected="true" aria-controls="panel-signal" data-mode="signal">
@@ -150,84 +159,93 @@
             </button>
             <button type="button" class="instrument__tab" id="tab-agent" role="tab" aria-selected="false" aria-controls="panel-agent" data-mode="agent">
               <span class="instrument__tab-led"></span>
-              <span class="instrument__tab-name">02 // ENTERPRISE AGENT DAG · 7-AGENT PIPELINE</span>
+              <span class="instrument__tab-name">02 // ENTERPRISE AGENT DAG · 7-NODE PIPELINE</span>
             </button>
           </div>
           <div class="instrument__meta">
-            <span class="instrument__status-tag"><span class="instrument__status-dot"></span> INSTRUMENT ACTIVE</span>
+            <span class="instrument__status-tag"><span class="instrument__status-dot"></span> TELEMETRY LOCKED · 125 Hz</span>
           </div>
         </div>
 
         <!-- PANEL 1: BIOMEDICAL DSP OSCILLOSCOPE -->
         <div class="instrument__panel active" id="panel-signal" role="tabpanel" aria-labelledby="tab-signal">
-          <div class="instrument__stage">
-            <canvas id="dsp-canvas" width="1120" height="260"></canvas>
-            <div class="dsp__overlay">
-              <div class="dsp__readouts mono">
-                <div class="dsp__metric">
-                  <span class="dsp__label">HEART RATE</span>
-                  <span class="dsp__val" id="dsp-hr">72 <small>BPM</small></span>
-                </div>
-                <div class="dsp__metric">
-                  <span class="dsp__label">ESTIMATED BP</span>
-                  <span class="dsp__val" id="dsp-bp">118.4 / 76.2 <small>mmHg</small></span>
-                </div>
-                <div class="dsp__metric">
-                  <span class="dsp__label">MIMIC-III SBP MAE</span>
-                  <span class="dsp__val" id="dsp-mae">9.76 <small>± 8.99 mmHg</small></span>
-                </div>
-                <div class="dsp__metric">
-                  <span class="dsp__label">SIGNAL QUALITY</span>
-                  <span class="dsp__val" id="dsp-sqi">98.4% <small>EXCELLENT</small></span>
-                </div>
-              </div>
+          <div class="dsp__hud mono">
+            <div class="dsp__metric" data-domain="signal">
+              <span class="dsp__label">Heart Rate</span>
+              <span class="dsp__val" id="dsp-hr">72 <small>BPM · 125 Hz</small></span>
+            </div>
+            <div class="dsp__metric" data-domain="agentic">
+              <span class="dsp__label">Estimated BP</span>
+              <span class="dsp__val" id="dsp-bp">118.4 / 76.2 <small>mmHg</small></span>
+            </div>
+            <div class="dsp__metric" data-domain="verify">
+              <span class="dsp__label">MIMIC-III SBP MAE</span>
+              <span class="dsp__val" id="dsp-mae">9.76 <small>± 8.99 mmHg</small></span>
+            </div>
+            <div class="dsp__metric" data-domain="signal">
+              <span class="dsp__label">Probe Readout</span>
+              <span class="dsp__val" id="dsp-probe">SQI 98.4% <small>move cursor on wave</small></span>
             </div>
           </div>
+
+          <div class="instrument__stage">
+            <canvas id="dsp-canvas" width="1120" height="230" aria-label="Interactive PPG oscilloscope canvas"></canvas>
+          </div>
+
           <div class="instrument__controls mono">
-            <div class="instrument__filter-buttons">
-              <span class="controls__title">FILTER STAGE:</span>
-              <button type="button" class="stage-btn active" data-stage="raw">Raw Acquisition (Noise &amp; Drift)</button>
-              <button type="button" class="stage-btn" data-stage="bandpass">0.5–8Hz Butterworth (Clean)</button>
-              <button type="button" class="stage-btn" data-stage="vpg">1st Deriv (VPG ΔV/Δt)</button>
-              <button type="button" class="stage-btn" data-stage="peaks">Systolic Peak Detection &amp; Model</button>
+            <div class="instrument__filter-buttons" role="group" aria-label="Signal processing filter stage">
+              <span class="controls__title">DSP Stage:</span>
+              <button type="button" class="stage-btn active" data-stage="raw">1. Raw Acquisition (Noise &amp; Drift)</button>
+              <button type="button" class="stage-btn" data-stage="bandpass">2. 0.5–8Hz Butterworth (Clean)</button>
+              <button type="button" class="stage-btn" data-stage="vpg">3. 1st Deriv (VPG ΔV/Δt)</button>
+              <button type="button" class="stage-btn" data-stage="peaks">4. Systolic Peak &amp; SBP Extraction</button>
             </div>
             <div class="instrument__hint">
-              <span class="hint__icon">ℹ</span> <span id="dsp-stage-desc">Raw 125Hz PPG sensor acquisition showing respiratory baseline wander and motion noise.</span>
+              <span class="hint__icon">▸</span>
+              <span id="dsp-stage-desc">Raw 125Hz PPG optical sensor stream showing respiratory baseline wander (0.4Hz) and motion artifacts before filtering.</span>
             </div>
           </div>
         </div>
 
         <!-- PANEL 2: ENTERPRISE AGENT DAG INSPECTOR -->
         <div class="instrument__panel" id="panel-agent" role="tabpanel" aria-labelledby="tab-agent">
-          <div class="instrument__stage dag__stage">
-            <div class="dag__canvas-wrap">
-              <canvas id="dag-canvas" width="1120" height="260"></canvas>
-            </div>
-            <div class="dag__legend mono">
+          <div class="dag__hud mono">
+            <div class="dag__legend">
               <span class="legend-item"><span class="legend-dot dot-deterministic"></span> Deterministic Python</span>
-              <span class="legend-item"><span class="legend-dot dot-llm"></span> LLM Reasoning (Sonnet)</span>
-              <span class="legend-item"><span class="legend-dot dot-gate"></span> Validation / HITL Gate</span>
-              <span class="legend-item"><span class="legend-dot dot-erp"></span> ERP Transaction</span>
+              <span class="legend-item"><span class="legend-dot dot-llm"></span> LLM Synthesis (Sonnet)</span>
+              <span class="legend-item"><span class="legend-dot dot-gate"></span> Pydantic / HITL Gate</span>
+              <span class="legend-item"><span class="legend-dot dot-erp"></span> SAP ERP Write</span>
             </div>
+            <button type="button" class="dag-trigger-btn" id="dag-run-btn">
+              <span class="play-icon" aria-hidden="true">▶</span> Simulate Pipeline Execution
+            </button>
           </div>
+
+          <div class="instrument__stage dag__stage">
+            <canvas id="dag-canvas" width="1120" height="230" aria-label="7-node enterprise agent pipeline DAG"></canvas>
+          </div>
+
           <div class="dag__controls mono">
-            <div class="dag__action-bar">
-              <button type="button" class="dag-trigger-btn" id="dag-run-btn">
-                <span class="play-icon">▶</span> SIMULATE PIPELINE EXECUTION
-              </button>
-              <span class="dag__active-step" id="dag-step-label">Ready. Click any node to inspect runtime payload contract.</span>
+            <div class="dag__node-pills" role="tablist" aria-label="Inspect pipeline node contract">
+              <button type="button" class="dag-pill" data-node="0">01. CRM Event</button>
+              <button type="button" class="dag-pill" data-node="1">02. FastAPI Router</button>
+              <button type="button" class="dag-pill" data-node="2">03. BM25 Grounding</button>
+              <button type="button" class="dag-pill" data-node="3">04. Claude Sonnet</button>
+              <button type="button" class="dag-pill active" data-node="4">05. Pydantic Gate</button>
+              <button type="button" class="dag-pill" data-node="5">06. Human Review</button>
+              <button type="button" class="dag-pill" data-node="6">07. SAP Read-Back</button>
             </div>
-            <!-- Node Schema Inspector -->
-            <div class="dag__inspector mono" id="dag-inspector">
+
+            <div class="dag__inspector" id="dag-inspector" aria-live="polite">
               <div class="inspector__header">
-                <span class="inspector__title" id="inspector-title">NODE CONTRACT // Pydantic Validation Gate</span>
+                <span class="inspector__title" id="inspector-title">NODE 05 CONTRACT // Pydantic Validation Gate</span>
                 <span class="inspector__badge" id="inspector-badge">PASS · DETERMINISTIC GATE</span>
               </div>
               <pre class="inspector__code" id="inspector-code"><code>{
   "validator": "PydanticV2",
   "model": "ProposalDraftPayload",
   "arithmetic_guard": "VERIFIED_EXTERNAL_PYTHON",
-  "checks": {"status_enum": "VALID", "score_range": [0, 100], "read_back": "MATCHED"},
+  "checks": { "status_enum": "VALID", "score_range": [0, 100], "read_back": "MATCHED" },
   "result": "PASS (88/88 test suite)"
 }</code></pre>
             </div>
@@ -241,9 +259,9 @@
 
       <!-- ============ ABOUT ============ -->
       <section class="section" id="about">
-        <h2 class="section__title mono reveal">About &amp; Engineering Philosophy</h2>
+        <h2 class="section__title reveal">About &amp; Engineering Philosophy</h2>
         <div class="about reveal">
-          <p>
+          <p class="about__lead">
             I am an AI Systems Engineer at <strong>MaxflowAI</strong>, where I design and deploy
             production multi-agent workflows, deterministic evaluation gates, and Python backends for real business operations —
             B2B sales automation, inventory intelligence, event and HR workflows, and ERP-adjacent document processing.
@@ -251,165 +269,299 @@
           <p>
             My engineering foundation is rooted in <strong>biomedical signal processing</strong>: a B.Eng in
             Electronics &amp; Telecommunication Engineering (University of Science,
-            VNU-HCM, GPA 3.4/4.0) and published research on cuffless blood pressure estimation
-            from PPG signals — spanning deep-learning architectures (PPG2BP-Net) down to STM32 bare-metal firmware.
+            VNU-HCM, GPA 3.4/4.0) and research on cuffless blood-pressure estimation
+            from PPG signals — spanning deep-learning architectures (PPG2BP-Net) down to STM32 bare-metal C firmware.
           </p>
-          <p>
-            That range defines my throughline: I build systems <strong>end to end</strong>,
-            and prove they work with deterministic evaluation rather than vibes.
-            <strong>Arithmetic, scoring, pricing, and state transitions belong in Python; the model handles language and interpretation.</strong>
-            The unglamorous layers — strict Pydantic schemas, state machines, retries, human review gates, and correlation-based reconciliation — are what turn AI from an unstable demo into enterprise software.
-          </p>
-          <p class="about__now">
-            Currently building AI systems at MaxflowAI. Open to remote roles in AI engineering, ML systems, and backend engineering.
-          </p>
+
+          <blockquote class="thesis-callout">
+            <p class="thesis-callout__quote">
+              “Arithmetic, scoring, pricing, and state transitions belong in Python; the model handles language and interpretation.”
+            </p>
+            <p class="thesis-callout__sub mono">
+              strict Pydantic schemas → explicit state machines → human review gates → correlation-based read-after-write reconciliation
+            </p>
+          </blockquote>
         </div>
 
-        <div class="stats reveal">
-          <div class="stats__label mono">Selected Engineering Benchmarks</div>
-          <div class="stat">
-            <span class="stat__num">7</span>
-            <span class="stat__label mono">agents coordinated in one production pipeline</span>
+        <div class="stats reveal" aria-label="Selected engineering benchmarks">
+          <div class="stat" data-domain="agentic">
+            <span class="stat__num">7 Agents</span>
+            <span class="stat__label mono">Coordinated in one production B2B sales &amp; research pipeline</span>
           </div>
-          <div class="stat">
-            <span class="stat__num">700+</span>
-            <span class="stat__label mono">records scored with an 11-metric deterministic model</span>
+          <div class="stat" data-domain="agentic">
+            <span class="stat__num">700+ Records</span>
+            <span class="stat__label mono">Scored with an 11-metric deterministic Python evaluation model</span>
           </div>
-          <div class="stat">
+          <div class="stat" data-domain="agentic">
             <span class="stat__num">2–3h → 3min</span>
-            <span class="stat__label mono">manual research-to-proposal cycle reduction (&gt;95%)</span>
+            <span class="stat__label mono">Manual research-to-proposal turnaround reduction (&gt;95%)</span>
           </div>
-          <div class="stat">
+          <div class="stat" data-domain="verify">
             <span class="stat__num">88 / 88</span>
-            <span class="stat__label mono">focused ERP tests passed; 5/5 read-back checks matched</span>
+            <span class="stat__label mono">Focused ERP receipt tests passed; 5/5 SAP read-back checks matched</span>
           </div>
-          <div class="stat">
-            <span class="stat__num">~40%</span>
-            <span class="stat__label mono">data-processing latency cut via vectorized NumPy</span>
+          <div class="stat" data-domain="signal">
+            <span class="stat__num">~40% Faster</span>
+            <span class="stat__label mono">Waveform pipeline latency reduction via vectorized NumPy DSP</span>
           </div>
-          <div class="stat">
+          <div class="stat" data-domain="signal">
             <span class="stat__num">9.76 mmHg</span>
-            <span class="stat__label mono">MIMIC-III SBP MAE (± 8.99 mmHg) cuffless BP research</span>
+            <span class="stat__label mono">MIMIC-III SBP MAE (± 8.99 mmHg) cuffless blood-pressure research</span>
           </div>
         </div>
       </section>
 
       <!-- ============ SELECTED WORK ============ -->
       <section class="section" id="work">
-        <h2 class="section__title mono reveal">Selected Work &amp; Enterprise Systems</h2>
-        <p class="section__note mono reveal">production client systems @ maxflowai — client names and proprietary data withheld</p>
+        <h2 class="section__title reveal">Selected Work &amp; Enterprise Systems</h2>
+        <p class="section__sub mono reveal">
+          Production client architectures @ MaxflowAI (proprietary data anonymised) — switch pipeline tabs on any system to inspect the live input payload, Python rule gate, and verified output.
+        </p>
 
         <div class="cases">
-          <article class="case reveal">
-            <span class="case__id mono">CS-01 · Production Client System · 2026</span>
-            <h3>B2B Sales Automation Platform</h3>
-            <div class="case__block">
-              <span class="mono">problem</span>
-              <p>Sales teams spent 2–3 hours per prospect manually researching company background, cross-checking CRM order history, scoring product fit, and drafting tailored proposals.</p>
-            </div>
-            <div class="case__block">
-              <span class="mono">system</span>
-              <p>A <strong>7-agent orchestrated pipeline</strong>: master router, partner research agent, deterministic 11-metric scoring across 700+ records, proposal drafting, QC review, batch delivery, and campaign analytics. CRM data flows through a custom <strong>MCP bridge</strong>; a Dockerized FastAPI webhook receiver triggers agent runs with correlation IDs.</p>
-            </div>
-            <p class="case__outcome"><span class="mono">outcome →</span> research-to-proposal turnaround dropped to <strong>3 minutes</strong> (&gt;95% reduction), replacing subjective gut feel with deterministic scoring.</p>
-            <p class="case__tags mono">multi-agent · MCP · FastAPI · CRM · Docker</p>
 
-            <details class="case__evidence mono">
-              <summary><span>▶ View Architecture &amp; Verification Evidence</span></summary>
-              <div class="evidence__box">
-                <p><strong>Pipeline Topology:</strong> Event Trigger → Python Router → MCP CRM Bridge (Bearer Auth) → Claude Sonnet → Pydantic ProposalDraftSchema → Human Approval Gate → CRM Dispatch.</p>
-                <p><strong>Evaluation Gate:</strong> 11-metric deterministic score calculated purely in Python; LLM only drafts narrative copy based on structured JSON numbers.</p>
+          <!-- CS-01 -->
+          <article class="case reveal" data-domain="agentic">
+            <div class="case__header">
+              <div>
+                <span class="case__id mono">CS-01 · Production Client System · 2026</span>
+                <h3>B2B Sales Automation Platform</h3>
               </div>
-            </details>
+              <div class="pipeline-tabs mono" role="tablist" aria-label="CS-01 pipeline stages">
+                <button type="button" class="pipeline-tab active" role="tab" aria-selected="true" data-stage="input">1. Webhook &amp; CRM</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="gate">2. 11-Metric Python Gate</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="output">3. Audited Proposal</button>
+              </div>
+            </div>
+
+            <div class="case__grid">
+              <div class="case__summary">
+                <div class="case__block">
+                  <span class="mono">Problem</span>
+                  <p>Sales teams spent 2–3 hours per prospect manually researching company background, cross-checking CRM order history, scoring product fit, and drafting tailored proposals.</p>
+                </div>
+                <div class="case__block">
+                  <span class="mono">System Architecture</span>
+                  <p>A <strong>7-agent orchestrated pipeline</strong>: master router, partner research agent, deterministic 11-metric scoring across 700+ records, proposal drafting, QC review, batch delivery, and campaign analytics connected via a custom <strong>MCP CRM bridge</strong> and Dockerized FastAPI webhooks.</p>
+                </div>
+                <p class="case__outcome"><span class="mono">Outcome →</span> Research-to-proposal turnaround dropped from <strong>2–3 hours to 3 minutes</strong> (&gt;95% reduction), replacing gut feel with deterministic scoring.</p>
+                <p class="case__tags mono">multi-agent · MCP · FastAPI · Pydantic · Docker</p>
+              </div>
+
+              <div class="case__inspector mono" aria-live="polite">
+                <div class="case__inspector-bar">
+                  <span class="case__inspector-title" data-stage-label>STAGE 01 // FASTAPI WEBHOOK &amp; MCP INGEST</span>
+                  <span class="case__inspector-badge">CORR_ID TRACKED</span>
+                </div>
+                <pre class="case__code is-active" data-pane="input"><code>{
+  "event": "crm.prospect_qualified",
+  "correlation_id": "corr_sales_7042",
+  "mcp_bridge": "streamable_http_bearer",
+  "signals": {
+    "historical_orders": 14,
+    " cold_chain_lanes": ["VN-EU", "SG-ROT"],
+    "annual_volume_teu": 480
+  }
+}</code></pre>
+                <pre class="case__code" data-pane="gate"><code># 11-metric deterministic scoring in pure Python (700+ records)
+score = compute_11_metric_fit(signals)  # 91.4 / 100.0
+tier = "TIER_1_PRIORITY" if score &gt;= 85 else "STANDARD"
+reason_codes = ["VOLUME_GT_300_TEU", "ACTIVE_EU_LANE", "REPEAT_BUYER"]
+draft_spec = ProposalDraftSchema(score=score, tier=tier, reasons=reason_codes)</code></pre>
+                <pre class="case__code" data-pane="output"><code>{
+  "tier": "TIER_1_PRIORITY",
+  "deterministic_score": 91.4,
+  "reason_codes": ["VOLUME_GT_300_TEU", "ACTIVE_EU_LANE"],
+  "qc_gate": "PASSED_SCHEMA_AND_PRICE_GUARD",
+  "turnaround_sec": 174
+}</code></pre>
+              </div>
+            </div>
           </article>
 
-          <article class="case reveal">
-            <span class="case__id mono">CS-02 · Production Client System · 2026</span>
-            <h3>Inventory Intelligence &amp; Allocation System</h3>
-            <div class="case__block">
-              <span class="mono">problem</span>
-              <p>Warehouse and logistics teams needed accurate transfer and replenishment recommendations across facilities — but LLM arithmetic is inherently untrustworthy for decisions moving physical stock.</p>
-            </div>
-            <div class="case__block">
-              <span class="mono">system</span>
-              <p>Python-first decision engine for days-of-inventory, demand velocity, warehouse allocation, and transfer proposals. Every recommendation carries an explicit <strong>deterministic reason code</strong>. The LLM only synthesizes the executive summary from computed JSON contracts; it never performs calculation.</p>
-            </div>
-            <p class="case__outcome"><span class="mono">outcome →</span> fully auditable inventory recommendations operations can execute without recalculating numbers.</p>
-            <p class="case__tags mono">decision engine · Python · SQL · LLM guardrails</p>
-
-            <details class="case__evidence mono">
-              <summary><span>▶ View Architecture &amp; Verification Evidence</span></summary>
-              <div class="evidence__box">
-                <p><strong>Rule Isolation:</strong> Days-of-inventory = (Current_Stock - Reserved) / Mean_Daily_Consumption. All arithmetic runs in SQLite / Python NumPy before payload creation.</p>
-                <p><strong>Guardrail:</strong> Low-confidence or boundary-condition inventory transfers trigger automated abstention flags instead of speculative advice.</p>
+          <!-- CS-02 -->
+          <article class="case reveal" data-domain="verify">
+            <div class="case__header">
+              <div>
+                <span class="case__id mono">CS-02 · Production Client System · 2026</span>
+                <h3>Inventory Intelligence &amp; Allocation System</h3>
               </div>
-            </details>
+              <div class="pipeline-tabs mono" role="tablist" aria-label="CS-02 pipeline stages">
+                <button type="button" class="pipeline-tab active" role="tab" aria-selected="true" data-stage="input">1. Stock Snapshot</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="gate">2. Python Solver</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="output">3. Reason-Coded Brief</button>
+              </div>
+            </div>
+
+            <div class="case__grid">
+              <div class="case__summary">
+                <div class="case__block">
+                  <span class="mono">Problem</span>
+                  <p>Warehouse and logistics teams needed accurate transfer and replenishment recommendations across facilities — but LLM arithmetic is untrustworthy when moving physical stock.</p>
+                </div>
+                <div class="case__block">
+                  <span class="mono">System Architecture</span>
+                  <p>Python-first decision engine computing days-of-inventory, demand velocity, warehouse allocation, and transfer proposals. Every recommendation carries an explicit <strong>deterministic reason code</strong>; the LLM only summarizes verified JSON contracts.</p>
+                </div>
+                <p class="case__outcome"><span class="mono">Outcome →</span> 100% auditable inventory recommendations operations teams execute without recalculating numbers.</p>
+                <p class="case__tags mono">decision engine · Python · SQL · reason codes · abstention gates</p>
+              </div>
+
+              <div class="case__inspector mono" aria-live="polite">
+                <div class="case__inspector-bar">
+                  <span class="case__inspector-title" data-stage-label>STAGE 01 // MULTI-WAREHOUSE SQL SNAPSHOT</span>
+                  <span class="case__inspector-badge">ZERO LLM MATH</span>
+                </div>
+                <pre class="case__code is-active" data-pane="input"><code>{
+  "sku": "IND-VALVE-DN50",
+  "wh_south": { "on_hand": 42, "reserved": 38, "daily_burn": 4.5 },
+  "wh_north": { "on_hand": 190, "reserved": 20, "daily_burn": 2.1 },
+  "replenish_lead_days": 14
+}</code></pre>
+                <pre class="case__code" data-pane="gate"><code># Pure Python / NumPy stock math before LLM summary
+doi_south = (42 - 38) / 4.5             # 0.89 days (&lt; 14d lead time!)
+surplus_north = 190 - 20 - (2.1 * 14)   # 140.6 units safe surplus
+transfer_qty = min(60, int(surplus_north))
+reasons = ["SOUTH_DOI_0.9D_CRITICAL", "NORTH_SURPLUS_140U"]</code></pre>
+                <pre class="case__code" data-pane="output"><code>{
+  "recommended_action": "INTER_WAREHOUSE_TRANSFER",
+  "from_facility": "WH_NORTH",
+  "to_facility": "WH_SOUTH",
+  "transfer_units": 60,
+  "reason_codes": ["SOUTH_DOI_0.9D_CRITICAL", "NORTH_SURPLUS_140U"]
+}</code></pre>
+              </div>
+            </div>
           </article>
 
-          <article class="case reveal">
-            <span class="case__id mono">CS-03 · Production Client System · ERP-Adjacent</span>
-            <h3>Human-Reviewed ERP Receipt Posting</h3>
-            <div class="case__block">
-              <span class="mono">problem</span>
-              <p>Posting OCR-extracted receipt payloads into SAP is a high-stakes irreversible write: low-confidence fields, currency/unit mismatches, approval hierarchies, and uncertain network timeouts.</p>
-            </div>
-            <div class="case__block">
-              <span class="mono">system</span>
-              <p>Upload → OCR draft → human review interface → SAP preflight (GET) → controlled POST to InventoryGenEntries → read-after-write verification. Posting state is persisted prior to the write; correlation IDs enable deterministic reconciliation. A server-side environment gate blocks production DB writes during testing.</p>
-            </div>
-            <p class="case__outcome"><span class="mono">outcome →</span> <strong>88 focused tests passed</strong> and <strong>5/5 SAP read-back field checks</strong> matched. OCR confidence gates automatically route uncertain fields to human operators.</p>
-            <p class="case__note mono">test-database evidence — isolated from live production SAP ERP</p>
-            <p class="case__tags mono">OCR · human-in-the-loop · SAP · state machine · pytest</p>
-
-            <details class="case__evidence mono">
-              <summary><span>▶ View Architecture &amp; Verification Evidence</span></summary>
-              <div class="evidence__box">
-                <p><strong>Verification Suite:</strong> 88 pytest cases verifying: Field validation, Negative item bounds, Timeout idempotency, Correlation ID tracking, and 5/5 SAP read-back schema parity.</p>
-                <p><strong>State Recovery:</strong> Persistent transition journal ensures interrupted network requests resume safely without duplicate journal entries.</p>
+          <!-- CS-03 -->
+          <article class="case reveal" data-domain="verify">
+            <div class="case__header">
+              <div>
+                <span class="case__id mono">CS-03 · Production Client System · ERP-Adjacent</span>
+                <h3>Human-Reviewed ERP Receipt Posting</h3>
               </div>
-            </details>
+              <div class="pipeline-tabs mono" role="tablist" aria-label="CS-03 pipeline stages">
+                <button type="button" class="pipeline-tab active" role="tab" aria-selected="true" data-stage="input">1. OCR Draft &amp; Gate</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="gate">2. Preflight &amp; Journal</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="output">3. 5/5 SAP Read-Back</button>
+              </div>
+            </div>
+
+            <div class="case__grid">
+              <div class="case__summary">
+                <div class="case__block">
+                  <span class="mono">Problem</span>
+                  <p>Posting OCR-extracted receipt payloads into SAP is a high-stakes irreversible write: low-confidence fields, unit mismatches, approval hierarchies, and network timeouts can corrupt ERP ledgers.</p>
+                </div>
+                <div class="case__block">
+                  <span class="mono">System Architecture</span>
+                  <p>Upload → OCR draft → human review UI → SAP preflight (GET) → controlled POST to <code>InventoryGenEntries</code> → read-after-write verification. State is journaled before the write with correlation IDs and an environment gate blocking prod writes in test mode.</p>
+                </div>
+                <p class="case__outcome"><span class="mono">Outcome →</span> <strong>88/88 focused pytest checks passed</strong> and <strong>5/5 SAP read-back field checks matched</strong> on the isolated test database.</p>
+                <p class="case__tags mono">OCR · human-in-the-loop · SAP ERP · state machine · 88 pytest suite</p>
+              </div>
+
+              <div class="case__inspector mono" aria-live="polite">
+                <div class="case__inspector-bar">
+                  <span class="case__inspector-title" data-stage-label>STAGE 01 // OCR CONFIDENCE &amp; HITL GATE</span>
+                  <span class="case__inspector-badge">88/88 PYTEST PASS</span>
+                </div>
+                <pre class="case__code is-active" data-pane="input"><code>{
+  "receipt_id": "GRN-2026-0419",
+  "ocr_fields": {
+    "po_number": { "val": "PO-88310", "conf": 0.99 },
+    "unit_price": { "val": 142.50, "conf": 0.74, "flag": "NEEDS_HUMAN_REVIEW" }
+  },
+  "env_gate": "SAP_SANDBOX_ISOLATED"
+}</code></pre>
+                <pre class="case__code" data-pane="gate"><code># Persist state journal prior to irreversible SAP POST
+assert operator_decision == "APPROVED"
+journal.record_intent(corr_id="corr_9f81a7b2", target="InventoryGenEntries")
+sap_preflight_get(po_number="PO-88310")
+resp = sap_client.post("/InventoryGenEntries", json=verified_payload)</code></pre>
+                <pre class="case__code" data-pane="output"><code>{
+  "sap_doc_entry": 409182,
+  "correlation_id": "corr_9f81a7b2",
+  "read_after_write_parity": "5/5_FIELDS_MATCHED",
+  "verified_fields": ["DocEntry", "CardCode", "ItemCode", "Quantity", "Price"],
+  "test_suite": "88 passed in 1.42s"
+}</code></pre>
+              </div>
+            </div>
           </article>
 
-          <article class="case reveal">
-            <span class="case__id mono">CS-04 · Production Client System · Operations</span>
-            <h3>Enterprise Agent Operations &amp; Operator UIs</h3>
-            <div class="case__block">
-              <span class="mono">problem</span>
-              <p>Corporate events, HR pipelines, and email workflows required config-driven multi-agent orchestration and operator consoles — not fragile, one-off chat prompts.</p>
-            </div>
-            <div class="case__block">
-              <span class="mono">system</span>
-              <p>Event and operations platform backed by a <strong>12-table relational schema</strong>, 3 specialized agents (reflection mentor, FAQ assistant, admin insights), 5 event triggers, 3 scheduled background jobs, and SMTP/SMS connectors. Operator mini-apps use postMessage authentication with localStorage fallback.</p>
-            </div>
-            <p class="case__outcome"><span class="mono">outcome →</span> unified architectural pattern: business rules reside in the database, actions are explicit, and human operators inspect dashboards, review screens, and status timelines.</p>
-            <p class="case__tags mono">workflows · scheduled jobs · HTML/JS · Playwright</p>
-
-            <details class="case__evidence mono">
-              <summary><span>▶ View Architecture &amp; Verification Evidence</span></summary>
-              <div class="evidence__box">
-                <p><strong>Schema &amp; Auth:</strong> 12 relational tables with foreign keys and enum state columns. Browser mini-apps communicate via secured postMessage parent-handshake tokens.</p>
-                <p><strong>Automated QA:</strong> Playwright test harness running end-to-end regression sweeps on forms, file uploads, and session persistence.</p>
+          <!-- CS-04 -->
+          <article class="case reveal" data-domain="agentic">
+            <div class="case__header">
+              <div>
+                <span class="case__id mono">CS-04 · Production Client System · Operations</span>
+                <h3>Enterprise Agent Operations &amp; Operator UIs</h3>
               </div>
-            </details>
+              <div class="pipeline-tabs mono" role="tablist" aria-label="CS-04 pipeline stages">
+                <button type="button" class="pipeline-tab active" role="tab" aria-selected="true" data-stage="input">1. Mini-App Auth</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="gate">2. 12-Table State</button>
+                <button type="button" class="pipeline-tab" role="tab" aria-selected="false" data-stage="output">3. Playwright E2E</button>
+              </div>
+            </div>
+
+            <div class="case__grid">
+              <div class="case__summary">
+                <div class="case__block">
+                  <span class="mono">Problem</span>
+                  <p>Corporate events, HR pipelines, and email workflows required config-driven multi-agent orchestration and operator consoles — not fragile, one-off chat prompts.</p>
+                </div>
+                <div class="case__block">
+                  <span class="mono">System Architecture</span>
+                  <p>Operations platform backed by a <strong>12-table relational schema</strong>, 3 specialized agents (reflection mentor, FAQ assistant, admin insights), 5 event triggers, 3 scheduled jobs, and operator mini-apps using <code>postMessage</code> handshake auth with <code>localStorage</code> fallback.</p>
+                </div>
+                <p class="case__outcome"><span class="mono">Outcome →</span> Business rules live in the relational schema, actions are explicit, and operators inspect live dashboards, review queues, and status timelines.</p>
+                <p class="case__tags mono">12-table SQL · scheduled jobs · HTML/JS mini-apps · Playwright E2E</p>
+              </div>
+
+              <div class="case__inspector mono" aria-live="polite">
+                <div class="case__inspector-bar">
+                  <span class="case__inspector-title" data-stage-label>STAGE 01 // OPERATOR MINI-APP HANDSHAKE</span>
+                  <span class="case__inspector-badge">PLAYWRIGHT VERIFIED</span>
+                </div>
+                <pre class="case__code is-active" data-pane="input"><code>{
+  "surface": "operator_review_console_v2",
+  "auth_channel": "window.postMessage_handshake",
+  "fallback_store": "localStorage_encrypted_session",
+  "trigger_event": "attendee.checkin_completed"
+}</code></pre>
+                <pre class="case__code" data-pane="gate"><code># Config-driven routing across 12 relational tables &amp; 3 agents
+tx = db.begin_transaction(tables=["events", "registrations", "audit_logs"])
+agent = route_specialist(event_type="checkin", role="reflection_mentor")
+schedule_followup_job(cron="0 9 * * *", channel="SMTP_SMS_DISPATCH")</code></pre>
+                <pre class="case__code" data-pane="output"><code>{
+  "state_transition": "CHECKED_IN -&gt; MENTOR_ASSIGNED",
+  "relational_tables_synced": 12,
+  "playwright_e2e_harness": "PASSED (forms, uploads, auth, timeline)",
+  "audit_trail_persisted": true
+}</code></pre>
+              </div>
+            </div>
           </article>
+
         </div>
 
         <div class="also reveal">
-          <h3 class="also__title mono">Related Architecture &amp; Research</h3>
+          <h3 class="also__title">Related Architecture &amp; Research</h3>
           <div class="also__grid">
-            <div class="also__item">
+            <div class="also__item" data-domain="agentic">
               <strong>Search Agent API</strong>
               <p>FastAPI + SSE + Pydantic service that streams research tool execution events, enforces 1–20 target constraints and 0–100 lead scores, and normalizes leads into CRM.</p>
             </div>
-            <div class="also__item">
+            <div class="also__item" data-domain="agentic">
               <strong>MCP CRM Bridge</strong>
               <p>Custom MCP server exposing CRM operations as typed tools over Streamable HTTP with bearer token authentication and Docker runtime.</p>
             </div>
-            <div class="also__item">
+            <div class="also__item" data-domain="verify">
               <strong>Playwright QA Runner</strong>
               <p>Auth-aware headless browser automation for platform QA: forms, chat, file uploads/downloads, health checks, screenshots, and deterministic selector assertions.</p>
             </div>
-            <div class="also__item">
+            <div class="also__item" data-domain="signal">
               <strong>PPG Blood Pressure Research</strong>
               <p>End-to-end MIMIC-III pipeline, PPG2BP-Net evaluation (SBP MAE 9.76 ± 8.99 mmHg), model zoo, and STM32 + Android/TFLite edge prototype.</p>
             </div>
@@ -419,44 +571,44 @@
 
       <!-- ============ CAPABILITIES ============ -->
       <section class="section" id="capabilities">
-        <h2 class="section__title mono reveal">Core Engineering Capabilities</h2>
-        <p class="section__note mono reveal">technical domains delivered from architecture to deployment</p>
+        <h2 class="section__title reveal">Core Engineering Capabilities</h2>
+        <p class="section__sub mono reveal">Technical domains delivered end-to-end from architecture and data contracts to production deployment.</p>
 
         <div class="capabilities">
-          <article class="capability reveal">
-            <span class="capability__id mono">CAP-01</span>
+          <article class="capability reveal" data-domain="agentic">
+            <span class="capability__id mono">CAP-01 · ORCHESTRATION</span>
             <h3>LLM Systems &amp; Agents</h3>
             <p>Multi-agent orchestration with master/specialist routing, tool calling, persistent memory, execution recovery, and human approval gates. MCP integrations for external systems.</p>
           </article>
-          <article class="capability reveal">
-            <span class="capability__id mono">CAP-02</span>
+          <article class="capability reveal" data-domain="agentic">
+            <span class="capability__id mono">CAP-02 · BACKEND</span>
             <h3>Backend Services &amp; APIs</h3>
             <p>FastAPI microservices, Server-Sent Events (SSE) progress streams, Pydantic data contracts, webhooks, scheduled background jobs, relational SQL persistence, and Docker containers.</p>
           </article>
-          <article class="capability reveal">
-            <span class="capability__id mono">CAP-03</span>
+          <article class="capability reveal" data-domain="verify">
+            <span class="capability__id mono">CAP-03 · GUARDRAILS</span>
             <h3>Reliability &amp; Evaluation</h3>
             <p>Deterministic cores, strict JSON schema output validation, fallback routing, human-in-the-loop review, pytest and Playwright test coverage, and read-after-write verification.</p>
           </article>
-          <article class="capability reveal">
-            <span class="capability__id mono">CAP-04</span>
+          <article class="capability reveal" data-domain="verify">
+            <span class="capability__id mono">CAP-04 · INTERFACES</span>
             <h3>Product Surfaces &amp; Mini-Apps</h3>
             <p>Operator mini-apps built with vanilla HTML/CSS/JavaScript: review screens, dashboards, status timelines, evidence drawers, postMessage authentication, and localStorage fallback.</p>
           </article>
-          <article class="capability reveal">
-            <span class="capability__id mono">CAP-05</span>
+          <article class="capability reveal" data-domain="signal">
+            <span class="capability__id mono">CAP-05 · SIGNAL &amp; ML</span>
             <h3>ML Systems &amp; Signal Processing</h3>
             <p>Data engineering pipelines, waveform ingestion and cleaning, digital signal filtering (Butterworth, VPG), PyTorch and TensorFlow/Keras training, MAE/RMSE evaluation, and TFLite export.</p>
           </article>
-          <article class="capability reveal">
-            <span class="capability__id mono">CAP-06</span>
+          <article class="capability reveal" data-domain="signal">
+            <span class="capability__id mono">CAP-06 · EMBEDDED EDGE</span>
             <h3>Embedded &amp; Edge Prototyping</h3>
             <p>STM32 firmware with MAX30102 sensor acquisition, I2C/UART/SPI interfaces, Bluetooth LE streaming, Android companion apps in Kotlin, and on-device TFLite inference.</p>
           </article>
         </div>
 
         <div class="principles reveal">
-          <h3 class="principles__title mono">Operating Principles</h3>
+          <h3 class="principles__title">Operating Principles</h3>
           <ol>
             <li><strong>Deterministic core, LLM at the edges.</strong> Arithmetic, scoring, pricing, and state transitions run in Python. The model handles language and interpretation.</li>
             <li><strong>Contracts before prompts.</strong> Strict JSON schemas, Pydantic models, typed enums, explicit status fields, and schema validation before anything reaches a user.</li>
@@ -469,11 +621,14 @@
 
       <!-- ============ EXPERIENCE ============ -->
       <section class="section" id="experience">
-        <h2 class="section__title mono reveal">Work Experience</h2>
+        <h2 class="section__title reveal">Work Experience</h2>
 
         <div class="jobs">
-          <article class="job reveal">
-            <span class="job__dates mono">Feb 2026 — Present</span>
+          <article class="job reveal" data-domain="agentic">
+            <div class="job__meta mono">
+              <span class="job__dates">Feb 2026 — Present</span>
+              <span class="job__badge">Agentic Systems</span>
+            </div>
             <div class="job__body">
               <h3>AI Systems Engineer / Agent Builder <span class="job__company">· MaxflowAI</span></h3>
               <ul>
@@ -487,8 +642,11 @@
             </div>
           </article>
 
-          <article class="job reveal">
-            <span class="job__dates mono">Apr — Oct 2025</span>
+          <article class="job reveal" data-domain="verify">
+            <div class="job__meta mono">
+              <span class="job__dates">Apr — Oct 2025</span>
+              <span class="job__badge">QA &amp; Evaluation</span>
+            </div>
             <div class="job__body">
               <h3>Product Reviewer / AI QA Collaborator <span class="job__company">· SNOW Vietnam</span></h3>
               <ul>
@@ -499,8 +657,11 @@
             </div>
           </article>
 
-          <article class="job reveal">
-            <span class="job__dates mono">Nov 2024 — Jan 2025</span>
+          <article class="job reveal" data-domain="signal">
+            <div class="job__meta mono">
+              <span class="job__dates">Nov 2024 — Jan 2025</span>
+              <span class="job__badge">Signal &amp; Edge ML</span>
+            </div>
             <div class="job__body">
               <h3>AI Engineer Intern, Deep Learning &amp; Signal Pipelines <span class="job__company">· ITR VN</span></h3>
               <ul>
@@ -516,60 +677,70 @@
 
       <!-- ============ OPEN SOURCE ============ -->
       <section class="section" id="open-source">
-        <h2 class="section__title mono reveal">Open Source &amp; Research</h2>
-        <p class="section__note mono reveal">selected repositories — github.com/BuccKyy</p>
+        <div class="repos-header reveal">
+          <div>
+            <h2 class="section__title">Open Source &amp; Research</h2>
+            <p class="section__sub mono">Selected repositories on github.com/BuccKyy — filter by engineering domain</p>
+          </div>
+          <div class="repo-filters mono" role="group" aria-label="Filter repositories by domain">
+            <button type="button" class="repo-filter active" data-filter="all">All (9)</button>
+            <button type="button" class="repo-filter" data-filter="signal">Signal &amp; Edge (3)</button>
+            <button type="button" class="repo-filter" data-filter="verify">Verification (2)</button>
+            <button type="button" class="repo-filter" data-filter="agentic">Agents &amp; Pipelines (4)</button>
+          </div>
+        </div>
 
         <div class="repos">
-          <a class="repo reveal" href="https://github.com/BuccKyy/verification-pack-generator" target="_blank" rel="noopener">
-            <div class="repo__top mono"><span class="repo__lang">Python</span></div>
+          <a class="repo reveal" data-domain="verify" href="https://github.com/BuccKyy/verification-pack-generator" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">Python · BM25</span><span class="repo__arch">Evidence Gate</span></div>
             <h3>verification-pack-generator</h3>
             <p>BM25 claim-checker for legal documents: pinpoint evidence citations, negation awareness, and conservative <strong>INSUFFICIENT</strong> labels instead of speculative hallucinated support.</p>
           </a>
 
-          <a class="repo reveal" href="https://github.com/BuccKyy/Deep-PPG-Research-Core" target="_blank" rel="noopener">
-            <div class="repo__top mono"><span class="repo__lang">Python</span><span>★ 3</span></div>
+          <a class="repo reveal" data-domain="signal" href="https://github.com/BuccKyy/Deep-PPG-Research-Core" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">Python · PyTorch/TF</span><span class="repo__arch">MIMIC-III · ★ 3</span></div>
             <h3>Deep-PPG-Research-Core</h3>
-            <p>End-to-end research framework for PPG-based blood pressure estimation — digital filtering, signal-quality metrics (SQI), model zoo (CNN-LSTM, U-Net, ResNet, Transformer), and standard evaluation protocols.</p>
+            <p>End-to-end research framework for PPG-based blood pressure estimation — digital filtering, signal-quality metrics (SQI), model zoo (CNN-LSTM, U-Net, ResNet, Transformer), and evaluation protocols.</p>
           </a>
 
-          <a class="repo reveal" href="https://github.com/BuccKyy/Cuffless-BP-IoT-System" target="_blank" rel="noopener">
-            <div class="repo__top mono"><span class="repo__lang">C / C++</span></div>
+          <a class="repo reveal" data-domain="signal" href="https://github.com/BuccKyy/Cuffless-BP-IoT-System" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">C / C++ · STM32</span><span class="repo__arch">MAX30102 · TFLite</span></div>
             <h3>Cuffless-BP-IoT-System</h3>
             <p>Full hardware-to-app telemetry stack: STM32 + MAX30102 sensor acquisition, Bluetooth LE streaming, on-device TFLite inference, and Android companion application.</p>
           </a>
 
-          <a class="repo reveal" href="https://github.com/BuccKyy/Video-Translation-Tool" target="_blank" rel="noopener">
-            <div class="repo__top mono"><span class="repo__lang">Python</span></div>
+          <a class="repo reveal" data-domain="agentic" href="https://github.com/BuccKyy/Video-Translation-Tool" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">Python · FFmpeg</span><span class="repo__arch">Whisper → LLM → TTS</span></div>
             <h3>Video-Translation-Tool</h3>
             <p>Modular media pipeline: Whisper ASR transcription → Llama 3.3 translation → Edge TTS synthesis → FFmpeg audio-video remuxing with per-stage recovery.</p>
           </a>
 
-          <a class="repo reveal" href="https://github.com/BuccKyy/prompt-master-for-codex" target="_blank" rel="noopener">
-            <div class="repo__top mono"><span class="repo__lang">Python</span><span>★ 2</span></div>
+          <a class="repo reveal" data-domain="verify" href="https://github.com/BuccKyy/prompt-master-for-codex" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">Python · Codex</span><span class="repo__arch">Task Contracts · ★ 2</span></div>
             <h3>prompt-master-for-codex</h3>
             <p>Instruction-driven Codex plugin that turns unstructured requirements into scoped, testable engineering tasks with evidence requirements and residual risk reporting.</p>
           </a>
 
-          <a class="repo reveal" href="https://github.com/BuccKyy/AI-agnet" target="_blank" rel="noopener">
-            <div class="repo__top mono"><span class="repo__lang">n8n / LLM</span></div>
+          <a class="repo reveal" data-domain="agentic" href="https://github.com/BuccKyy/AI-agnet" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">n8n · Groq/LLaMA</span><span class="repo__arch">27-Source Triage</span></div>
             <h3>AI-agnet</h3>
             <p>n8n workflow that ingests 27 RSS intelligence sources, analyzes content with Groq/LLaMA, applies threshold scoring, and delivers a prioritized Telegram digest every 30 minutes.</p>
           </a>
 
-          <a class="repo reveal" href="https://github.com/BuccKyy/SGX-Downloader" target="_blank" rel="noopener">
-            <div class="repo__top mono"><span class="repo__lang">Python</span></div>
+          <a class="repo reveal" data-domain="agentic" href="https://github.com/BuccKyy/SGX-Downloader" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">Python · SQLite</span><span class="repo__arch">62% Faster Cache</span></div>
             <h3>SGX-Downloader</h3>
             <p>Financial derivatives data downloader with exponential backoff, SQLite state tracking, and content-hash caching making repeat runs <strong>62% faster</strong>.</p>
           </a>
 
-          <a class="repo reveal" href="https://github.com/BuccKyy/PPG-MoNi-Android-App" target="_blank" rel="noopener">
-            <div class="repo__top mono"><span class="repo__lang">Kotlin</span></div>
+          <a class="repo reveal" data-domain="signal" href="https://github.com/BuccKyy/PPG-MoNi-Android-App" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">Kotlin · Android</span><span class="repo__arch">BLE Waveform UI</span></div>
             <h3>PPG-MoNi-Android-App</h3>
             <p>Native Android app for real-time PPG waveform plotting, Bluetooth device pairing, Room SQLite history persistence, and on-device TFLite inference.</p>
           </a>
 
-          <a class="repo repo--more reveal" href="https://github.com/BuccKyy" target="_blank" rel="noopener">
-            <div class="repo__top mono"><span class="repo__lang">GitHub</span></div>
+          <a class="repo repo--more reveal" data-domain="agentic" href="https://github.com/BuccKyy" target="_blank" rel="noopener">
+            <div class="repo__top mono"><span class="repo__lang">GitHub Profile</span><span class="repo__arch">All Artifacts ↗</span></div>
             <h3>View All Repositories →</h3>
             <p>Additional PPG signal processing utilities, STM32 firmware, clinic booking systems, and machine-learning prototypes.</p>
           </a>
@@ -578,15 +749,15 @@
 
       <!-- ============ TECH STACK ============ -->
       <section class="section" id="skills">
-        <h2 class="section__title mono reveal">Technical Stack &amp; Tooling</h2>
+        <h2 class="section__title reveal">Technical Stack &amp; Tooling</h2>
 
         <div class="skills-grid">
-          <div class="skill-card reveal">
-            <div class="skill-card__header mono">
-              <span class="skill-card__icon">◆</span>
+          <div class="skill-card reveal" data-domain="agentic">
+            <div class="skill-card__header">
+              <span class="skill-card__tag mono">DOMAIN 01 · ORCHESTRATION</span>
               <h3>AI &amp; Multi-Agent Systems</h3>
             </div>
-            <div class="skill-tags">
+            <div class="skill-tags mono">
               <span>Multi-Agent Orchestration</span>
               <span>Master/Specialist Routing</span>
               <span>Tool &amp; Function Calling</span>
@@ -601,12 +772,12 @@
             </div>
           </div>
 
-          <div class="skill-card reveal">
-            <div class="skill-card__header mono">
-              <span class="skill-card__icon">◆</span>
+          <div class="skill-card reveal" data-domain="verify">
+            <div class="skill-card__header">
+              <span class="skill-card__tag mono">DOMAIN 02 · GROUNDING</span>
               <h3>Retrieval &amp; Evaluation</h3>
             </div>
-            <div class="skill-tags">
+            <div class="skill-tags mono">
               <span>BM25 Retrieval</span>
               <span>Evidence Grounding</span>
               <span>Claim Verification</span>
@@ -618,12 +789,12 @@
             </div>
           </div>
 
-          <div class="skill-card reveal">
-            <div class="skill-card__header mono">
-              <span class="skill-card__icon">◆</span>
+          <div class="skill-card reveal" data-domain="agentic">
+            <div class="skill-card__header">
+              <span class="skill-card__tag mono">DOMAIN 01 · INFRASTRUCTURE</span>
               <h3>Backend &amp; Systems</h3>
             </div>
-            <div class="skill-tags">
+            <div class="skill-tags mono">
               <span>Python 3.12</span>
               <span>FastAPI</span>
               <span>SSE Progress Streams</span>
@@ -638,12 +809,12 @@
             </div>
           </div>
 
-          <div class="skill-card reveal">
-            <div class="skill-card__header mono">
-              <span class="skill-card__icon">◆</span>
+          <div class="skill-card reveal" data-domain="verify">
+            <div class="skill-card__header">
+              <span class="skill-card__tag mono">DOMAIN 02 · VERIFICATION</span>
               <h3>QA &amp; Reliability</h3>
             </div>
-            <div class="skill-tags">
+            <div class="skill-tags mono">
               <span>pytest</span>
               <span>Playwright Automation</span>
               <span>Contract Testing</span>
@@ -655,12 +826,12 @@
             </div>
           </div>
 
-          <div class="skill-card reveal">
-            <div class="skill-card__header mono">
-              <span class="skill-card__icon">◆</span>
+          <div class="skill-card reveal" data-domain="signal">
+            <div class="skill-card__header">
+              <span class="skill-card__tag mono">DOMAIN 03 · SIGNAL &amp; ML</span>
               <h3>Biomedical DSP &amp; ML</h3>
             </div>
-            <div class="skill-tags">
+            <div class="skill-tags mono">
               <span>MIMIC-III Benchmark</span>
               <span>PPG Waveform Ingestion</span>
               <span>Butterworth Filtering</span>
@@ -674,12 +845,12 @@
             </div>
           </div>
 
-          <div class="skill-card reveal">
-            <div class="skill-card__header mono">
-              <span class="skill-card__icon">◆</span>
+          <div class="skill-card reveal" data-domain="signal">
+            <div class="skill-card__header">
+              <span class="skill-card__tag mono">DOMAIN 03 · EDGE &amp; UI</span>
               <h3>Edge, Mobile &amp; Frontend</h3>
             </div>
-            <div class="skill-tags">
+            <div class="skill-tags mono">
               <span>C / C++ (Embedded)</span>
               <span>STM32 Firmware</span>
               <span>MAX30102 Sensor</span>
@@ -696,10 +867,10 @@
 
       <!-- ============ EDUCATION ============ -->
       <section class="section" id="education">
-        <h2 class="section__title mono reveal">Education &amp; Credentials</h2>
+        <h2 class="section__title reveal">Education &amp; Credentials</h2>
 
         <div class="edu-grid">
-          <div class="edu-card reveal">
+          <div class="edu-card reveal" data-domain="signal">
             <p class="edu-meta mono">2021 — 2025 · Ho Chi Minh City</p>
             <h3>University of Science, VNU-HCM</h3>
             <p class="edu-degree">B.Eng. Electronics &amp; Telecommunication Engineering · <strong>GPA 3.4 / 4.0</strong></p>
@@ -707,31 +878,32 @@
             <p class="edu-course">Thesis: PPG signal processing, cuffless blood-pressure estimation on MIMIC-III, and model evaluation protocols.</p>
           </div>
 
-          <div class="awards reveal">
-            <h3 class="mono awards__title">Awards &amp; Competitions</h3>
+          <div class="awards reveal" data-domain="agentic">
+            <p class="edu-meta mono">HONOURS &amp; CERTIFICATIONS</p>
+            <h3>Awards &amp; Competitions</h3>
             <ul>
               <li><strong>VPBank Technology Hackathon 2025</strong> — Senior Track Finalist</li>
               <li><strong>Biomedical Engineering Innovation Competition 2025</strong> — Team Lead, IoT blood-pressure monitoring; 90% user satisfaction across 20+ clinical test participants</li>
               <li><strong>Professional Certifications</strong> — Deep Learning Specialization (Keras/TensorFlow) · Machine Learning with Python (Coursera)</li>
             </ul>
-            <p class="awards__lang mono">Languages: Vietnamese (native) · English (professional proficiency)</p>
+            <p class="awards__lang mono">Languages: Vietnamese (native) · English (professional working proficiency)</p>
           </div>
         </div>
       </section>
 
       <!-- ============ CONTACT ============ -->
       <section class="section" id="contact">
-        <h2 class="section__title mono reveal">Get in Touch</h2>
+        <h2 class="section__title reveal">Get in Touch</h2>
         <div class="contact reveal">
           <p class="contact__lead">
             Open to remote roles in<br>
-            <em>AI Systems Engineering</em>, <em>ML Systems</em>, and <em>Applied AI Backend</em>.
+            <em class="tone-agentic">AI Systems Engineering</em>, <em class="tone-signal">ML Systems</em>, and <em class="tone-verify">Applied AI Backend</em>.
           </p>
           <a class="contact__email" href="mailto:trantrungduc313@gmail.com">trantrungduc313@gmail.com<span class="contact__email-arrow" aria-hidden="true">→</span></a>
           <div class="contact__links mono">
-            <a href="TranTrungDuc-AI-Engineer-CV.pdf" download>download cv (pdf) ↓</a>
-            <a href="https://github.com/BuccKyy" target="_blank" rel="me noopener">github.com/BuccKyy ↗</a>
-            <a href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="me noopener">linkedin ↗</a>
+            <a class="contact__btn" href="TranTrungDuc-AI-Engineer-CV.pdf" download>↓ Download CV (PDF)</a>
+            <a class="contact__btn" href="https://github.com/BuccKyy" target="_blank" rel="me noopener">GitHub / BuccKyy ↗</a>
+            <a class="contact__btn" href="https://www.linkedin.com/in/%C4%91%E1%BB%A9c-tr%E1%BA%A7n-77b207265/" target="_blank" rel="me noopener">LinkedIn Profile ↗</a>
           </div>
           <p class="contact__note mono">Ho Chi Minh City · UTC+7 · Async-First Communication · Vietnamese / English</p>
         </div>

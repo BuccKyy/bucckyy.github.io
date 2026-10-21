@@ -18,6 +18,8 @@
     var isDark = root.getAttribute("data-theme") === "dark";
     themeToggle.setAttribute("aria-pressed", String(isDark));
     themeToggle.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
+    var label = themeToggle.querySelector(".theme-toggle__label");
+    if (label) label.textContent = isDark ? "light" : "dark";
     var meta = document.querySelector("meta[name='theme-color']");
     if (meta) meta.setAttribute("content", isDark ? "#0b0e14" : "#f6f3ec");
   }
@@ -77,19 +79,10 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+    }, { threshold: 0.08, rootMargin: "0px 0px -30px 0px" });
     reveals.forEach(function (el) { io.observe(el); });
   } else {
     reveals.forEach(function (el) { el.classList.add("visible"); });
-  }
-
-  /* Boot reveal trigger */
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(function () {
-      document.body.classList.add("is-loaded");
-    });
-  } else {
-    document.body.classList.add("is-loaded");
   }
 
   /* ============ SCROLLSPY & PROGRESS ============ */
@@ -110,10 +103,13 @@
 
     var current = "";
     for (var i = 0; i < sections.length; i++) {
-      var top = sections[i].offsetTop - 120;
+      var top = sections[i].offsetTop - 130;
       if (scrollY >= top) {
         current = sections[i].id;
       }
+    }
+    if (maxScroll > 0 && scrollY >= maxScroll - 32 && sections.length > 0) {
+      current = sections[sections.length - 1].id;
     }
     navLinks.forEach(function (link) {
       var active = link.getAttribute("href") === "#" + current;
@@ -140,16 +136,15 @@
     window.addEventListener("resize", resize, { passive: true });
     resize();
 
-    // Lightweight ambient nodes (30 nodes, no expensive per-frame sorting)
     var nodes = [];
-    var count = 32;
+    var count = 28;
     for (var i = 0; i < count; i++) {
       nodes.push({
         x: Math.random() * w,
         y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
-        r: 1.2 + Math.random() * 1.5
+        vx: (Math.random() - 0.5) * 0.32,
+        vy: (Math.random() - 0.5) * 0.32,
+        r: 1.2 + Math.random() * 1.4
       });
     }
 
@@ -159,8 +154,8 @@
     function draw() {
       if (!running) return;
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = "rgba(148, 157, 178, 0.4)";
-      ctx.strokeStyle = "rgba(148, 157, 178, 0.08)";
+      ctx.fillStyle = "rgba(148, 157, 178, 0.38)";
+      ctx.strokeStyle = "rgba(148, 157, 178, 0.07)";
       ctx.lineWidth = 1;
 
       for (var i = 0; i < count; i++) {
@@ -181,7 +176,7 @@
           var dx = n.x - m.x;
           var dy = n.y - m.y;
           var dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
+          if (dist < 115) {
             ctx.beginPath();
             ctx.moveTo(n.x, n.y);
             ctx.lineTo(m.x, m.y);
@@ -251,6 +246,7 @@
     /* ---------- MODULE 1: BIOMEDICAL DSP OSCILLOSCOPE ---------- */
     var dspCanvas = document.getElementById("dsp-canvas");
     var stageDesc = document.getElementById("dsp-stage-desc");
+    var dspProbe = document.getElementById("dsp-probe");
     var stageBtns = instrument.querySelectorAll(".stage-btn");
 
     var currentStage = "raw";
@@ -277,21 +273,31 @@
       var width = 0, height = 0;
       var dpr = window.devicePixelRatio || 1;
       var tOffset = 0;
+      var hoverRatio = null;
 
       function resize() {
         var rect = dspCanvas.getBoundingClientRect();
-        width = rect.width;
-        height = rect.height;
+        width = rect.width || 600;
+        height = rect.height || 240;
         dspCanvas.width = width * dpr;
         dspCanvas.height = height * dpr;
-        ctx.scale(dpr, dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
       window.addEventListener("resize", resize, { passive: true });
       resize();
 
+      dspCanvas.addEventListener("mousemove", function (evt) {
+        var rect = dspCanvas.getBoundingClientRect();
+        if (!rect.width) return;
+        hoverRatio = Math.max(0, Math.min(1, (evt.clientX - rect.left) / rect.width));
+      });
+      dspCanvas.addEventListener("mouseleave", function () {
+        hoverRatio = null;
+        if (dspProbe) dspProbe.textContent = "Hover waveform to inspect sample";
+      });
+
       function pulseWave(t) {
         var cycle = t % 0.833; // 72 BPM = 0.833 sec per beat
-        // Dual-Gaussian physiological PPG approximation
         var s1 = Math.exp(-Math.pow(cycle - 0.18, 2) / (2 * 0.0022)); // Systolic
         var s2 = 0.42 * Math.exp(-Math.pow(cycle - 0.38, 2) / (2 * 0.0045)); // Dicrotic
         var base = s1 + s2;
@@ -301,7 +307,6 @@
           var noise = (Math.sin(t * 85) + Math.cos(t * 140)) * 0.04;
           return base + drift + noise;
         } else if (currentStage === "vpg") {
-          // Numerical derivative
           var dt = 0.005;
           var c1 = (t + dt) % 0.833;
           var c0 = (t - dt) % 0.833;
@@ -315,11 +320,11 @@
 
       function draw() {
         if (!running) return;
-        tOffset += 0.012;
+        tOffset += 0.011;
 
         ctx.clearRect(0, 0, width, height);
 
-        // Draw Oscilloscope Grid Lines
+        // Oscilloscope Grid Lines
         ctx.strokeStyle = "rgba(148, 157, 178, 0.08)";
         ctx.lineWidth = 1;
         var stepX = 40, stepY = 32;
@@ -337,8 +342,8 @@
         var pts = [];
         var totalSecs = 3.2;
         var numSamples = 240;
-        var midY = height * 0.62;
-        var scaleY = height * 0.45;
+        var midY = height * 0.68;
+        var scaleY = height * 0.46;
 
         for (var i = 0; i < numSamples; i++) {
           var px = (i / (numSamples - 1)) * width;
@@ -378,9 +383,32 @@
           }
         }
 
+        // Interactive Hover Probe Crosshair
+        if (hoverRatio !== null && pts.length > 0) {
+          var sampleIdx = Math.min(pts.length - 1, Math.max(0, Math.round(hoverRatio * (pts.length - 1))));
+          var sp = pts[sampleIdx];
+          ctx.strokeStyle = "rgba(79, 214, 190, 0.55)";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(sp.x, 0);
+          ctx.lineTo(sp.x, height);
+          ctx.stroke();
+
+          ctx.fillStyle = "#4fd6be";
+          ctx.beginPath();
+          ctx.arc(sp.x, sp.y, 4.5, 0, Math.PI * 2);
+          ctx.fill();
+
+          if (dspProbe) {
+            var mv = (sp.val * 1.85).toFixed(2);
+            var sqi = currentStage === "raw" ? "0.78" : "0.97";
+            dspProbe.textContent = "t=" + sp.t.toFixed(2) + "s · " + mv + " mV · SQI " + sqi;
+          }
+        }
+
         // Oscilloscope Sweep Line
-        var sweepX = ((tOffset * 100) % width);
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
+        var sweepX = ((tOffset * 95) % width);
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.22)";
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(sweepX, 0);
@@ -407,6 +435,7 @@
     var dagCanvas = document.getElementById("dag-canvas");
     var dagRunBtn = document.getElementById("dag-run-btn");
     var dagStepLabel = document.getElementById("dag-step-label");
+    var dagPills = instrument.querySelectorAll(".dag-pill");
     var inspectorTitle = document.getElementById("inspector-title");
     var inspectorBadge = document.getElementById("inspector-badge");
     var inspectorCode = document.getElementById("inspector-code");
@@ -414,9 +443,10 @@
     var dagNodes = [
       {
         id: 0,
-        label: "CRM / Webhook Event",
+        code: "01",
+        label: "CRM Webhook",
         type: "trigger",
-        color: "#8b93a7",
+        color: "#949db2",
         badge: "INPUT TRIGGER",
         contract: {
           event: "prospect.created",
@@ -427,6 +457,7 @@
       },
       {
         id: 1,
+        code: "02",
         label: "FastAPI Router",
         type: "deterministic",
         color: "#4fd6be",
@@ -440,7 +471,8 @@
       },
       {
         id: 2,
-        label: "BM25 Document Retrieval",
+        code: "03",
+        label: "BM25 Retrieval",
         type: "deterministic",
         color: "#4fd6be",
         badge: "DETERMINISTIC RETRIEVAL",
@@ -454,7 +486,8 @@
       },
       {
         id: 3,
-        label: "Claude 3.5 Sonnet",
+        code: "04",
+        label: "Claude Sonnet",
         type: "llm",
         color: "#818cf8",
         badge: "LLM INTERPRETATION",
@@ -467,7 +500,8 @@
       },
       {
         id: 4,
-        label: "Pydantic Validation Gate",
+        code: "05",
+        label: "Pydantic Gate",
         type: "gate",
         color: "#ffb454",
         badge: "EVALUATION GATE",
@@ -481,7 +515,8 @@
       },
       {
         id: 5,
-        label: "Human Review Gate",
+        code: "06",
+        label: "HITL Approval",
         type: "gate",
         color: "#ffb454",
         badge: "HITL APPROVAL GATE",
@@ -494,7 +529,8 @@
       },
       {
         id: 6,
-        label: "SAP ERP Receipt Post",
+        code: "07",
+        label: "SAP ERP Post",
         type: "erp",
         color: "#ff6b9d",
         badge: "ERP WRITE TRANSACTION",
@@ -508,15 +544,32 @@
       }
     ];
 
+    var selectedNode = 4; // Default on Pydantic Gate
+
     function selectDagNode(index) {
       var n = dagNodes[index];
       if (!n) return;
-      if (inspectorTitle) inspectorTitle.textContent = "NODE CONTRACT // " + n.label;
+      selectedNode = index;
+      if (inspectorTitle) inspectorTitle.textContent = "NODE CONTRACT // " + n.code + " " + n.label;
       if (inspectorBadge) inspectorBadge.textContent = n.badge;
       if (inspectorCode) {
         inspectorCode.innerHTML = "<code>" + JSON.stringify(n.contract, null, 2) + "</code>";
       }
+      dagPills.forEach(function (pill) {
+        var pIdx = Number(pill.getAttribute("data-node"));
+        pill.classList.toggle("is-selected", pIdx === index);
+      });
     }
+
+    dagPills.forEach(function (pill) {
+      pill.addEventListener("click", function () {
+        var idx = Number(pill.getAttribute("data-node"));
+        selectDagNode(idx);
+        if (dagStepLabel) {
+          dagStepLabel.textContent = "Selected Node " + dagNodes[idx].code + ": " + dagNodes[idx].label + " (" + dagNodes[idx].badge + ")";
+        }
+      });
+    });
 
     var dagModule = (function () {
       if (!dagCanvas || !dagCanvas.getContext) return null;
@@ -526,25 +579,55 @@
       var width = 0, height = 0;
       var dpr = window.devicePixelRatio || 1;
       var activePacket = null;
-      var selectedNode = 4; // Default on Pydantic Validator
 
       function resize() {
         var rect = dagCanvas.getBoundingClientRect();
-        width = rect.width;
-        height = rect.height;
+        width = rect.width || 600;
+        height = rect.height || 240;
         dagCanvas.width = width * dpr;
         dagCanvas.height = height * dpr;
-        ctx.scale(dpr, dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
       window.addEventListener("resize", resize, { passive: true });
       resize();
 
-      function getNodeCoords(i) {
+      function getNodeMetrics() {
         var n = dagNodes.length;
-        var padX = 75;
+        // On narrow screens (<720px), arrange in 2 rows (4 top, 3 bottom) so cards never overlap
+        if (width < 720) {
+          var nodeW = Math.min(130, Math.floor((width - 48) / 4));
+          var nodeH = 46;
+          return {
+            twoRows: true,
+            nodeW: nodeW,
+            nodeH: nodeH
+          };
+        }
+        var padX = 68;
         var stepX = (width - padX * 2) / (n - 1);
-        var x = padX + i * stepX;
-        var y = height * 0.5 + (i % 2 === 0 ? -18 : 18);
+        var wCard = Math.min(124, Math.max(92, Math.floor(stepX * 0.84)));
+        return {
+          twoRows: false,
+          nodeW: wCard,
+          nodeH: 48,
+          padX: padX,
+          stepX: stepX
+        };
+      }
+
+      function getNodeCoords(i) {
+        var m = getNodeMetrics();
+        if (m.twoRows) {
+          if (i < 4) {
+            var colW = width / 4;
+            return { x: colW * (i + 0.5), y: height * 0.3 };
+          } else {
+            var colW2 = width / 3;
+            return { x: colW2 * ((i - 4) + 0.5), y: height * 0.72 };
+          }
+        }
+        var x = m.padX + i * m.stepX;
+        var y = height * 0.5 + (i % 2 === 0 ? -24 : 24);
         return { x: x, y: y };
       }
 
@@ -552,21 +635,25 @@
         if (!running) return;
         ctx.clearRect(0, 0, width, height);
 
+        var m = getNodeMetrics();
+        var nodeW = m.nodeW;
+        var nodeH = m.nodeH;
+
         // Draw connecting directed edges
         ctx.lineWidth = 2;
         for (var i = 0; i < dagNodes.length - 1; i++) {
           var p1 = getNodeCoords(i);
           var p2 = getNodeCoords(i + 1);
-          ctx.strokeStyle = "rgba(148, 157, 178, 0.25)";
+          ctx.strokeStyle = "rgba(148, 157, 178, 0.28)";
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
-          ctx.bezierCurveTo(p1.x + 35, p1.y, p2.x - 35, p2.y, p2.x, p2.y);
+          ctx.bezierCurveTo(p1.x + 28, p1.y, p2.x - 28, p2.y, p2.x, p2.y);
           ctx.stroke();
         }
 
         // Draw packet animation if active
         if (activePacket) {
-          activePacket.progress += 0.025;
+          activePacket.progress += 0.028;
           var fromIdx = activePacket.currentStep;
           var toIdx = fromIdx + 1;
           if (toIdx < dagNodes.length) {
@@ -587,29 +674,28 @@
             if (t >= 1) {
               activePacket.progress = 0;
               activePacket.currentStep++;
-              selectedNode = activePacket.currentStep;
-              selectDagNode(selectedNode);
+              selectDagNode(activePacket.currentStep);
               if (dagStepLabel) {
-                dagStepLabel.textContent = "Step " + (selectedNode + 1) + "/7: " + dagNodes[selectedNode].label + " executed (" + dagNodes[selectedNode].badge + ")";
+                var cur = dagNodes[activePacket.currentStep];
+                dagStepLabel.textContent = "Step " + (activePacket.currentStep + 1) + "/7: " + cur.label + " executed (" + cur.badge + ")";
               }
               if (activePacket.currentStep >= dagNodes.length - 1) {
                 activePacket = null;
-                if (dagStepLabel) dagStepLabel.textContent = "Pipeline execution complete! 88/88 checks passed · SAP read-back verified.";
+                if (dagStepLabel) dagStepLabel.textContent = "Pipeline execution complete · 88/88 checks passed · SAP read-back verified.";
               }
             }
           }
         }
 
         // Draw nodes
-        var nodeW = 120, nodeH = 46;
+        var monoFont = getComputedStyle(root).getPropertyValue("--font-mono");
         for (var k = 0; k < dagNodes.length; k++) {
           var node = dagNodes[k];
           var pt = getNodeCoords(k);
           var isSel = (k === selectedNode);
 
-          // Card box
-          ctx.fillStyle = isSel ? "rgba(255, 180, 84, 0.12)" : "rgba(17, 21, 31, 0.92)";
-          ctx.strokeStyle = isSel ? node.color : "rgba(255, 255, 255, 0.12)";
+          ctx.fillStyle = isSel ? "rgba(255, 180, 84, 0.14)" : "rgba(17, 21, 31, 0.94)";
+          ctx.strokeStyle = isSel ? node.color : "rgba(255, 255, 255, 0.15)";
           ctx.lineWidth = isSel ? 2 : 1;
 
           ctx.beginPath();
@@ -618,38 +704,34 @@
           ctx.fill();
           ctx.stroke();
 
-          // Node Type Dot
           ctx.fillStyle = node.color;
           ctx.beginPath();
-          ctx.arc(rx + 12, ry + 14, 4, 0, Math.PI * 2);
+          ctx.arc(rx + 11, ry + 14, 3.5, 0, Math.PI * 2);
           ctx.fill();
 
-          // Label
           ctx.fillStyle = isSel ? "#ffb454" : "#e8eaf0";
-          ctx.font = "11px " + getComputedStyle(root).getPropertyValue("--font-mono");
-          ctx.fillText(node.label.slice(0, 14), rx + 22, ry + 18);
-          ctx.fillStyle = "#8b93a7";
-          ctx.font = "9px " + getComputedStyle(root).getPropertyValue("--font-mono");
-          ctx.fillText(node.badge.slice(0, 16), rx + 10, ry + 34);
+          ctx.font = "500 10.5px " + monoFont;
+          ctx.fillText(node.label.slice(0, 14), rx + 20, ry + 18);
+          ctx.fillStyle = "#949db2";
+          ctx.font = "9.5px " + monoFont;
+          ctx.fillText("NODE " + node.code, rx + 10, ry + 35);
         }
 
         animId = requestAnimationFrame(draw);
       }
 
-      // Click to select node
       dagCanvas.addEventListener("click", function (evt) {
         var rect = dagCanvas.getBoundingClientRect();
         var mx = evt.clientX - rect.left;
         var my = evt.clientY - rect.top;
-        var nodeW = 120, nodeH = 46;
+        var m = getNodeMetrics();
 
         for (var i = 0; i < dagNodes.length; i++) {
           var pt = getNodeCoords(i);
-          if (mx >= pt.x - nodeW / 2 && mx <= pt.x + nodeW / 2 &&
-              my >= pt.y - nodeH / 2 && my <= pt.y + nodeH / 2) {
-            selectedNode = i;
+          if (mx >= pt.x - m.nodeW / 2 && mx <= pt.x + m.nodeW / 2 &&
+              my >= pt.y - m.nodeH / 2 && my <= pt.y + m.nodeH / 2) {
             selectDagNode(i);
-            if (dagStepLabel) dagStepLabel.textContent = "Selected: " + dagNodes[i].label + " (" + dagNodes[i].badge + ")";
+            if (dagStepLabel) dagStepLabel.textContent = "Selected Node " + dagNodes[i].code + ": " + dagNodes[i].label + " (" + dagNodes[i].badge + ")";
             break;
           }
         }
@@ -658,7 +740,6 @@
       if (dagRunBtn) {
         dagRunBtn.addEventListener("click", function () {
           activePacket = { currentStep: 0, progress: 0 };
-          selectedNode = 0;
           selectDagNode(0);
           if (dagStepLabel) dagStepLabel.textContent = "Executing pipeline from Event Trigger...";
         });
@@ -677,8 +758,72 @@
       };
     })();
 
-    // Start default panel (DSP)
     if (dspModule) dspModule.start();
+  })();
+
+  /* ============ CASE STUDY PIPELINE TRACE INSPECTOR ============ */
+  (function initCaseInspectors() {
+    var cases = document.querySelectorAll(".case");
+    cases.forEach(function (card) {
+      var tabs = Array.prototype.slice.call(card.querySelectorAll(".pipeline-tab"));
+      var panes = Array.prototype.slice.call(card.querySelectorAll(".case__code"));
+      if (!tabs.length || !panes.length) return;
+
+      function activateStage(stage) {
+        tabs.forEach(function (tab) {
+          var active = tab.getAttribute("data-stage") === stage;
+          tab.classList.toggle("active", active);
+          tab.classList.toggle("is-active", active);
+          tab.setAttribute("aria-selected", String(active));
+        });
+        panes.forEach(function (pane) {
+          var active = pane.getAttribute("data-pane") === stage;
+          pane.classList.toggle("is-active", active);
+        });
+      }
+
+      tabs.forEach(function (tab, idx) {
+        tab.addEventListener("click", function () {
+          activateStage(tab.getAttribute("data-stage"));
+        });
+        tab.addEventListener("keydown", function (evt) {
+          if (evt.key === "ArrowRight" || evt.key === "ArrowLeft") {
+            evt.preventDefault();
+            var dir = evt.key === "ArrowRight" ? 1 : -1;
+            var nextIdx = (idx + dir + tabs.length) % tabs.length;
+            tabs[nextIdx].focus();
+            activateStage(tabs[nextIdx].getAttribute("data-stage"));
+          }
+        });
+      });
+    });
+  })();
+
+  /* ============ OPEN SOURCE REPOSITORY DOMAIN FILTER ============ */
+  (function initRepoFilters() {
+    var filterBtns = Array.prototype.slice.call(document.querySelectorAll(".repo-filter"));
+    var repoCards = Array.prototype.slice.call(document.querySelectorAll(".repos .repo"));
+    if (!filterBtns.length || !repoCards.length) return;
+
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var filter = btn.getAttribute("data-filter");
+        filterBtns.forEach(function (b) {
+          var active = (b === btn);
+          b.classList.toggle("active", active);
+          b.classList.toggle("is-active", active);
+        });
+        repoCards.forEach(function (card) {
+          if (card.classList.contains("repo--more") || filter === "all") {
+            card.removeAttribute("hidden");
+          } else {
+            var domain = card.getAttribute("data-domain");
+            if (domain === filter) card.removeAttribute("hidden");
+            else card.setAttribute("hidden", "");
+          }
+        });
+      });
+    });
   })();
 
 })();
